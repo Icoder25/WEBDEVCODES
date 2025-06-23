@@ -62,108 +62,98 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 font-sans">
     <!-- Header/Navbar -->
     <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
                 <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="index.html" class="text-2xl font-bold text-primary">
-                        <span class="text-primary">SHUBHAM</span> <span class="text-accent">ENTERPRISES</span>
+            <a href="index.html" class="text-2xl font-bold text-primary flex items-center">
+                <span class="text-primary">SHUBHAM</span> <span class="text-accent ml-1">ENTERPRISES</span>
                     </a>
-                </div>
                 
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-6">
-                    <a href="index.html" class="text-gray-800 hover:text-primary font-medium">Home</a>
-                    <a href="products.html" class="text-gray-800 hover:text-primary font-medium">Products</a>
-                    <a href="about.html" class="text-gray-800 hover:text-primary font-medium">About Us</a>
-                    <a href="contact.html" class="text-gray-800 hover:text-primary font-medium">Contact</a>
-                    <a href="faq.html" class="text-gray-800 hover:text-primary font-medium">FAQs</a>
-                    <a href="privacy-policy.html" class="text-gray-800 hover:text-primary font-medium">Privacy</a>
-                    <a href="terms-conditions.html" class="text-gray-800 hover:text-primary font-medium">Terms</a>
+                <a href="index.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Home</a>
+                <a href="products.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Products</a>
+                <a href="about.html" class="text-gray-800 hover:text-primary font-medium transition-colors">About Us</a>
+                <a href="contact.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Contact</a>
+                <a href="faq.html" class="text-gray-800 hover:text-primary font-medium transition-colors">FAQs</a>
+                <a href="privacy-policy.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Privacy</a>
+                <a href="terms-conditions.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Terms</a>
                 </nav>
                 
                 <!-- Right Side Icons -->
                 <div class="flex items-center space-x-4">
-                    <a href="cart.html" class="text-gray-800 hover:text-primary relative">
+                <a href="cart.html" class="text-gray-800 hover:text-primary relative transition-colors">
                         <i class="fas fa-shopping-cart text-xl"></i>
                         <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
                     </a>
-                    <!-- <a href="login.html" class="text-gray-800 hover:text-primary">
-                        <i class="fas fa-user text-xl"></i> -->
-                    </a>
-                    <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary">
+                <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary transition-colors">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
-                </div>
             </div>
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 md:hidden">
-            <div class="p-4 border-b">
-                <div class="flex justify-between items-center">
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 md:hidden transform -translate-x-full transition-transform duration-300">
+            <div class="p-4 border-b flex justify-between items-center">
                     <span class="text-xl font-bold text-primary">Menu</span>
-                    <button id="close-menu-button" class="text-gray-800 hover:text-primary">
+                <button id="close-menu-button" class="text-gray-800 hover:text-primary transition-colors">
                         <i class="fas fa-times text-xl"></i>
                     </button>
-                </div>
             </div>
             <nav class="p-4">
                 <ul class="space-y-4">
-                    <li><a href="index.html" class="block text-gray-800 hover:text-primary font-medium">Home</a></li>
-                    <li><a href="products.html" class="block text-gray-800 hover:text-primary font-medium">Products</a></li>
-                    <li><a href="about.html" class="block text-gray-800 hover:text-primary font-medium">About Us</a></li>
-                    <li><a href="contact.html" class="block text-gray-800 hover:text-primary font-medium">Contact</a></li>
-                    <li><a href="faq.html" class="block text-gray-800 hover:text-primary font-medium">FAQs</a></li>
-                    <li><a href="cart.html" class="block text-gray-800 hover:text-primary font-medium">Cart</a></li>
-                    <li><a href="checkout.html" class="block text-gray-800 hover:text-primary font-medium">Checkout</a></li>
-                    <!-- <li><a href="login.html" class="block text-gray-800 hover:text-primary font-medium">Login/Register</a></li> -->
-                    <li><a href="privacy-policy.html" class="block text-gray-800 hover:text-primary font-medium">Privacy Policy</a></li>
-                    <li><a href="terms-conditions.html" class="block text-gray-800 hover:text-primary font-medium">Terms & Conditions</a></li>
-                    <li><a href="shipping-policy.html" class="block text-gray-800 hover:text-primary font-medium">Shipping Policy</a></li>
+                    <li><a href="index.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Home</a></li>
+                    <li><a href="products.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Products</a></li>
+                    <li><a href="about.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">About Us</a></li>
+                    <li><a href="contact.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Contact</a></li>
+                    <li><a href="faq.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">FAQs</a></li>
+                    <li><a href="cart.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Cart</a></li>
+                    <li><a href="checkout.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Checkout</a></li>
+                    <li><a href="privacy-policy.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Privacy Policy</a></li>
+                    <li><a href="terms-conditions.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Terms & Conditions</a></li>
+                    <li><a href="shipping-policy.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Shipping Policy</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <!-- Hero Section with Carousel -->
-    <section class="relative bg-gray-100 overflow-hidden" style="height: 500px;">
+    <section class="relative bg-gray-100 overflow-hidden h-[500px]">
         <div id="hero-carousel" class="relative h-full">
             <!-- Slide 1 -->
-            <div class="hero-slide active bg-gradient-to-r from-primary to-purple-700 flex items-center">
+            <div class="hero-slide active bg-gradient-to-r from-primary to-purple-700 flex items-center absolute inset-0 opacity-0 transition-opacity duration-500 z-0">
                 <div class="container mx-auto px-4 py-12 text-white">
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">Premium Wholesale Cosmetics</h1>
                     <p class="text-xl mb-8">Quality products for salons, retailers, and bulk resellers</p>
-                    <a href="products.html" class="bg-accent text-gray-900 hover:bg-yellow-400 font-bold py-3 px-6 rounded-lg inline-block transition duration-300">Shop Now</a>
+                    <a href="products.html" class="bg-accent text-gray-900 hover:bg-yellow-400 font-bold py-3 px-6 rounded-lg inline-block transition-colors duration-300 w-full sm:w-auto text-center">Shop Now</a>
                 </div>
             </div>
             
             <!-- Slide 2 -->
-            <div class="hero-slide bg-gradient-to-r from-blue-600 to-blue-800 flex items-center">
+            <div class="hero-slide bg-gradient-to-r from-blue-600 to-blue-800 flex items-center absolute inset-0 opacity-0 transition-opacity duration-500 z-0">
                 <div class="container mx-auto px-4 py-12 text-white">
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">Exclusive B2B Pricing</h1>
                     <p class="text-xl mb-8">Special tiered pricing for bulk orders</p>
-                    <a href="products.html" class="bg-accent text-gray-900 hover:bg-yellow-400 font-bold py-3 px-6 rounded-lg inline-block transition duration-300">View Offers</a>
+                    <a href="products.html" class="bg-accent text-gray-900 hover:bg-yellow-400 font-bold py-3 px-6 rounded-lg inline-block transition-colors duration-300 w-full sm:w-auto text-center">View Offers</a>
                 </div>
             </div>
             
             <!-- Slide 3 -->
-            <div class="hero-slide bg-gradient-to-r from-green-600 to-green-800 flex items-center">
+            <div class="hero-slide bg-gradient-to-r from-green-600 to-green-800 flex items-center absolute inset-0 opacity-0 transition-opacity duration-500 z-0">
                 <div class="container mx-auto px-4 py-12 text-white">
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">Flexible Payment Options</h1>
                     <p class="text-xl mb-8">Credit payment with 30% upfront for eligible businesses</p>
-                    <a href="contact.html" class="bg-accent text-gray-900 hover:bg-yellow-400 font-bold py-3 px-6 rounded-lg inline-block transition duration-300">Contact Us</a>
+                    <a href="contact.html" class="bg-accent text-gray-900 hover:bg-yellow-400 font-bold py-3 px-6 rounded-lg inline-block transition-colors duration-300 w-full sm:w-auto text-center">Contact Us</a>
                 </div>
             </div>
             
             <!-- Carousel Controls -->
-            <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
-                <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-100 transition duration-300 active"></button>
-                <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-100 transition duration-300"></button>
-                <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-100 transition duration-300"></button>
+            <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10">
+                <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-100 transition-opacity duration-300 active"></button>
+                <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-100 transition-opacity duration-300"></button>
+                <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-100 transition-opacity duration-300"></button>
             </div>
         </div>
     </section>
@@ -175,7 +165,7 @@
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Skincare Category -->
-                <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
                     <div class="h-48 bg-gray-200 relative overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-primary opacity-70"></div>
                         <div class="absolute bottom-0 left-0 p-4 text-white">
@@ -183,15 +173,13 @@
                             <p class="text-sm">Premium face and body care</p>
                         </div>
                     </div>
-                    <div class="p-4">
-                        <a href="products.html?category=skincare" class="text-primary hover:text-primary-dark font-medium flex items-center">
-                            Browse Products <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
+                    <div class="p-4 flex-1 flex items-end">
+                        <a href="products.html?category=skincare" class="text-primary hover:text-primary/80 font-medium flex items-center transition-colors">Browse Products <i class="fas fa-arrow-right ml-2"></i></a>
                     </div>
                 </div>
                 
                 <!-- Haircare Category -->
-                <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
                     <div class="h-48 bg-gray-200 relative overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-primary opacity-70"></div>
                         <div class="absolute bottom-0 left-0 p-4 text-white">
@@ -199,42 +187,36 @@
                             <p class="text-sm">Professional salon products</p>
                         </div>
                     </div>
-                    <div class="p-4">
-                        <a href="products.html?category=haircare" class="text-primary hover:text-primary-dark font-medium flex items-center">
-                            Browse Products <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
+                    <div class="p-4 flex-1 flex items-end">
+                        <a href="products.html?category=haircare" class="text-primary hover:text-primary/80 font-medium flex items-center transition-colors">Browse Products <i class="fas fa-arrow-right ml-2"></i></a>
                     </div>
                 </div>
                 
                 <!-- Makeup Category -->
-                <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
                     <div class="h-48 bg-gray-200 relative overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-primary opacity-70"></div>
                         <div class="absolute bottom-0 left-0 p-4 text-white">
                             <h3 class="text-xl font-bold">Makeup</h3>
-                            <p class="text-sm">Complete range of cosmetics</p>
+                            <p class="text-sm">Trendy and classic makeup</p>
                         </div>
                     </div>
-                    <div class="p-4">
-                        <a href="products.html?category=makeup" class="text-primary hover:text-primary-dark font-medium flex items-center">
-                            Browse Products <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
+                    <div class="p-4 flex-1 flex items-end">
+                        <a href="products.html?category=makeup" class="text-primary hover:text-primary/80 font-medium flex items-center transition-colors">Browse Products <i class="fas fa-arrow-right ml-2"></i></a>
                     </div>
                 </div>
                 
                 <!-- Personal Hygiene Category -->
-                <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
                     <div class="h-48 bg-gray-200 relative overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-primary opacity-70"></div>
                         <div class="absolute bottom-0 left-0 p-4 text-white">
                             <h3 class="text-xl font-bold">Personal Hygiene</h3>
-                            <p class="text-sm">Essential care products</p>
+                            <p class="text-sm">Sanitizers, soaps & more</p>
                         </div>
                     </div>
-                    <div class="p-4">
-                        <a href="products.html?category=personal-hygiene" class="text-primary hover:text-primary-dark font-medium flex items-center">
-                            Browse Products <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
+                    <div class="p-4 flex-1 flex items-end">
+                        <a href="products.html?category=personal-hygiene" class="text-primary hover:text-primary/80 font-medium flex items-center transition-colors">Browse Products <i class="fas fa-arrow-right ml-2"></i></a>
                     </div>
                 </div>
             </div>
