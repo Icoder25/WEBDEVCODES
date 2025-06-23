@@ -2,11 +2,8 @@ const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
 const Order = require('../models/Order');
-const CashfreeService = require('../services/cashfreeService');
-const { validate, schemas } = require('../middleware/validation');
-
-// Initialize Cashfree service
-const cashfreeService = new CashfreeService();
+const cashfreeService = require('../services/cashfreeService');
+const { validate, schemas, customValidation } = require('../middleware/validation');
 
 /**
  * @route POST /api/webhooks/cashfree
