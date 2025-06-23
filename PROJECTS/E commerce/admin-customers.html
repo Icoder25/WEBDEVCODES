@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management - Shubham Enterprise</title>
+    <meta name="description" content="Admin customer management for Shubham Enterprise wholesale cosmetics platform.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#be185d', // rose
+                        accent: '#facc15', // gold
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Sidebar styles */
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+        
+        /* Form focus styles */
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #be185d;
+            --tw-ring-width: 2px;
+            --tw-ring-color: rgba(190, 24, 93, 0.2);
+        }
+        
+        /* Status badge styles */
+        .status-badge {
+            @apply px-2 py-1 rounded-full text-xs font-medium;
+        }
+        
+        .status-active {
+            @apply bg-green-100 text-green-800;
+        }
+        
+        .status-inactive {
+            @apply bg-gray-100 text-gray-800;
+        }
+        
+        .status-pending {
+            @apply bg-yellow-100 text-yellow-800;
+        }
+        
+        .status-blocked {
+            @apply bg-red-100 text-red-800;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar bg-gray-800 text-white w-64 min-h-screen fixed md:relative z-30">
+            <!-- Logo -->
+            <div class="p-4 border-b border-gray-700">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold">Shubham Enterprise</span>
+                </div>
+                <div class="text-xs text-gray-400 mt-1">Admin Dashboard</div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="mt-4">
+                <ul>
+                    <li>
+                        <a href="admin-dashboard.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-tachometer-alt w-6"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-products.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-box w-6"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-orders.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-shopping-cart w-6"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-customers.html" class="flex items-center px-4 py-3 bg-primary text-white">
+                            <i class="fas fa-users w-6"></i>
+                            <span>Customers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-inquiries.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-question-circle w-6"></i>
+                            <span>Inquiries</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-settings.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-cog w-6"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Logout -->
+            <div class="absolute bottom-0 w-full p-4 border-t border-gray-700">
+                <a href="index.html" class="flex items-center text-gray-300 hover:text-white transition duration-200">
+                    <i class="fas fa-store w-6"></i>
+                    <span>View Store</span>
+                </a>
+                <a href="#" id="logout-button" class="flex items-center mt-2 text-gray-300 hover:text-white transition duration-200">
+                    <i class="fas fa-sign-out-alt w-6"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Header -->
+            <header class="bg-white shadow-sm z-10">
+                <div class="flex items-center justify-between p-4">
+                    <!-- Mobile Menu Toggle -->
+                    <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <!-- Search Bar -->
+                    <div class="hidden md:flex items-center flex-1 mx-4">
+                        <div class="relative w-full max-w-md">
+                            <input type="text" id="customer-search" placeholder="Search customers by name, business, or GSTIN..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Add New Customer Button -->
+                    <button id="add-customer-button" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition duration-200 flex items-center">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        <span class="hidden md:inline">Add Customer</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-100">
+                <!-- Customers Section -->
+                <section id="customers-section">
+                    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-800">Customer Management</h1>
+                            <p class="text-gray-600">View and manage customer accounts</p>
+                        </div>
+                        
+                        <!-- Filter & Sort -->
+                        <div class="mt-4 md:mt-0 flex flex-col sm:flex-row gap-2">
+                            <select id="status-filter" class="border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                                <option value="">All Statuses</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="pending">Pending</option>
+                                <option value="blocked">Blocked</option>
+                            </select>
+                            
+                            <select id="sort-customers" class="border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                                <option value="name-asc">Name (A-Z)</option>
+                                <option value="name-desc">Name (Z-A)</option>
+                                <option value="date-desc">Date Joined (Newest)</option>
+                                <option value="date-asc">Date Joined (Oldest)</option>
+                                <option value="orders-desc">Orders (High to Low)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Customers Table -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GSTIN</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orders</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Spent</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customers-table-body" class="divide-y divide-gray-200">
+                                    <!-- Customer rows will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Empty State -->
+                        <div id="empty-state" class="hidden p-8 text-center">
+                            <div class="text-gray-400 mb-4">
+                                <i class="fas fa-users text-5xl"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-800 mb-1">No customers found</h3>
+                            <p class="text-gray-600">Try adjusting your search or filter to find what you're looking for.</p>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                            <div class="text-sm text-gray-600">
+                                Showing <span id="showing-start">1</span> to <span id="showing-end">10</span> of <span id="total-customers">0</span> customers
+                            </div>
+                            <div class="flex space-x-2">
+                                <button id="prev-page" class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button id="next-page" class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Customer Detail Modal -->
+    <div id="customer-detail-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h2 id="modal-title" class="text-xl font-bold">Customer Details</h2>
+                <button id="close-modal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Customer Details Content -->
+            <div id="customer-details" class="p-6">
+                <!-- Customer Info -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Basic Info -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-lg font-medium mb-3">Basic Information</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Name:</span>
+                                <span id="detail-name" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Business Name:</span>
+                                <span id="detail-business" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">GSTIN:</span>
+                                <span id="detail-gstin" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Date Joined:</span>
+                                <span id="detail-joined" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Status:</span>
+                                <span id="detail-status" class="font-medium"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Info -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-lg font-medium mb-3">Contact Information</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Email:</span>
+                                <span id="detail-email" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Phone:</span>
+                                <span id="detail-phone" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Address:</span>
+                                <span id="detail-address" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">City:</span>
+                                <span id="detail-city" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">State:</span>
+                                <span id="detail-state" class="font-medium"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Order History -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-lg font-medium">Order History</h3>
+                        <a href="#" id="view-all-orders" class="text-primary hover:text-primary/80 text-sm font-medium">View All Orders</a>
+                    </div>
+                    <div class="overflow-x-auto bg-gray-50 rounded-lg">
+                        <table class="w-full">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detail-orders" class="divide-y divide-gray-200">
+                                <!-- Order history will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Credit Information -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <h3 class="text-lg font-medium mb-3">Credit Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <div class="text-gray-500 text-sm">Total Purchases</div>
+                            <div id="detail-total-purchases" class="text-xl font-bold text-gray-800"></div>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <div class="text-gray-500 text-sm">Outstanding Balance</div>
+                            <div id="detail-outstanding" class="text-xl font-bold text-gray-800"></div>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm">
+                            <div class="text-gray-500 text-sm">Credit Limit</div>
+                            <div id="detail-credit-limit" class="text-xl font-bold text-gray-800"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notes -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <h3 class="text-lg font-medium mb-3">Notes</h3>
+                    <textarea id="customer-notes" class="w-full p-3 border border-gray-300 rounded-lg" rows="3" placeholder="Add notes about this customer..."></textarea>
+                    <div class="flex justify-end mt-2">
+                        <button id="save-notes" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition duration-200">
+                            Save Notes
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex justify-end space-x-3">
+                    <button id="edit-customer" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200 flex items-center">
+                        <i class="fas fa-edit mr-2"></i>
+                        Edit Customer
+                    </button>
+                    <button id="update-status-button" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 flex items-center">
+                        <i class="fas fa-user-check mr-2"></i>
+                        Update Status
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Customer Modal -->
+    <div id="add-edit-customer-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h2 id="add-edit-modal-title" class="text-xl font-bold">Add New Customer</h2>
+                <button id="close-add-edit-modal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Add/Edit Customer Form -->
+            <form id="customer-form" class="p-6">
+                <input type="hidden" id="customer-id">
+                
+                <!-- Basic Information -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-3">Basic Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="customer-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                            <input type="text" id="customer-name" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                        </div>
+                        <div>
+                            <label for="customer-business" class="block text-sm font-medium text-gray-700 mb-1">Business Name *</label>
+                            <input type="text" id="customer-business" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                        </div>
+                        <div>
+                            <label for="customer-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                            <input type="email" id="customer-email" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                        </div>
+                        <div>
+                            <label for="customer-phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                            <input type="tel" id="customer-phone" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                        </div>
+                        <div>
+                            <label for="customer-gstin" class="block text-sm font-medium text-gray-700 mb-1">GSTIN *</label>
+                            <input type="text" id="customer-gstin" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                        </div>
+                        <div>
+                            <label for="customer-status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                            <select id="customer-status" class="w-full p-2 border border-gray-300 rounded-lg">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="pending">Pending</option>
+                                <option value="blocked">Blocked</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Address Information -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-3">Address Information</h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label for="customer-address" class="block text-sm font-medium text-gray-700 mb-1">Street Address *</label>
+                            <input type="text" id="customer-address" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label for="customer-city" class="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                                <input type="text" id="customer-city" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                            </div>
+                            <div>
+                                <label for="customer-state" class="block text-sm font-medium text-gray-700 mb-1">State *</label>
+                                <select id="customer-state" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                                    <option value="">Select State</option>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                    <option value="Assam">Assam</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+                                    <option value="Goa">Goa</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Meghalaya">Meghalaya</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Sikkim">Sikkim</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="Uttarakhand">Uttarakhand</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                    <option value="Delhi">Delhi</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="customer-pincode" class="block text-sm font-medium text-gray-700 mb-1">PIN Code *</label>
+                                <input type="text" id="customer-pincode" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Credit Information -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-3">Credit Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="customer-credit-limit" class="block text-sm font-medium text-gray-700 mb-1">Credit Limit (₹)</label>
+                            <input type="number" id="customer-credit-limit" class="w-full p-2 border border-gray-300 rounded-lg" min="0">
+                        </div>
+                        <div>
+                            <label for="customer-payment-terms" class="block text-sm font-medium text-gray-700 mb-1">Payment Terms</label>
+                            <select id="customer-payment-terms" class="w-full p-2 border border-gray-300 rounded-lg">
+                                <option value="full-advance">Full Advance</option>
+                                <option value="credit-30">Credit (30% Advance)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Form Actions -->
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" id="cancel-customer-form" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition duration-200">
+                        Save Customer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Update Status Modal -->
+    <div id="update-status-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h2 class="text-xl font-bold">Update Customer Status</h2>
+                <button id="close-status-modal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Status Form -->
+            <div class="p-6">
+                <div class="mb-4">
+                    <label for="update-customer-status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select id="update-customer-status" class="w-full p-2 border border-gray-300 rounded-lg">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="pending">Pending</option>
+                        <option value="blocked">Blocked</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="status-reason" class="block text-sm font-medium text-gray-700 mb-1">Reason for Status Change (Optional)</label>
+                    <textarea id="status-reason" class="w-full p-2 border border-gray-300 rounded-lg" rows="3"></textarea>
+                </div>
+                
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button id="cancel-status-update" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
+                        Cancel
+                    </button>
+                    <button id="confirm-status-update" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition duration-200">
+                        Update Status
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="toast-message">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Sample customer data (in a real app, this would come from a database)
+        let customers = [
+            {
+                id: 1,
+                name: 'Rajesh Kumar',
+                business: 'Beauty Salon',
+                email: 'rajesh@example.com',
+                phone: '+91 9876543210',
+                gstin: '27AADCB2230M1ZT',
+                address: '123 Main Street',
+                city: 'Mumbai',
+                state: 'Maharashtra',
+                pincode: '400001',
+                dateJoined: '2022-05-15',
+                status: 'active',
+                orders: 12,
+                totalSpent: 145000,
+                creditLimit: 50000,
+                outstandingBalance: 15000,
+                paymentTerms: 'credit-30',
+                notes: 'Regular customer, prefers monthly orders.',
+                orderHistory: [
+                    { id: 'ORD-5142', date: '2023-07-15', amount: 12500, status: 'delivered' },
+                    { id: 'ORD-5120', date: '2023-06-20', amount: 9800, status: 'delivered' },
+                    { id: 'ORD-5098', date: '2023-05-10', amount: 15200, status: 'delivered' }
+                ]
+            },
+            {
+                id: 2,
+                name: 'Priya Patel',
+                business: 'Glamour Store',
+                email: 'priya@example.com',
+                phone: '+91 9876543211',
+                gstin: '24AADCP4536M1ZT',
+                address: '456 Park Avenue',
+                city: 'Ahmedabad',
+                state: 'Gujarat',
+                pincode: '380001',
+                dateJoined: '2022-08-22',
+                status: 'active',
+                orders: 8,
+                totalSpent: 98000,
+                creditLimit: 30000,
+                outstandingBalance: 0,
+                paymentTerms: 'full-advance',
+                notes: 'Always pays in advance, interested in new product launches.',
+                orderHistory: [
+                    { id: 'ORD-5141', date: '2023-07-14', amount: 8750, status: 'processing' },
+                    { id: 'ORD-5115', date: '2023-06-05', amount: 12300, status: 'delivered' }
+                ]
+            },
+            {
+                id: 3,
+                name: 'Amit Shah',
+                business: 'Style Hub',
+                email: 'amit@example.com',
+                phone: '+91 9876543212',
+                gstin: '07AADCS8765M1ZT',
+                address: '789 MG Road',
+                city: 'Delhi',
+                state: 'Delhi',
+                pincode: '110001',
+                dateJoined: '2022-10-10',
+                status: 'active',
+                orders: 15,
+                totalSpent: 210000,
+                creditLimit: 75000,
+                outstandingBalance: 25000,
+                paymentTerms: 'credit-30',
+                notes: 'High-volume customer, prefers bulk orders.',
+                orderHistory: [
+                    { id: 'ORD-5140', date: '2023-07-13', amount: 15200, status: 'confirmed' },
+                    { id: 'ORD-5130', date: '2023-06-28', amount: 18500, status: 'delivered' },
+                    { id: 'ORD-5110', date: '2023-05-30', amount: 22000, status: 'delivered' }
+                ]
+            },
+            {
+                id: 4,
+                name: 'Neha Gupta',
+                business: 'Glow Cosmetics',
+                email: 'neha@example.com',
+                phone: '+91 9876543213',
+                gstin: '29AADCG7654M1ZT',
+                address: '321 Brigade Road',
+                city: 'Bangalore',
+                state: 'Karnataka',
+                pincode: '560001',
+                dateJoined: '2023-01-05',
+                status: 'active',
+                orders: 6,
+                totalSpent: 85000,
+                creditLimit: 40000,
+                outstandingBalance: 0,
+                paymentTerms: 'full-advance',
+                notes: 'New customer, growing business.',
+                orderHistory: [
+                    { id: 'ORD-5139', date: '2023-07-12', amount: 9300, status: 'delivered' },
+                    { id: 'ORD-5125', date: '2023-06-15', amount: 11500, status: 'delivered' }
+                ]
+            },
+            {
+                id: 5,
+                name: 'Sanjay Verma',
+                business: 'Radiance Beauty',
+                email: 'sanjay@example.com',
+                phone: '+91 9876543214',
+                gstin: '33AADCR5432M1ZT',
+                address: '654 Anna Salai',
+                city: 'Chennai',
+                state: 'Tamil Nadu',
+                pincode: '600002',
+                dateJoined: '2022-12-18',
+                status: 'inactive',
+                orders: 3,
+                totalSpent: 42000,
+                creditLimit: 25000,
+                outstandingBalance: 6800,
+                paymentTerms: 'credit-30',
+                notes: 'Payment delays in the past.',
+                orderHistory: [
+                    { id: 'ORD-5138', date: '2023-07-11', amount: 6800, status: 'cancelled' },
+                    { id: 'ORD-5105', date: '2023-05-20', amount: 15200, status: 'delivered' }
+                ]
+            },
+            {
+                id: 6,
+                name: 'Meera Sharma',
+                business: 'Elegance Beauty Parlor',
+                email: 'meera@example.com',
+                phone: '+91 9876543215',
+                gstin: '36AADCE9876M1ZT',
+                address: '123 Jubilee Hills',
+                city: 'Hyderabad',
+                state: 'Telangana',
+                pincode: '500033',
+                dateJoined: '2023-02-10',
+                status: 'pending',
+                orders: 0,
+                totalSpent: 0,
+                creditLimit: 20000,
+                outstandingBalance: 0,
+                paymentTerms: 'full-advance',
+                notes: 'New registration, verification pending.',
+                orderHistory: []
+            },
+            {
+                id: 7,
+                name: 'Vikram Singh',
+                business: 'Royal Salon',
+                email: 'vikram@example.com',
+                phone: '+91 9876543216',
+                gstin: '08AADCR7654M1ZT',
+                address: '456 Civil Lines',
+                city: 'Jaipur',
+                state: 'Rajasthan',
+                pincode: '302001',
+                dateJoined: '2022-09-05',
+                status: 'blocked',
+                orders: 4,
+                totalSpent: 58000,
+                creditLimit: 0,
+                outstandingBalance: 22000,
+                paymentTerms: 'full-advance',
+                notes: 'Account blocked due to payment issues.',
+                orderHistory: [
+                    { id: 'ORD-5090', date: '2023-04-15', amount: 18500, status: 'delivered' },
+                    { id: 'ORD-5075', date: '2023-03-20', amount: 12500, status: 'delivered' }
+                ]
+            }
+        ];
+        
+        // DOM Elements
+        const customersTableBody = document.getElementById('customers-table-body');
+        const emptyState = document.getElementById('empty-state');
+        const customerDetailModal = document.getElementById('customer-detail-modal');
+        const addEditCustomerModal = document.getElementById('add-edit-customer-modal');
+        const updateStatusModal = document.getElementById('update-status-modal');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        const customerSearch = document.getElementById('customer-search');
+        const statusFilter = document.getElementById('status-filter');
+        const sortCustomers = document.getElementById('sort-customers');
+        const showingStart = document.getElementById('showing-start');
+        const showingEnd = document.getElementById('showing-end');
+        const totalCustomers = document.getElementById('total-customers');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        
+        // Pagination state
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let filteredCustomers = [...customers];
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if admin is logged in
+            const adminUser = localStorage.getItem('adminUser');
+            if (!adminUser) {
+                window.location.href = 'admin-login.html';
+                return;
+            }
+            
+            // Load customers
+            renderCustomers();
+            updatePagination();
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+        
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const sidebar = document.getElementById('sidebar');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+            
+            // Add Customer button
+            const addCustomerButton = document.getElementById('add-customer-button');
+            addCustomerButton.addEventListener('click', () => {
+                // Reset form
+                document.getElementById('customer-form').reset();
+                document.getElementById('customer-id').value = '';
+                document.getElementById('add-edit-modal-title').textContent = 'Add New Customer';
+                
+                // Show modal
+                addEditCustomerModal.classList.remove('hidden');
+            });
+            
+            // Close modals
+            document.getElementById('close-modal').addEventListener('click', () => {
+                customerDetailModal.classList.add('hidden');
+            });
+            
+            document.getElementById('close-add-edit-modal').addEventListener('click', () => {
+                addEditCustomerModal.classList.add('hidden');
+            });
+            
+            document.getElementById('cancel-customer-form').addEventListener('click', () => {
+                addEditCustomerModal.classList.add('hidden');
+            });
+            
+            document.getElementById('close-status-modal').addEventListener('click', () => {
+                updateStatusModal.classList.add('hidden');
+            });
+            
+            document.getElementById('cancel-status-update').addEventListener('click', () => {
+                updateStatusModal.classList.add('hidden');
+            });
+            
+            // Edit Customer button
+            document.getElementById('edit-customer').addEventListener('click', () => {
+                const customerId = document.getElementById('edit-customer').dataset.customerId;
+                editCustomer(customerId);
+            });
+            
+            // Update Status button
+            document.getElementById('update-status-button').addEventListener('click', () => {
+                const customerId = document.getElementById('update-status-button').dataset.customerId;
+                const customer = customers.find(c => c.id == customerId);
+                
+                if (customer) {
+                    document.getElementById('update-customer-status').value = customer.status;
+                    document.getElementById('confirm-status-update').dataset.customerId = customerId;
+                    updateStatusModal.classList.remove('hidden');
+                }
+            });
+            
+            // Confirm Status Update
+            document.getElementById('confirm-status-update').addEventListener('click', () => {
+                const customerId = document.getElementById('confirm-status-update').dataset.customerId;
+                const newStatus = document.getElementById('update-customer-status').value;
+                const reason = document.getElementById('status-reason').value;
+                
+                updateCustomerStatus(customerId, newStatus, reason);
+            });
+            
+            // Save Notes
+            document.getElementById('save-notes').addEventListener('click', () => {
+                const customerId = document.getElementById('save-notes').dataset.customerId;
+                const notes = document.getElementById('customer-notes').value;
+                
+                saveCustomerNotes(customerId, notes);
+            });
+            
+            // Customer Form Submit
+            document.getElementById('customer-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                saveCustomer();
+            });
+            
+            // Search and filter
+            customerSearch.addEventListener('input', handleSearch);
+            statusFilter.addEventListener('change', handleFilter);
+            sortCustomers.addEventListener('change', handleSort);
+            
+            // Pagination
+            prevPageBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderCustomers();
+                    updatePagination();
+                }
+            });
+            
+            nextPageBtn.addEventListener('click', () => {
+                const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderCustomers();
+                    updatePagination();
+                }
+            });
+            
+            // Logout button
+            const logoutButton = document.getElementById('logout-button');
+            logoutButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('adminUser');
+                    window.location.href = 'admin-login.html';
+                }
+            });
+        }
+        
+        // Render Customers Table
+        function renderCustomers() {
+            // Apply filters and sorting
+            applyFiltersAndSort();
+            
+            // Clear the table
+            customersTableBody.innerHTML = '';
+            
+            // Check if there are customers
+            if (filteredCustomers.length === 0) {
+                emptyState.classList.remove('hidden');
+                document.querySelector('table').classList.add('hidden');
+                return;
+            }
+            
+            // Show the table, hide empty state
+            emptyState.classList.add('hidden');
+            document.querySelector('table').classList.remove('hidden');
+            
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredCustomers.length);
+            const paginatedCustomers = filteredCustomers.slice(startIndex, endIndex);
+            
+            // Render each customer row
+            paginatedCustomers.forEach(customer => {
+                const row = document.createElement('tr');
+                
+                // Format date
+                const joinDate = new Date(customer.dateJoined);
+                const formattedDate = joinDate.toLocaleDateString('en-IN', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                // Get status badge class
+                const statusClass = `status-${customer.status.toLowerCase()}`;
+                
+                // Format amount
+                const formattedAmount = new Intl.NumberFormat('en-IN', {
+                    style: 'currency',
+                    currency: 'INR',
+                    maximumFractionDigits: 0
+                }).format(customer.totalSpent);
+                
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">${customer.name}</div>
+                        <div class="text-sm text-gray-500">${customer.business}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">${customer.email}</div>
+                        <div class="text-sm text-gray-500">${customer.phone}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${customer.gstin}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${customer.orders}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formattedAmount}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="status-badge ${statusClass}">
+                            ${capitalizeFirstLetter(customer.status)}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button class="text-primary hover:text-primary/80" onclick="viewCustomerDetails(${customer.id})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="text-blue-600 hover:text-blue-700" onclick="editCustomer(${customer.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                customersTableBody.appendChild(row);
+            });
+        }
+        
+        // Update pagination info and buttons
+        function updatePagination() {
+            const totalItems = filteredCustomers.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            const startIndex = (currentPage - 1) * itemsPerPage + 1;
+            const endIndex = Math.min(startIndex + itemsPerPage - 1, totalItems);
+            
+            // Update text
+            showingStart.textContent = totalItems > 0 ? startIndex : 0;
+            showingEnd.textContent = endIndex;
+            totalCustomers.textContent = totalItems;
+            
+            // Update button states
+            prevPageBtn.disabled = currentPage <= 1;
+            nextPageBtn.disabled = currentPage >= totalPages;
+            
+            // Add visual indication for disabled buttons
+            if (prevPageBtn.disabled) {
+                prevPageBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                prevPageBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+            
+            if (nextPageBtn.disabled) {
+                nextPageBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                nextPageBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+        
+        // Apply filters and sorting
+        function applyFiltersAndSort() {
+            const searchTerm = customerSearch.value.toLowerCase();
+            const statusValue = statusFilter.value;
+            const sortValue = sortCustomers.value;
+            
+            // Filter by search term and status
+            filteredCustomers = customers.filter(customer => {
+                // Search term filter
+                const matchesSearch = 
+                    customer.name.toLowerCase().includes(searchTerm) ||
+                    customer.business.toLowerCase().includes(searchTerm) ||
+                    customer.email.toLowerCase().includes(searchTerm) ||
+                    customer.phone.includes(searchTerm) ||
+                    customer.gstin.toLowerCase().includes(searchTerm);
+                    
+                // Status filter
+                const matchesStatus = statusValue === '' || customer.status === statusValue;
+                
+                return matchesSearch && matchesStatus;
+            });
+            
+            // Sort customers
+            filteredCustomers.sort((a, b) => {
+                switch (sortValue) {
+                    case 'name-asc':
+                        return a.name.localeCompare(b.name);
+                    case 'name-desc':
+                        return b.name.localeCompare(a.name);
+                    case 'date-desc':
+                        return new Date(b.dateJoined) - new Date(a.dateJoined);
+                    case 'date-asc':
+                        return new Date(a.dateJoined) - new Date(b.dateJoined);
+                    case 'orders-desc':
+                        return b.orders - a.orders;
+                    default:
+                        return 0;
+                }
+            });
+            
+            // Reset to first page when filters change
+            currentPage = 1;
+        }
+        
+        // Handle search input
+        function handleSearch() {
+            renderCustomers();
+            updatePagination();
+        }
+        
+        // Handle filter change
+        function handleFilter() {
+            renderCustomers();
+            updatePagination();
+        }
+        
+        // Handle sort change
+        function handleSort() {
+            renderCustomers();
+            updatePagination();
+        }
+        
+        // View Customer Details
+        function viewCustomerDetails(customerId) {
+            const customer = customers.find(c => c.id == customerId);
+            if (!customer) return;
+            
+            // Set customer details in modal
+            document.getElementById('detail-name').textContent = customer.name;
+            document.getElementById('detail-business').textContent = customer.business;
+            document.getElementById('detail-gstin').textContent = customer.gstin;
+            
+            // Format date
+            const joinDate = new Date(customer.dateJoined);
+            const formattedDate = joinDate.toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('detail-joined').textContent = formattedDate;
+            
+            // Set status with badge
+            const statusElement = document.getElementById('detail-status');
+            statusElement.textContent = capitalizeFirstLetter(customer.status);
+            statusElement.className = `status-badge ${`status-${customer.status.toLowerCase()}`}`;
+            
+            // Set contact info
+            document.getElementById('detail-email').textContent = customer.email;
+            document.getElementById('detail-phone').textContent = customer.phone;
+            document.getElementById('detail-address').textContent = customer.address;
+            document.getElementById('detail-city').textContent = customer.city;
+            document.getElementById('detail-state').textContent = customer.state;
+            
+            // Set order history
+            const ordersContainer = document.getElementById('detail-orders');
+            ordersContainer.innerHTML = '';
+            
+            if (customer.orderHistory.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="5" class="px-4 py-4 text-center text-gray-500">No order history available</td>
+                `;
+                ordersContainer.appendChild(row);
+            } else {
+                customer.orderHistory.forEach(order => {
+                    const row = document.createElement('tr');
+                    
+                    // Format date and amount
+                    const orderDate = new Date(order.date);
+                    const formattedOrderDate = orderDate.toLocaleDateString('en-IN', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                    
+                    const formattedAmount = new Intl.NumberFormat('en-IN', {
+                        style: 'currency',
+                        currency: 'INR'
+                    }).format(order.amount);
+                    
+                    // Get status badge class
+                    const statusClass = `status-${order.status.toLowerCase()}`;
+                    
+                    row.innerHTML = `
+                        <td class="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-900">${order.id}</td>
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">${formattedOrderDate}</td>
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">${formattedAmount}</td>
+                        <td class="px-4 py-2 whitespace-nowrap">
+                            <span class="status-badge ${statusClass}">
+                                ${capitalizeFirstLetter(order.status)}
+                            </span>
+                        </td>
+                        <td class="px-4 py-2 whitespace-nowrap text-sm font-medium">
+                            <a href="#" class="text-primary hover:text-primary/80" onclick="viewOrderDetails('${order.id}'); return false;">
+                                View
+                            </a>
+                        </td>
+                    `;
+                    
+                    ordersContainer.appendChild(row);
+                });
+            }
+            
+            // Set credit information
+            document.getElementById('detail-total-purchases').textContent = formatCurrency(customer.totalSpent);
+            document.getElementById('detail-outstanding').textContent = formatCurrency(customer.outstandingBalance);
+            document.getElementById('detail-credit-limit').textContent = formatCurrency(customer.creditLimit);
+            
+            // Set notes
+            document.getElementById('customer-notes').value = customer.notes || '';
+            
+            // Store customer ID for actions
+            document.getElementById('edit-customer').dataset.customerId = customer.id;
+            document.getElementById('update-status-button').dataset.customerId = customer.id;
+            document.getElementById('save-notes').dataset.customerId = customer.id;
+            
+            // Show modal
+            customerDetailModal.classList.remove('hidden');
+        }
+        
+        // Edit Customer
+        function editCustomer(customerId) {
+            const customer = customers.find(c => c.id == customerId);
+            if (!customer) return;
+            
+            // Hide customer detail modal if open
+            customerDetailModal.classList.add('hidden');
+            
+            // Set form values
+            document.getElementById('customer-id').value = customer.id;
+            document.getElementById('customer-name').value = customer.name;
+            document.getElementById('customer-business').value = customer.business;
+            document.getElementById('customer-email').value = customer.email;
+            document.getElementById('customer-phone').value = customer.phone;
+            document.getElementById('customer-gstin').value = customer.gstin;
+            document.getElementById('customer-status').value = customer.status;
+            document.getElementById('customer-address').value = customer.address;
+            document.getElementById('customer-city').value = customer.city;
+            document.getElementById('customer-state').value = customer.state;
+            document.getElementById('customer-pincode').value = customer.pincode;
+            document.getElementById('customer-credit-limit').value = customer.creditLimit;
+            document.getElementById('customer-payment-terms').value = customer.paymentTerms;
+            
+            // Update modal title
+            document.getElementById('add-edit-modal-title').textContent = 'Edit Customer';
+            
+            // Show modal
+            addEditCustomerModal.classList.remove('hidden');
+        }
+        
+        // Save Customer (Add or Update)
+        function saveCustomer() {
+            const customerId = document.getElementById('customer-id').value;
+            const isNewCustomer = customerId === '';
+            
+            // Get form values
+            const customerData = {
+                name: document.getElementById('customer-name').value,
+                business: document.getElementById('customer-business').value,
+                email: document.getElementById('customer-email').value,
+                phone: document.getElementById('customer-phone').value,
+                gstin: document.getElementById('customer-gstin').value,
+                status: document.getElementById('customer-status').value,
+                address: document.getElementById('customer-address').value,
+                city: document.getElementById('customer-city').value,
+                state: document.getElementById('customer-state').value,
+                pincode: document.getElementById('customer-pincode').value,
+                creditLimit: parseFloat(document.getElementById('customer-credit-limit').value) || 0,
+                paymentTerms: document.getElementById('customer-payment-terms').value
+            };
+            
+            if (isNewCustomer) {
+                // Add new customer
+                const newCustomer = {
+                    id: customers.length + 1,
+                    ...customerData,
+                    dateJoined: new Date().toISOString().split('T')[0],
+                    orders: 0,
+                    totalSpent: 0,
+                    outstandingBalance: 0,
+                    notes: '',
+                    orderHistory: []
+                };
+                
+                customers.push(newCustomer);
+                showToast('Customer added successfully');
+            } else {
+                // Update existing customer
+                const index = customers.findIndex(c => c.id == customerId);
+                if (index !== -1) {
+                    customers[index] = {
+                        ...customers[index],
+                        ...customerData
+                    };
+                    showToast('Customer updated successfully');
+                }
+            }
+            
+            // Close modal and refresh table
+            addEditCustomerModal.classList.add('hidden');
+            renderCustomers();
+            updatePagination();
+        }
+        
+        // Update Customer Status
+        function updateCustomerStatus(customerId, newStatus, reason) {
+            const index = customers.findIndex(c => c.id == customerId);
+            if (index !== -1) {
+                customers[index].status = newStatus;
+                
+                // Add reason to notes if provided
+                if (reason) {
+                    const date = new Date().toLocaleDateString('en-IN');
+                    const statusNote = `[${date}] Status changed to ${newStatus}: ${reason}`;
+                    
+                    if (customers[index].notes) {
+                        customers[index].notes += '\n\n' + statusNote;
+                    } else {
+                        customers[index].notes = statusNote;
+                    }
+                }
+                
+                showToast(`Customer status updated to ${capitalizeFirstLetter(newStatus)}`);
+                
+                // Close modals and refresh
+                updateStatusModal.classList.add('hidden');
+                customerDetailModal.classList.add('hidden');
+                renderCustomers();
+                updatePagination();
+            }
+        }
+        
+        // Save Customer Notes
+        function saveCustomerNotes(customerId, notes) {
+            const index = customers.findIndex(c => c.id == customerId);
+            if (index !== -1) {
+                customers[index].notes = notes;
+                showToast('Customer notes saved successfully');
+            }
+        }
+        
+        // View Order Details (placeholder function)
+        function viewOrderDetails(orderId) {
+            // In a real app, this would navigate to the order details page
+            alert(`Viewing order details for ${orderId}. This would navigate to the order details page in a real application.`);
+        }
+        
+        // Helper Functions
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+        
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            
+            // Set toast color based on type
+            if (type === 'success') {
+                toast.classList.remove('bg-red-500', 'bg-blue-500');
+                toast.classList.add('bg-green-500');
+            } else if (type === 'error') {
+                toast.classList.remove('bg-green-500', 'bg-blue-500');
+                toast.classList.add('bg-red-500');
+            } else if (type === 'info') {
+                toast.classList.remove('bg-green-500', 'bg-red-500');
+                toast.classList.add('bg-blue-500');
+            }
+            
+            // Show toast
+            toast.classList.remove('translate-x-full');
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+        
+        // Make functions available globally
+        window.viewCustomerDetails = viewCustomerDetails;
+        window.editCustomer = editCustomer;
+        window.viewOrderDetails = viewOrderDetails;
+    </script>
+</body>
+</html>

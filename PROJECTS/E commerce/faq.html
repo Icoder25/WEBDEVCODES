@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs - Shubham Enterprise</title>
+    <meta name="description" content="Frequently asked questions about Shubham Enterprise's wholesale cosmetics, shipping, returns, payment options, and more.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#be185d', // rose
+                        accent: '#facc15', // gold
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Mobile menu styles */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.hidden {
+            transform: translateX(-100%);
+        }
+        
+        /* FAQ accordion styles */
+        .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+        
+        .faq-toggle i {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-toggle i {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-30">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-primary">Shubham Enterprise</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-primary transition duration-300">Home</a>
+                    <a href="products.html" class="text-gray-600 hover:text-primary transition duration-300">Products</a>
+                    <a href="about.html" class="text-gray-600 hover:text-primary transition duration-300">About Us</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-primary transition duration-300">Contact</a>
+                    <a href="faq.html" class="text-primary font-medium">FAQs</a>
+                </nav>
+                
+                <!-- Right Navigation Items -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="cart.html" class="text-gray-600 hover:text-primary transition duration-300 relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                    </a>
+                    <a href="login.html" class="text-gray-600 hover:text-primary transition duration-300">
+                        <i class="fas fa-user text-xl"></i>
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-primary focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 w-full h-full bg-white z-40 hidden">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <span class="text-xl font-bold text-primary">Shubham Enterprise</span>
+                <button id="close-menu-button" class="text-gray-600 hover:text-primary focus:outline-none">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <nav class="p-4">
+                <ul class="space-y-4">
+                    <li>
+                        <a href="index.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Home</a>
+                    </li>
+                    <li>
+                        <a href="products.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Products</a>
+                    </li>
+                    <li>
+                        <a href="about.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">About Us</a>
+                    </li>
+                    <li>
+                        <a href="contact.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Contact</a>
+                    </li>
+                    <li>
+                        <a href="faq.html" class="text-primary font-medium block py-2">FAQs</a>
+                    </li>
+                    <li class="border-t border-gray-200 pt-4 mt-4">
+                        <a href="cart.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Cart</a>
+                    </li>
+                    <li>
+                        <a href="login.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Login / Register</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-primary/90 to-primary py-12 md:py-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">Frequently Asked Questions</h1>
+                <p class="text-xl text-white/90">Find answers to common questions about our products, services, and policies</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Categories Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Category 1: Orders & Shipping -->
+                    <a href="#orders-shipping" class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition duration-300">
+                        <div class="text-primary mb-4">
+                            <i class="fas fa-truck-fast text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Orders & Shipping</h3>
+                        <p class="text-gray-600">Delivery times, shipping costs, order tracking</p>
+                    </a>
+                    
+                    <!-- Category 2: Products & Pricing -->
+                    <a href="#products-pricing" class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition duration-300">
+                        <div class="text-primary mb-4">
+                            <i class="fas fa-tag text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Products & Pricing</h3>
+                        <p class="text-gray-600">MOQ, tier pricing, product information</p>
+                    </a>
+                    
+                    <!-- Category 3: Payment & Credit -->
+                    <a href="#payment-credit" class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition duration-300">
+                        <div class="text-primary mb-4">
+                            <i class="fas fa-credit-card text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Payment & Credit</h3>
+                        <p class="text-gray-600">Payment options, credit terms, invoicing</p>
+                    </a>
+                    
+                    <!-- Category 4: Returns & Refunds -->
+                    <a href="#returns-refunds" class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition duration-300">
+                        <div class="text-primary mb-4">
+                            <i class="fas fa-rotate-left text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Returns & Refunds</h3>
+                        <p class="text-gray-600">Return policy, refund process, damaged goods</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion Section: Orders & Shipping -->
+    <section id="orders-shipping" class="py-12 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Orders & Shipping</h2>
+                    <div class="h-1 w-20 bg-primary rounded"></div>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">What is the minimum order quantity (MOQ)?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">The minimum order quantity varies by product and is clearly indicated on each product page. Typically, our MOQs range from 12 to 50 units depending on the product category and price point. Bulk orders qualify for tiered pricing discounts.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">How long does shipping take?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">We offer two shipping options:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                                <li><strong>Standard Shipping:</strong> 3-5 business days for most locations in India</li>
+                                <li><strong>Express Shipping:</strong> 1-2 business days for urgent orders</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">Shipping times may vary based on your location and product availability. You can track your order status through your account dashboard once the order is dispatched.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">How much does shipping cost?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Shipping costs are calculated based on order weight, delivery location, and shipping method:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                                <li><strong>Standard Shipping:</strong> ₹150-₹300 depending on weight and location</li>
+                                <li><strong>Express Shipping:</strong> ₹300-₹600 depending on weight and location</li>
+                                <li><strong>Free Standard Shipping:</strong> Available on orders above ₹10,000</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">Exact shipping costs will be calculated at checkout based on your cart contents and delivery address.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">How can I track my order?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Once your order is dispatched, you will receive a tracking number via email and SMS. You can track your order in two ways:</p>
+                            <ol class="list-decimal pl-5 mt-2 space-y-1 text-gray-600">
+                                <li>Log in to your account and visit the "Order History" section</li>
+                                <li>Use the tracking number on our shipping partner's website</li>
+                            </ol>
+                            <p class="text-gray-600 mt-2">If you have any issues tracking your order, please contact our customer support team.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">Do you ship to all locations in India?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Yes, we ship to all major cities and most locations across India. However, delivery times may vary for remote areas. We currently do not offer international shipping.</p>
+                            <p class="text-gray-600 mt-2">If you're in a remote location, please contact our customer service team before placing an order to confirm delivery availability and estimated timeframes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion Section: Products & Pricing -->
+    <section id="products-pricing" class="py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Products & Pricing</h2>
+                    <div class="h-1 w-20 bg-primary rounded"></div>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">How does tiered pricing work?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Our tiered pricing structure offers volume-based discounts. The more units you purchase, the lower the price per unit. For example, a product might be priced as follows:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                                <li>12-49 units: ₹140/unit</li>
+                                <li>50-99 units: ₹125/unit</li>
+                                <li>100+ units: ₹110/unit</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">The applicable tier is automatically calculated in your cart based on the quantity you select. Each product has its own specific tier structure displayed on the product detail page.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">Are your products authentic and certified?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Yes, all our products are 100% authentic and sourced directly from authorized manufacturers or distributors. Our products comply with all relevant Indian regulations and standards, including:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                                <li>Bureau of Indian Standards (BIS) certification where applicable</li>
+                                <li>Drugs and Cosmetics Act compliance</li>
+                                <li>Proper ingredient labeling and batch information</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">We maintain strict quality control processes and can provide certification documentation upon request for bulk orders.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">Can I get product samples before placing a bulk order?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Yes, we offer sample options for new customers who want to evaluate our products before placing larger orders:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                                <li><strong>Sample Kits:</strong> Curated collections of our bestselling products at discounted rates</li>
+                                <li><strong>Individual Samples:</strong> Available for most products at regular retail pricing</li>
+                                <li><strong>Sample Credit:</strong> The cost of samples can be credited toward your first bulk order (minimum order value applies)</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">To request samples, please contact our sales team through the Contact Us page or call our customer service number.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">Do you offer private labeling or white labeling?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Yes, we offer private labeling and white labeling services for qualified businesses. Our private labeling program includes:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                                <li>Custom packaging with your brand name and logo</li>
+                                <li>Custom formulations for select product categories</li>
+                                <li>Low minimum order quantities compared to industry standards</li>
+                                <li>Regulatory compliance assistance</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">Private labeling requires a minimum order value of ₹50,000 and lead times of 3-4 weeks. Please contact our business development team for detailed information and pricing.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">How often do you update your product catalog?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">We update our product catalog regularly to include the latest trends and innovations in the beauty industry. New products are typically added:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                                <li>Monthly for seasonal collections and trending items</li>
+                                <li>Quarterly for major catalog expansions</li>
+                                <li>Annually for complete catalog refreshes</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">You can subscribe to our newsletter to stay informed about new product launches, or follow us on social media for the latest updates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion Section: Payment & Credit -->
+    <section id="payment-credit" class="py-12 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Payment & Credit</h2>
+                    <div class="h-1 w-20 bg-primary rounded"></div>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">What payment methods do you accept?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">We accept a variety of payment methods to accommodate different business needs:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                                <li><strong>Online Payments:</strong> Credit/Debit Cards, Net Banking, UPI</li>
+                                <li><strong>Bank Transfer:</strong> NEFT/RTGS/IMPS</li>
+                                <li><strong>Digital Wallets:</strong> PayTM, Google Pay, PhonePe</li>
+                                <li><strong>Credit Terms:</strong> 30% advance payment with approved credit application</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">All online transactions are secured with industry-standard encryption to protect your payment information.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">How does your credit payment system work?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Our credit payment system is designed to help businesses manage cash flow while building inventory:</p>
+                            <ol class="list-decimal pl-5 mt-2 space-y-1 text-gray-600">
+                                <li><strong>Application:</strong> Complete our credit application form with business details and trade references</li>
+                                <li><strong>Approval:</strong> Credit applications are typically processed within 3-5 business days</li>
+                                <li><strong>Terms:</strong> Approved businesses can place orders with 30% advance payment</li>
+                                <li><strong>Balance Payment:</strong> The remaining 70% is due within 30 days of invoice date</li>
+                                <li><strong>Credit Limit:</strong> Initial credit limits are based on business history and references</li>
+                            </ol>
+                            <p class="text-gray-600 mt-2">Credit terms are available for registered businesses with a minimum of 1 year in operation and valid GSTIN. Credit limits can be increased over time with a good payment history.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">Is GST included in your product prices?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">No, all prices displayed on our website are exclusive of GST. The applicable GST rate (typically 18% for most cosmetic products) will be added at checkout. You will see a detailed breakdown of:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                                <li>Product subtotal (pre-tax)</li>
+                                <li>CGST and SGST (for intra-state transactions)</li>
+                                <li>IGST (for inter-state transactions)</li>
+                                <li>Shipping charges (if applicable)</li>
+                                <li>Total amount payable</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">We provide proper GST invoices for all transactions, which you can download from your account dashboard or receive via email.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">Do you offer any discounts for first-time buyers?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Yes, we offer special incentives for first-time buyers:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                                <li><strong>Welcome Discount:</strong> 5% off on your first order (minimum order value ₹5,000)</li>
+                                <li><strong>Free Shipping:</strong> On first orders above ₹7,500</li>
+                                <li><strong>Product Samples:</strong> Complimentary samples with your first order</li>
+                                <li><strong>Dedicated Account Manager:</strong> Personalized assistance for new business customers</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">To avail these benefits, create an account and register your business details before placing your first order. The welcome discount will be automatically applied at checkout.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">How do I get a tax invoice for my purchase?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Tax invoices are automatically generated for all orders and are available through multiple channels:</p>
+                            <ol class="list-decimal pl-5 mt-2 space-y-1 text-gray-600">
+                                <li><strong>Email:</strong> A copy of the invoice is sent to your registered email address</li>
+                                <li><strong>Account Dashboard:</strong> Log in to your account and visit the "Order History" section</li>
+                                <li><strong>Order Confirmation:</strong> The invoice is attached to your order confirmation</li>
+                                <li><strong>Physical Copy:</strong> A printed invoice is included with your shipment</li>
+                            </ol>
+                            <p class="text-gray-600 mt-2">If you need additional copies or have specific invoice requirements, please contact our accounts department with your order number and requirements.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion Section: Returns & Refunds -->
+    <section id="returns-refunds" class="py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Returns & Refunds</h2>
+                    <div class="h-1 w-20 bg-primary rounded"></div>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">What is your return policy?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">We accept returns under the following conditions:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                                <li><strong>Damaged or Defective Products:</strong> Full refund or replacement within 7 days of delivery</li>
+                                <li><strong>Incorrect Items:</strong> Full refund or replacement if we shipped the wrong product</li>
+                                <li><strong>Unopened Products:</strong> Returns accepted within 3 days of delivery with 10% restocking fee</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">To initiate a return, please contact our customer service team with your order number and details of the issue. We'll provide a return authorization and instructions for shipping the items back to us.</p>
+                            <p class="text-gray-600 mt-2">Please note that custom orders, private label products, and clearance items are not eligible for returns unless damaged or defective.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">How do I report damaged or defective products?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">If you receive damaged or defective products, please follow these steps:</p>
+                            <ol class="list-decimal pl-5 mt-2 space-y-1 text-gray-600">
+                                <li>Inspect all products immediately upon delivery</li>
+                                <li>Take clear photographs of the damaged/defective items and packaging</li>
+                                <li>Contact our customer service team within 48 hours of delivery</li>
+                                <li>Provide your order number, product details, and photographs</li>
+                                <li>Our team will review your claim and provide resolution options</li>
+                            </ol>
+                            <p class="text-gray-600 mt-2">For damaged shipments, we recommend noting the damage on the delivery receipt before accepting the package. This helps expedite the claims process with our shipping partners.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">How long does the refund process take?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Our refund process typically follows this timeline:</p>
+                            <ol class="list-decimal pl-5 mt-2 space-y-1 text-gray-600">
+                                <li><strong>Return Approval:</strong> 1-2 business days after receiving your request</li>
+                                <li><strong>Return Shipping:</strong> Depends on your location (typically 2-5 days)</li>
+                                <li><strong>Quality Check:</strong> 1-2 business days after we receive the returned items</li>
+                                <li><strong>Refund Processing:</strong> 3-5 business days after quality check approval</li>
+                                <li><strong>Bank/Card Processing:</strong> 2-7 business days (varies by payment method)</li>
+                            </ol>
+                            <p class="text-gray-600 mt-2">The total refund process usually takes 7-14 business days from the date we receive your returned items. For credit orders, refunds are processed as credits to your account balance or adjusted against future invoices.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">Do you cover return shipping costs?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Our return shipping policy depends on the reason for the return:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                                <li><strong>Our Error (wrong item, damaged in transit):</strong> We cover return shipping costs</li>
+                                <li><strong>Product Defect:</strong> We cover return shipping costs</li>
+                                <li><strong>Customer Change of Mind:</strong> Customer is responsible for return shipping costs</li>
+                                <li><strong>Bulk Returns (over ₹10,000):</strong> Case-by-case evaluation</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2">When we cover shipping costs, we'll either arrange pickup through our shipping partners or reimburse your shipping expenses (with prior approval and valid receipt).</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-5 focus:outline-none">
+                            <span class="text-lg font-medium text-gray-800">Can I exchange products instead of getting a refund?</span>
+                            <span class="faq-toggle text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600">Yes, we offer product exchanges as an alternative to refunds. The exchange process works as follows:</p>
+                            <ol class="list-decimal pl-5 mt-2 space-y-1 text-gray-600">
+                                <li>Contact our customer service team to request an exchange</li>
+                                <li>Specify which products you want to return and what you'd like instead</li>
+                                <li>We'll verify product availability and price differences</li>
+                                <li>Return your original items as instructed</li>
+                                <li>Once we receive and inspect the returns, we'll ship your exchange items</li>
+                            </ol>
+                            <p class="text-gray-600 mt-2">If there's a price difference between the returned and exchanged items, we'll either charge or refund the difference. Exchanges are subject to the same eligibility criteria as our return policy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Other Questions Section -->
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Still Have Questions?</h2>
+                <p class="text-gray-600 mb-8">Our customer support team is here to help you with any other questions you might have.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="contact.html" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition duration-300 inline-flex items-center justify-center">
+                        <i class="fas fa-envelope mr-2"></i>
+                        <span>Contact Us</span>
+                    </a>
+                    <a href="https://wa.me/919876543210" class="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300 inline-flex items-center justify-center">
+                        <i class="fab fa-whatsapp mr-2"></i>
+                        <span>WhatsApp Support</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Footer Top -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Shubham Enterprise</h3>
+                    <p class="text-gray-400 mb-4">Your trusted partner for wholesale cosmetics and beauty supplies since 2010.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition duration-300">Products</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition duration-300">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Categories</h3>
+                    <ul class="space-y-2">
+                        <li><a href="products.html?category=skincare" class="text-gray-400 hover:text-white transition duration-300">Skincare</a></li>
+                        <li><a href="products.html?category=haircare" class="text-gray-400 hover:text-white transition duration-300">Haircare</a></li>
+                        <li><a href="products.html?category=makeup" class="text-gray-400 hover:text-white transition duration-300">Makeup</a></li>
+                        <li><a href="products.html?category=personal-hygiene" class="text-gray-400 hover:text-white transition duration-300">Personal Hygiene</a></li>
+                        <li><a href="products.html?category=salon-supplies" class="text-gray-400 hover:text-white transition duration-300">Salon Supplies</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                            <span class="text-gray-400">123 Business Park, Sector 5<br>Noida, Uttar Pradesh 201301</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2"></i>
+                            <span class="text-gray-400">+91 98765 43210</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <span class="text-gray-400">info@shubhamenterprise.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Footer Bottom -->
+            <div class="pt-8 border-t border-gray-700 text-center md:flex md:justify-between md:text-left">
+                <p class="text-gray-400">&copy; 2023 Shubham Enterprise. All rights reserved.</p>
+                <div class="mt-4 md:mt-0">
+                    <a href="privacy-policy.html" class="text-gray-400 hover:text-white transition duration-300 mr-4">Privacy Policy</a>
+                    <a href="terms-conditions.html" class="text-gray-400 hover:text-white transition duration-300 mr-4">Terms & Conditions</a>
+                    <a href="shipping-policy.html" class="text-gray-400 hover:text-white transition duration-300">Shipping Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/919876543210" class="fixed bottom-6 right-6 bg-green-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-green-700 transition duration-300 z-20">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- JavaScript -->
+    <script>
+        // DOM Elements
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        // Mobile Menu Toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+        });
+        
+        closeMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+        
+        // FAQ Accordion
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                
+                // Close all other FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem && item.classList.contains('active')) {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current FAQ item
+                faqItem.classList.toggle('active');
+            });
+        });
+        
+        // Smooth scroll to FAQ sections
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100, // Offset for fixed header
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Update cart count from localStorage
+        function updateCartCount() {
+            const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+            const cartCount = document.getElementById('cart-count');
+            
+            if (cartCount) {
+                cartCount.textContent = cartItems.length;
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            
+            // Auto-open FAQ item if URL has hash
+            if (window.location.hash) {
+                const targetSection = document.querySelector(window.location.hash);
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Open first FAQ in the section
+                    const firstFaq = targetSection.querySelector('.faq-item');
+                    if (firstFaq) {
+                        setTimeout(() => {
+                            firstFaq.classList.add('active');
+                        }, 500);
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

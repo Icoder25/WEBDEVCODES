@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - Shubham Enterprise</title>
+    <meta name="description" content="Terms and conditions for Shubham Enterprise's wholesale cosmetics e-commerce platform. Read our legal agreement before making a purchase.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#be185d', // rose
+                        accent: '#facc15', // gold
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Mobile menu styles */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.hidden {
+            transform: translateX(-100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-30">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-primary">Shubham Enterprise</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-primary transition duration-300">Home</a>
+                    <a href="products.html" class="text-gray-600 hover:text-primary transition duration-300">Products</a>
+                    <a href="about.html" class="text-gray-600 hover:text-primary transition duration-300">About Us</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-primary transition duration-300">Contact</a>
+                    <a href="faq.html" class="text-gray-600 hover:text-primary transition duration-300">FAQs</a>
+                </nav>
+                
+                <!-- Right Navigation Items -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="cart.html" class="text-gray-600 hover:text-primary transition duration-300 relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                    </a>
+                    <a href="login.html" class="text-gray-600 hover:text-primary transition duration-300">
+                        <i class="fas fa-user text-xl"></i>
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-primary focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 w-full h-full bg-white z-40 hidden">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <span class="text-xl font-bold text-primary">Shubham Enterprise</span>
+                <button id="close-menu-button" class="text-gray-600 hover:text-primary focus:outline-none">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <nav class="p-4">
+                <ul class="space-y-4">
+                    <li>
+                        <a href="index.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Home</a>
+                    </li>
+                    <li>
+                        <a href="products.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Products</a>
+                    </li>
+                    <li>
+                        <a href="about.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">About Us</a>
+                    </li>
+                    <li>
+                        <a href="contact.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Contact</a>
+                    </li>
+                    <li>
+                        <a href="faq.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">FAQs</a>
+                    </li>
+                    <li class="border-t border-gray-200 pt-4 mt-4">
+                        <a href="cart.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Cart</a>
+                    </li>
+                    <li>
+                        <a href="login.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Login / Register</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-primary/90 to-primary py-12 md:py-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">Terms & Conditions</h1>
+                <p class="text-xl text-white/90">Please read these terms carefully before using our services</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terms & Conditions Content -->
+    <section class="py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="p-6 md:p-8">
+                    <!-- Introduction -->
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Introduction</h2>
+                        <p class="text-gray-600 mb-4">Welcome to Shubham Enterprise. These Terms and Conditions govern your use of our website and services, including the purchase of products through our B2B wholesale e-commerce platform.</p>
+                        <p class="text-gray-600">By accessing or using our website, placing orders, or creating an account, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, please do not use our website or services.</p>
+                    </div>
+                    
+                    <!-- Definitions -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">1. Definitions</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li><strong>"Company", "We", "Us", "Our"</strong> refers to Shubham Enterprise, a business registered in India.</li>
+                            <li><strong>"Website"</strong> refers to the e-commerce platform operated by Shubham Enterprise.</li>
+                            <li><strong>"User", "You", "Your"</strong> refers to individuals or entities accessing or using our website and services.</li>
+                            <li><strong>"Products"</strong> refers to the cosmetics, beauty supplies, and related items available for purchase on our website.</li>
+                            <li><strong>"Business Customer"</strong> refers to salons, retailers, and other businesses purchasing products for commercial purposes.</li>
+                            <li><strong>"Account"</strong> refers to the registered user profile created on our website.</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Account Registration -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">2. Account Registration</h3>
+                        <p class="text-gray-600 mb-4">To access certain features of our website and place orders, you must register for an account. When registering, you agree to:</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Provide accurate, current, and complete information about yourself and your business</li>
+                            <li>Maintain and promptly update your account information</li>
+                            <li>Keep your account credentials confidential and secure</li>
+                            <li>Accept responsibility for all activities that occur under your account</li>
+                            <li>Notify us immediately of any unauthorized use of your account</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4">We reserve the right to suspend or terminate accounts that violate these Terms and Conditions or are inactive for an extended period.</p>
+                    </div>
+                    
+                    <!-- Business Verification -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">3. Business Verification</h3>
+                        <p class="text-gray-600 mb-4">As a B2B wholesale platform, we require verification of your business status. By registering, you agree to:</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Provide valid business documentation, including but not limited to business registration, GST registration, and trade licenses</li>
+                            <li>Use our platform exclusively for business purposes, not for personal consumption</li>
+                            <li>Maintain active and valid business credentials throughout your relationship with us</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4">We reserve the right to request additional documentation to verify your business status at any time. Failure to provide requested documentation may result in account suspension or termination.</p>
+                    </div>
+                    
+                    <!-- Products and Pricing -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">4. Products and Pricing</h3>
+                        <p class="text-gray-600 mb-4">Regarding our products and pricing, please note:</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>All product descriptions, images, and specifications are provided for informational purposes only and are subject to change without notice</li>
+                            <li>Prices displayed on our website are in Indian Rupees (INR) and are exclusive of applicable taxes</li>
+                            <li>We implement tiered pricing based on order quantities, with specific minimum order quantities (MOQ) for each product</li>
+                            <li>We reserve the right to modify prices, discounts, and promotional offers at any time</li>
+                            <li>In the event of a pricing error, we reserve the right to cancel orders placed at the incorrect price</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4">While we strive to display accurate product information and pricing, we do not warrant that product descriptions or prices are accurate, complete, or current.</p>
+                    </div>
+                    
+                    <!-- Orders and Payment -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">5. Orders and Payment</h3>
+                        <p class="text-gray-600 mb-4">By placing an order through our website, you agree to the following terms:</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>All orders are subject to acceptance and availability</li>
+                            <li>We reserve the right to refuse or cancel any order for any reason, including but not limited to product availability, errors in pricing or product information, or suspected fraudulent activity</li>
+                            <li>Payment must be made through our approved payment methods, which include credit/debit cards, net banking, UPI, and bank transfers</li>
+                            <li>For credit terms, a separate credit application and approval process is required</li>
+                            <li>All payments are subject to verification and authorization by relevant financial institutions</li>
+                            <li>Orders will not be processed until payment is confirmed or credit terms are approved</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4">By submitting payment information, you represent and warrant that you have the legal right to use the payment method provided and that the information you supply is true and correct.</p>
+                    </div>
+                    
+                    <!-- Shipping and Delivery -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">6. Shipping and Delivery</h3>
+                        <p class="text-gray-600 mb-4">Our shipping and delivery terms include:</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Delivery timeframes are estimates only and not guaranteed</li>
+                            <li>Shipping costs are calculated based on weight, delivery location, and shipping method</li>
+                            <li>Risk of loss and title for products pass to you upon delivery to the carrier</li>
+                            <li>You are responsible for providing accurate shipping information</li>
+                            <li>We are not liable for delivery delays caused by shipping carriers, customs clearance, or events beyond our reasonable control</li>
+                            <li>You are responsible for inspecting products upon delivery and reporting any damages or discrepancies within 48 hours</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4">For detailed information about our shipping policies, please refer to our <a href="shipping-policy.html" class="text-primary hover:underline">Shipping Policy</a>.</p>
+                    </div>
+                    
+                    <!-- Returns and Refunds -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">7. Returns and Refunds</h3>
+                        <p class="text-gray-600 mb-4">Our return and refund policy includes the following terms:</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Returns are accepted for damaged or defective products within 7 days of delivery</li>
+                            <li>Incorrect items shipped by us can be returned for a full refund or replacement</li>
+                            <li>Unopened products may be returned within 3 days of delivery, subject to a 10% restocking fee</li>
+                            <li>Custom orders, private label products, and clearance items are not eligible for returns unless damaged or defective</li>
+                            <li>All returns must be authorized by our customer service team before shipping</li>
+                            <li>Refunds will be processed using the original payment method, typically within 7-14 business days after we receive and inspect the returned items</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4">For detailed information about our return procedures, please refer to our <a href="faq.html#returns-refunds" class="text-primary hover:underline">Return Policy</a> in the FAQ section.</p>
+                    </div>
+                    
+                    <!-- Intellectual Property -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">8. Intellectual Property</h3>
+                        <p class="text-gray-600 mb-4">Regarding intellectual property rights:</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>All content on our website, including text, graphics, logos, images, product descriptions, and software, is the property of Shubham Enterprise or its content suppliers and is protected by Indian and international copyright laws</li>
+                            <li>Our trademarks, service marks, and trade names may not be used without our prior written consent</li>
+                            <li>You may not reproduce, distribute, modify, display, or create derivative works from any content on our website without our express written permission</li>
+                            <li>For private label products, all intellectual property rights in custom designs, formulations, and packaging created for you remain the property of Shubham Enterprise unless otherwise agreed in writing</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4">Any unauthorized use of our intellectual property may violate copyright, trademark, and other laws and may result in legal action.</p>
+                    </div>
+                    
+                    <!-- User Conduct -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">9. User Conduct</h3>
+                        <p class="text-gray-600 mb-4">When using our website, you agree not to:</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Use our website for any unlawful purpose or in violation of these Terms and Conditions</li>
+                            <li>Impersonate any person or entity, or falsely state or misrepresent your affiliation with a person or entity</li>
+                            <li>Interfere with or disrupt the operation of our website or servers</li>
+                            <li>Attempt to gain unauthorized access to any portion of our website or any systems or networks connected to our website</li>
+                            <li>Use any robot, spider, or other automated device to access our website</li>
+                            <li>Harvest or collect email addresses or other contact information from our website</li>
+                            <li>Engage in any conduct that restricts or inhibits any other user from using or enjoying our website</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4">We reserve the right to terminate or restrict your access to our website for violating these terms or for any other reason at our sole discretion.</p>
+                    </div>
+                    
+                    <!-- Limitation of Liability -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">10. Limitation of Liability</h3>
+                        <p class="text-gray-600 mb-4">To the maximum extent permitted by law:</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Shubham Enterprise and its affiliates, officers, directors, employees, and agents shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from or related to your use of our website or products</li>
+                            <li>Our total liability to you for all claims arising from or related to these Terms and Conditions shall not exceed the amount paid by you for the products giving rise to such liability</li>
+                            <li>We do not warrant that our website will be uninterrupted or error-free, that defects will be corrected, or that our website or servers are free of viruses or other harmful components</li>
+                            <li>We are not liable for any loss or damage caused by a distributed denial-of-service attack, viruses, or other technologically harmful material that may infect your computer equipment, programs, data, or other proprietary material</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4">Some jurisdictions do not allow the exclusion or limitation of certain warranties or liability for certain damages, so some of the above limitations may not apply to you.</p>
+                    </div>
+                    
+                    <!-- Indemnification -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">11. Indemnification</h3>
+                        <p class="text-gray-600 mb-4">You agree to indemnify, defend, and hold harmless Shubham Enterprise and its affiliates, officers, directors, employees, and agents from and against any and all claims, liabilities, damages, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising from or relating to:</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li>Your use of our website or products</li>
+                            <li>Your violation of these Terms and Conditions</li>
+                            <li>Your violation of any rights of another person or entity</li>
+                            <li>Your breach of any representations or warranties made by you under these Terms and Conditions</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4">We reserve the right, at your expense, to assume the exclusive defense and control of any matter for which you are required to indemnify us, and you agree to cooperate with our defense of these claims.</p>
+                    </div>
+                    
+                    <!-- Governing Law -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">12. Governing Law</h3>
+                        <p class="text-gray-600 mb-4">These Terms and Conditions shall be governed by and construed in accordance with the laws of India, without giving effect to any principles of conflicts of law.</p>
+                        <p class="text-gray-600">Any dispute arising from or relating to these Terms and Conditions or your use of our website shall be subject to the exclusive jurisdiction of the courts in Noida, Uttar Pradesh, India.</p>
+                    </div>
+                    
+                    <!-- Dispute Resolution -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">13. Dispute Resolution</h3>
+                        <p class="text-gray-600 mb-4">In the event of any dispute or claim arising from or relating to these Terms and Conditions or your use of our website:</p>
+                        <ol class="list-decimal pl-5 space-y-2 text-gray-600">
+                            <li>We encourage you to first contact our customer service team to attempt to resolve the issue informally</li>
+                            <li>If the dispute cannot be resolved informally, either party may initiate formal proceedings</li>
+                            <li>Any legal action or proceeding shall be brought exclusively in the courts located in Noida, Uttar Pradesh, India</li>
+                            <li>You consent to the jurisdiction and venue of such courts and waive any objection to such jurisdiction or venue</li>
+                        </ol>
+                        <p class="text-gray-600 mt-4">Nothing in this section shall prevent us from seeking injunctive or other equitable relief in any court of competent jurisdiction.</p>
+                    </div>
+                    
+                    <!-- Modifications to Terms -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">14. Modifications to Terms</h3>
+                        <p class="text-gray-600 mb-4">We reserve the right to modify these Terms and Conditions at any time, effective upon posting the updated terms on our website. Your continued use of our website after any such changes constitutes your acceptance of the new Terms and Conditions.</p>
+                        <p class="text-gray-600">It is your responsibility to review these Terms and Conditions periodically. If you do not agree to any changes to these Terms and Conditions, you must discontinue using our website.</p>
+                    </div>
+                    
+                    <!-- Severability -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">15. Severability</h3>
+                        <p class="text-gray-600">If any provision of these Terms and Conditions is found to be invalid, illegal, or unenforceable, the remaining provisions shall continue in full force and effect. The invalid or unenforceable provision shall be replaced by a valid and enforceable provision that comes closest to the intention underlying the invalid provision.</p>
+                    </div>
+                    
+                    <!-- Entire Agreement -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">16. Entire Agreement</h3>
+                        <p class="text-gray-600">These Terms and Conditions, together with our Privacy Policy, Shipping Policy, and any additional terms incorporated by reference, constitute the entire agreement between you and Shubham Enterprise regarding your use of our website and supersede all prior or contemporaneous communications and proposals, whether electronic, oral, or written, between you and Shubham Enterprise regarding your use of our website.</p>
+                    </div>
+                    
+                    <!-- Contact Information -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">17. Contact Information</h3>
+                        <p class="text-gray-600 mb-4">If you have any questions or concerns about these Terms and Conditions, please contact us at:</p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                            <li><strong>Email:</strong> legal@shubhamenterprise.com</li>
+                            <li><strong>Phone:</strong> +91 98765 43210</li>
+                            <li><strong>Address:</strong> 123 Business Park, Sector 5, Noida, Uttar Pradesh 201301, India</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Policy Update Information -->
+            <div class="max-w-4xl mx-auto mt-8 text-center">
+                <p class="text-sm text-gray-500">Last Updated: August 15, 2023</p>
+                <p class="text-sm text-gray-500 mt-1">These Terms and Conditions are subject to change without notice. Please check back periodically for updates.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Policies Section -->
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Related Policies</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Privacy Policy -->
+                    <a href="privacy-policy.html" class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition duration-300">
+                        <div class="text-primary mb-4">
+                            <i class="fas fa-shield-alt text-3xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Privacy Policy</h3>
+                        <p class="text-gray-600">How we protect and use your data</p>
+                    </a>
+                    
+                    <!-- Shipping Policy -->
+                    <a href="shipping-policy.html" class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition duration-300">
+                        <div class="text-primary mb-4">
+                            <i class="fas fa-truck text-3xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Shipping Policy</h3>
+                        <p class="text-gray-600">Delivery times, costs, and methods</p>
+                    </a>
+                    
+                    <!-- FAQs -->
+                    <a href="faq.html" class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition duration-300">
+                        <div class="text-primary mb-4">
+                            <i class="fas fa-question-circle text-3xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">FAQs</h3>
+                        <p class="text-gray-600">Answers to common questions</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Footer Top -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Shubham Enterprise</h3>
+                    <p class="text-gray-400 mb-4">Your trusted partner for wholesale cosmetics and beauty supplies since 2010.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition duration-300">Products</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition duration-300">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Categories</h3>
+                    <ul class="space-y-2">
+                        <li><a href="products.html?category=skincare" class="text-gray-400 hover:text-white transition duration-300">Skincare</a></li>
+                        <li><a href="products.html?category=haircare" class="text-gray-400 hover:text-white transition duration-300">Haircare</a></li>
+                        <li><a href="products.html?category=makeup" class="text-gray-400 hover:text-white transition duration-300">Makeup</a></li>
+                        <li><a href="products.html?category=personal-hygiene" class="text-gray-400 hover:text-white transition duration-300">Personal Hygiene</a></li>
+                        <li><a href="products.html?category=salon-supplies" class="text-gray-400 hover:text-white transition duration-300">Salon Supplies</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                            <span class="text-gray-400">123 Business Park, Sector 5<br>Noida, Uttar Pradesh 201301</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2"></i>
+                            <span class="text-gray-400">+91 98765 43210</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <span class="text-gray-400">info@shubhamenterprise.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Footer Bottom -->
+            <div class="pt-8 border-t border-gray-700 text-center md:flex md:justify-between md:text-left">
+                <p class="text-gray-400">&copy; 2023 Shubham Enterprise. All rights reserved.</p>
+                <div class="mt-4 md:mt-0">
+                    <a href="privacy-policy.html" class="text-gray-400 hover:text-white transition duration-300 mr-4">Privacy Policy</a>
+                    <a href="terms-conditions.html" class="text-gray-400 hover:text-white transition duration-300 mr-4">Terms & Conditions</a>
+                    <a href="shipping-policy.html" class="text-gray-400 hover:text-white transition duration-300">Shipping Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/919356382562" class="fixed bottom-6 right-6 bg-green-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-green-700 transition duration-300 z-20">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- JavaScript -->
+    <script>
+        // DOM Elements
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        // Mobile Menu Toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+        });
+        
+        closeMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+        
+        // Update cart count from localStorage
+        function updateCartCount() {
+            const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+            const cartCount = document.getElementById('cart-count');
+            
+            if (cartCount) {
+                cartCount.textContent = cartItems.length;
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>

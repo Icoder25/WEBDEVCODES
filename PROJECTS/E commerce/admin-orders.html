@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management - Shubham Enterprise</title>
+    <meta name="description" content="Admin order management for Shubham Enterprise wholesale cosmetics platform.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#be185d', // rose
+                        accent: '#facc15', // gold
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Sidebar styles */
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+        
+        /* Form focus styles */
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #be185d;
+            ring: 2px;
+            ring-color: rgba(190, 24, 93, 0.2);
+        }
+        
+        /* Status badge styles */
+        .status-badge {
+            @apply px-2 py-1 rounded-full text-xs font-medium;
+        }
+        
+        .status-pending {
+            @apply bg-yellow-100 text-yellow-800;
+        }
+        
+        .status-confirmed {
+            @apply bg-blue-100 text-blue-800;
+        }
+        
+        .status-processing {
+            @apply bg-purple-100 text-purple-800;
+        }
+        
+        .status-shipped {
+            @apply bg-indigo-100 text-indigo-800;
+        }
+        
+        .status-delivered {
+            @apply bg-green-100 text-green-800;
+        }
+        
+        .status-cancelled {
+            @apply bg-red-100 text-red-800;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar bg-gray-800 text-white w-64 min-h-screen fixed md:relative z-30">
+            <!-- Logo -->
+            <div class="p-4 border-b border-gray-700">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold">Shubham Enterprise</span>
+                </div>
+                <div class="text-xs text-gray-400 mt-1">Admin Dashboard</div>
+            </div>
+            
+            <!-- Navigation -->
+            <!-- <nav class="mt-4">
+                <ul>
+                    <li>
+                        <a href="admin-dashboard.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-tachometer-alt w-6"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-products.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-box w-6"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-login.html" class="flex items-center px-4 py-3 bg-primary text-white">
+                            <i class="fas fa-shopping-cart w-6"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-customers.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-users w-6"></i>
+                            <span>Customers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-inquiries.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-question-circle w-6"></i>
+                            <span>Inquiries</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-settings.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-cog w-6"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Logout -->
+            <div class="absolute bottom-0 w-full p-4 border-t border-gray-700">
+                <a href="index.html" class="flex items-center text-gray-300 hover:text-white transition duration-200">
+                    <i class="fas fa-store w-6"></i>
+                    <span>View Store</span>
+                </a>
+                <a href="#" id="logout-button" class="flex items-center mt-2 text-gray-300 hover:text-white transition duration-200">
+                    <i class="fas fa-sign-out-alt w-6"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside> -->
+        
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Header -->
+            <header class="bg-white shadow-sm z-10">
+                <div class="flex items-center justify-between p-4">
+                    <!-- Mobile Menu Toggle -->
+                    <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <!-- Search Bar -->
+                    <div class="hidden md:flex items-center flex-1 mx-4">
+                        <div class="relative w-full max-w-md">
+                            <input type="text" id="order-search" placeholder="Search orders by ID, customer, or phone..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Export Orders Button -->
+                    <button id="export-orders" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition duration-200 flex items-center">
+                        <i class="fas fa-file-export mr-2"></i>
+                        <span class="hidden md:inline">Export Orders</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-100">
+                <!-- Orders Section -->
+                <section id="orders-section">
+                    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-800">Order Management</h1>
+                            <p class="text-gray-600">View and manage customer orders</p>
+                        </div>
+                        
+                        <!-- Filter & Sort -->
+                        <div class="mt-4 md:mt-0 flex flex-col sm:flex-row gap-2">
+                            <select id="status-filter" class="border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                                <option value="">All Statuses</option>
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="processing">Processing</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                            
+                            <select id="date-filter" class="border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                                <option value="">All Time</option>
+                                <option value="today">Today</option>
+                                <option value="yesterday">Yesterday</option>
+                                <option value="last7days">Last 7 Days</option>
+                                <option value="last30days">Last 30 Days</option>
+                                <option value="thismonth">This Month</option>
+                                <option value="lastmonth">Last Month</option>
+                            </select>
+                            
+                            <select id="sort-orders" class="border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                                <option value="date-desc">Date (Newest First)</option>
+                                <option value="date-asc">Date (Oldest First)</option>
+                                <option value="amount-desc">Amount (High to Low)</option>
+                                <option value="amount-asc">Amount (Low to High)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Orders Table -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orders-table-body" class="divide-y divide-gray-200">
+                                    <!-- Order rows will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Empty State -->
+                        <div id="empty-state" class="hidden p-8 text-center">
+                            <div class="text-gray-400 mb-4">
+                                <i class="fas fa-shopping-cart text-5xl"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-800 mb-1">No orders found</h3>
+                            <p class="text-gray-600">Try adjusting your search or filter to find what you're looking for.</p>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                            <div class="text-sm text-gray-600">
+                                Showing <span id="showing-start">1</span> to <span id="showing-end">10</span> of <span id="total-orders">0</span> orders
+                            </div>
+                            <div class="flex space-x-2">
+                                <button id="prev-page" class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button id="next-page" class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Order Detail Modal -->
+    <div id="order-detail-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h2 id="modal-title" class="text-xl font-bold">Order Details</h2>
+                <button id="close-modal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Order Details Content -->
+            <div id="order-details" class="p-6">
+                <!-- Order Info -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Order Summary -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-lg font-medium mb-3">Order Summary</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Order ID:</span>
+                                <span id="detail-order-id" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Date:</span>
+                                <span id="detail-date" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Status:</span>
+                                <span id="detail-status" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Payment Method:</span>
+                                <span id="detail-payment-method" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Payment Status:</span>
+                                <span id="detail-payment-status" class="font-medium"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Customer Info -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-lg font-medium mb-3">Customer Information</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Name:</span>
+                                <span id="detail-customer-name" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Business:</span>
+                                <span id="detail-business-name" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Email:</span>
+                                <span id="detail-email" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Phone:</span>
+                                <span id="detail-phone" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">GSTIN:</span>
+                                <span id="detail-gstin" class="font-medium"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Shipping Address -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <h3 class="text-lg font-medium mb-3">Shipping Address</h3>
+                    <p id="detail-address" class="text-gray-700"></p>
+                </div>
+                
+                <!-- Order Items -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-3">Order Items</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detail-items" class="divide-y divide-gray-200">
+                                <!-- Order items will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Order Totals -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <h3 class="text-lg font-medium mb-3">Order Totals</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Subtotal:</span>
+                            <span id="detail-subtotal" class="font-medium"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">GST (18%):</span>
+                            <span id="detail-gst" class="font-medium"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Shipping:</span>
+                            <span id="detail-shipping" class="font-medium"></span>
+                        </div>
+                        <div class="flex justify-between pt-2 border-t border-gray-200">
+                            <span class="text-gray-800 font-medium">Total:</span>
+                            <span id="detail-total" class="font-bold text-lg"></span>
+                        </div>
+                        <div id="detail-payment-info" class="flex justify-between pt-2 border-t border-gray-200">
+                            <span class="text-gray-800 font-medium">Advance Payment (30%):</span>
+                            <span id="detail-advance" class="font-medium"></span>
+                        </div>
+                        <div id="detail-balance-info" class="flex justify-between">
+                            <span class="text-gray-800 font-medium">Balance Due:</span>
+                            <span id="detail-balance" class="font-medium"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Update Status -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <h3 class="text-lg font-medium mb-3">Update Order Status</h3>
+                    <div class="flex items-center space-x-3">
+                        <select id="update-status" class="border border-gray-300 rounded-lg px-3 py-2 bg-white flex-grow">
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="processing">Processing</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                        <button id="save-status" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition duration-200">
+                            Update Status
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex justify-end space-x-3">
+                    <button id="print-order" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200 flex items-center">
+                        <i class="fas fa-print mr-2"></i>
+                        Print Order
+                    </button>
+                    <button id="email-invoice" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 flex items-center">
+                        <i class="fas fa-envelope mr-2"></i>
+                        Email Invoice
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="toast-message">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/orders.js"></script>
+    <script src="js/admin.js"></script>
+    
+    <!-- JavaScript -->
+    <script>
+        // Use orders from ShubhamOrders module if available, otherwise use sample data
+        let orders = [];
+        
+        // Sample order data as fallback if ShubhamOrders is not available
+        const sampleOrders = [
+            {
+                id: 'ORD-5142',
+                customer: {
+                    name: 'Rajesh Kumar',
+                    business: 'Beauty Salon',
+                    email: 'rajesh@example.com',
+                    phone: '+91 9876543210',
+                    gstin: '27AADCB2230M1ZT'
+                },
+                date: '2023-07-15',
+                amount: 12500,
+                payment: {
+                    method: 'Credit (30% Advance)',
+                    status: 'Advance Paid',
+                    advanceAmount: 3750,
+                    balanceDue: 8750
+                },
+                status: 'delivered',
+                address: '123 Main Street, Mumbai, Maharashtra, 400001, India',
+                items: [
+                    {
+                        product: 'Moisturizing Cream',
+                        price: 450,
+                        quantity: 20,
+                        total: 9000
+                    },
+                    {
+                        product: 'Facial Cleanser',
+                        price: 280,
+                        quantity: 12,
+                        total: 3360
+                    }
+                ],
+                subtotal: 12360,
+                gst: 2224.8,
+                shipping: 140,
+                total: 14724.8
+            },
+            {
+                id: 'ORD-5141',
+                customer: {
+                    name: 'Priya Patel',
+                    business: 'Glamour Store',
+                    email: 'priya@example.com',
+                    phone: '+91 9876543211',
+                    gstin: '24AADCP4536M1ZT'
+                },
+                date: '2023-07-14',
+                amount: 8750,
+                payment: {
+                    method: 'Full Advance',
+                    status: 'Paid',
+                    advanceAmount: 8750,
+                    balanceDue: 0
+                },
+                status: 'processing',
+                address: '456 Park Avenue, Ahmedabad, Gujarat, 380001, India',
+                items: [
+                    {
+                        product: 'Hair Serum',
+                        price: 350,
+                        quantity: 25,
+                        total: 8750
+                    }
+                ],
+                subtotal: 8750,
+                gst: 1575,
+                shipping: 0,
+                total: 10325
+            },
+            {
+                id: 'ORD-5140',
+                customer: {
+                    name: 'Amit Shah',
+                    business: 'Style Hub',
+                    email: 'amit@example.com',
+                    phone: '+91 9876543212',
+                    gstin: '07AADCS8765M1ZT'
+                },
+                date: '2023-07-13',
+                amount: 15200,
+                payment: {
+                    method: 'Credit (30% Advance)',
+                    status: 'Advance Paid',
+                    advanceAmount: 4560,
+                    balanceDue: 10640
+                },
+                status: 'confirmed',
+                address: '789 MG Road, Delhi, 110001, India',
+                items: [
+                    {
+                        product: 'Lipstick Set',
+                        price: 550,
+                        quantity: 15,
+                        total: 8250
+                    },
+                    {
+                        product: 'Facial Cleanser',
+                        price: 280,
+                        quantity: 25,
+                        total: 7000
+                    }
+                ],
+                subtotal: 15250,
+                gst: 2745,
+                shipping: 200,
+                total: 18195
+            },
+            {
+                id: 'ORD-5139',
+                customer: {
+                    name: 'Neha Gupta',
+                    business: 'Glow Cosmetics',
+                    email: 'neha@example.com',
+                    phone: '+91 9876543213',
+                    gstin: '29AADCG7654M1ZT'
+                },
+                date: '2023-07-12',
+                amount: 9300,
+                payment: {
+                    method: 'Full Advance',
+                    status: 'Paid',
+                    advanceAmount: 9300,
+                    balanceDue: 0
+                },
+                status: 'delivered',
+                address: '321 Brigade Road, Bangalore, Karnataka, 560001, India',
+                items: [
+                    {
+                        product: 'Body Lotion',
+                        price: 320,
+                        quantity: 30,
+                        total: 9600
+                    }
+                ],
+                subtotal: 9600,
+                gst: 1728,
+                shipping: 0,
+                total: 11328
+            },
+            {
+                id: 'ORD-5138',
+                customer: {
+                    name: 'Sanjay Verma',
+                    business: 'Radiance Beauty',
+                    email: 'sanjay@example.com',
+                    phone: '+91 9876543214',
+                    gstin: '33AADCR5432M1ZT'
+                },
+                date: '2023-07-11',
+                amount: 6800,
+                payment: {
+                    method: 'Credit (30% Advance)',
+                    status: 'Advance Paid',
+                    advanceAmount: 2040,
+                    balanceDue: 4760
+                },
+                status: 'cancelled',
+                address: '654 Anna Salai, Chennai, Tamil Nadu, 600002, India',
+                items: [
+                    {
+                        product: 'Moisturizing Cream',
+                        price: 450,
+                        quantity: 15,
+                        total: 6750
+                    }
+                ],
+                subtotal: 6750,
+                gst: 1215,
+                shipping: 100,
+                total: 8065
+            }
+        ];
+        
+        // DOM Elements
+        const ordersTableBody = document.getElementById('orders-table-body');
+        const emptyState = document.getElementById('empty-state');
+        const orderDetailModal = document.getElementById('order-detail-modal');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        const orderSearch = document.getElementById('order-search');
+        const statusFilter = document.getElementById('status-filter');
+        const dateFilter = document.getElementById('date-filter');
+        const sortOrders = document.getElementById('sort-orders');
+        const showingStart = document.getElementById('showing-start');
+        const showingEnd = document.getElementById('showing-end');
+        const totalOrders = document.getElementById('total-orders');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        
+        // Pagination state
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let filteredOrders = [];
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if admin is logged in using ShubhamAdmin or fallback to localStorage
+            if (window.ShubhamAdmin) {
+                // Use ShubhamAdmin to check admin status and redirect if not admin
+                window.ShubhamAdmin.requireAdmin();
+            } else {
+                // Fallback to localStorage check
+                const adminUser = localStorage.getItem('adminUser');
+                if (!adminUser) {
+                    window.location.href = 'admin-login.html';
+                    return;
+                }
+            }
+            
+            // Load orders from ShubhamOrders if available
+            if (window.ShubhamOrders) {
+                orders = window.ShubhamOrders.getAllOrders();
+                
+                // If no orders found in ShubhamOrders, use sample data
+                if (orders.length === 0) {
+                    orders = sampleOrders;
+                    // Save sample orders to ShubhamOrders for future use
+                    window.ShubhamOrders.saveOrders(sampleOrders);
+                }
+            } else {
+                // Fallback to sample data if ShubhamOrders is not available
+                orders = sampleOrders;
+            }
+            
+            // Initialize filtered orders
+            filteredOrders = [...orders];
+            
+            // Load orders
+            renderOrders();
+            updatePagination();
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+        
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const sidebar = document.getElementById('sidebar');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+            
+            // Close modal button
+            const closeModal = document.getElementById('close-modal');
+            closeModal.addEventListener('click', () => {
+                orderDetailModal.classList.add('hidden');
+            });
+            
+            // Export orders button
+            const exportOrdersBtn = document.getElementById('export-orders');
+            exportOrdersBtn.addEventListener('click', exportOrders);
+            
+            // Search and filter
+            orderSearch.addEventListener('input', handleSearch);
+            statusFilter.addEventListener('change', handleFilter);
+            dateFilter.addEventListener('change', handleFilter);
+            sortOrders.addEventListener('change', handleSort);
+            
+            // Pagination
+            prevPageBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderOrders();
+                    updatePagination();
+                }
+            });
+            
+            nextPageBtn.addEventListener('click', () => {
+                const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderOrders();
+                    updatePagination();
+                }
+            });
+            
+            // Save status button
+            const saveStatusBtn = document.getElementById('save-status');
+            saveStatusBtn.addEventListener('click', updateOrderStatus);
+            
+            // Print order button
+            const printOrderBtn = document.getElementById('print-order');
+            printOrderBtn.addEventListener('click', printOrder);
+            
+            // Email invoice button
+            const emailInvoiceBtn = document.getElementById('email-invoice');
+            emailInvoiceBtn.addEventListener('click', emailInvoice);
+            
+            // Logout button
+            const logoutButton = document.getElementById('logout-button');
+            logoutButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                if (confirm('Are you sure you want to logout?')) {
+                    if (window.ShubhamAuth && typeof window.ShubhamAuth.logout === 'function') {
+                        // Use ShubhamAuth for logout if available
+                        window.ShubhamAuth.logout();
+                    } else {
+                        // Fallback to localStorage removal
+                        localStorage.removeItem('adminUser');
+                        window.location.href = 'admin-login.html';
+                    }
+                }
+            });
+        }
+        
+        // Render Orders Table
+        function renderOrders() {
+            // Apply filters and sorting
+            applyFiltersAndSort();
+            
+            // Clear the table
+            ordersTableBody.innerHTML = '';
+            
+            // Check if there are orders
+            if (filteredOrders.length === 0) {
+                emptyState.classList.remove('hidden');
+                document.querySelector('table').classList.add('hidden');
+                document.querySelector('.pagination').classList.add('hidden');
+                return;
+            }
+            
+            // Show the table, hide empty state
+            emptyState.classList.add('hidden');
+            document.querySelector('table').classList.remove('hidden');
+            document.querySelector('.pagination').classList.remove('hidden');
+            
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredOrders.length);
+            const paginatedOrders = filteredOrders.slice(startIndex, endIndex);
+            
+            // Render each order row
+            paginatedOrders.forEach(order => {
+                const row = document.createElement('tr');
+                
+                // Format date
+                const orderDate = new Date(order.date);
+                const formattedDate = orderDate.toLocaleDateString('en-IN', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                // Get status badge class
+                const statusClass = `status-${order.status.toLowerCase()}`;
+                
+                // Format amount
+                const formattedAmount = new Intl.NumberFormat('en-IN', {
+                    style: 'currency',
+                    currency: 'INR',
+                    maximumFractionDigits: 0
+                }).format(order.amount);
+                
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${order.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">${order.customer.name}</div>
+                        <div class="text-sm text-gray-500">${order.customer.business}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formattedDate}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formattedAmount}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${order.payment.method}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="status-badge ${statusClass}">
+                            ${capitalizeFirstLetter(order.status)}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button class="text-primary hover:text-primary/80" onclick="viewOrderDetails('${order.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="text-blue-600 hover:text-blue-700" onclick="printInvoice('${order.id}')">
+                                <i class="fas fa-file-invoice"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                ordersTableBody.appendChild(row);
+            });
+        }
+        
+        // Update pagination info and buttons
+        function updatePagination() {
+            const totalItems = filteredOrders.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            const startIndex = (currentPage - 1) * itemsPerPage + 1;
+            const endIndex = Math.min(startIndex + itemsPerPage - 1, totalItems);
+            
+            // Update text
+            showingStart.textContent = totalItems > 0 ? startIndex : 0;
+            showingEnd.textContent = endIndex;
+            totalOrders.textContent = totalItems;
+            
+            // Update button states
+            prevPageBtn.disabled = currentPage <= 1;
+            nextPageBtn.disabled = currentPage >= totalPages;
+            
+            // Add visual indication for disabled buttons
+            if (prevPageBtn.disabled) {
+                prevPageBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                prevPageBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+            
+            if (nextPageBtn.disabled) {
+                nextPageBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                nextPageBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+        
+        // Apply filters and sorting
+        function applyFiltersAndSort() {
+            const searchTerm = orderSearch.value.toLowerCase();
+            const statusValue = statusFilter.value;
+            const dateValue = dateFilter.value;
+            const sortValue = sortOrders.value;
+            
+            // Filter by search term, status, and date
+            filteredOrders = orders.filter(order => {
+                // Search term filter
+                const matchesSearch = 
+                    order.id.toLowerCase().includes(searchTerm) ||
+                    order.customer.name.toLowerCase().includes(searchTerm) ||
+                    order.customer.business.toLowerCase().includes(searchTerm) ||
+                    order.customer.phone.includes(searchTerm);
+                    
+                // Status filter
+                const matchesStatus = statusValue === '' || order.status === statusValue;
+                
+                // Date filter
+                let matchesDate = true;
+                if (dateValue !== '') {
+                    const orderDate = new Date(order.date);
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    
+                    const yesterday = new Date(today);
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    
+                    const last7Days = new Date(today);
+                    last7Days.setDate(last7Days.getDate() - 7);
+                    
+                    const last30Days = new Date(today);
+                    last30Days.setDate(last30Days.getDate() - 30);
+                    
+                    const thisMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                    
+                    const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+                    const lastMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0);
+                    
+                    switch (dateValue) {
+                        case 'today':
+                            matchesDate = orderDate.toDateString() === today.toDateString();
+                            break;
+                        case 'yesterday':
+                            matchesDate = orderDate.toDateString() === yesterday.toDateString();
+                            break;
+                        case 'last7days':
+                            matchesDate = orderDate >= last7Days;
+                            break;
+                        case 'last30days':
+                            matchesDate = orderDate >= last30Days;
+                            break;
+                        case 'thismonth':
+                            matchesDate = orderDate >= thisMonth;
+                            break;
+                        case 'lastmonth':
+                            matchesDate = orderDate >= lastMonth && orderDate <= lastMonthEnd;
+                            break;
+                    }
+                }
+                
+                return matchesSearch && matchesStatus && matchesDate;
+            });
+            
+            // Sort orders
+            filteredOrders.sort((a, b) => {
+                switch (sortValue) {
+                    case 'date-desc':
+                        return new Date(b.date) - new Date(a.date);
+                    case 'date-asc':
+                        return new Date(a.date) - new Date(b.date);
+                    case 'amount-desc':
+                        return b.amount - a.amount;
+                    case 'amount-asc':
+                        return a.amount - b.amount;
+                    default:
+                        return 0;
+                }
+            });
+            
+            // Reset to first page when filters change
+            currentPage = 1;
+        }
+        
+        // Handle search input
+        function handleSearch() {
+            renderOrders();
+            updatePagination();
+        }
+        
+        // Handle filter change
+        function handleFilter() {
+            renderOrders();
+            updatePagination();
+        }
+        
+        // Handle sort change
+        function handleSort() {
+            renderOrders();
+            updatePagination();
+        }
+        
+        // View Order Details
+        function viewOrderDetails(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            // Set order details in modal
+            document.getElementById('detail-order-id').textContent = order.id;
+            
+            // Format date
+            const orderDate = new Date(order.date);
+            const formattedDate = orderDate.toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('detail-date').textContent = formattedDate;
+            
+            // Set status with badge
+            const statusElement = document.getElementById('detail-status');
+            statusElement.textContent = capitalizeFirstLetter(order.status);
+            statusElement.className = `status-badge ${`status-${order.status.toLowerCase()}`}`;
+            
+            // Set payment info
+            document.getElementById('detail-payment-method').textContent = order.payment.method;
+            document.getElementById('detail-payment-status').textContent = order.payment.status;
+            
+            // Set customer info
+            document.getElementById('detail-customer-name').textContent = order.customer.name;
+            document.getElementById('detail-business-name').textContent = order.customer.business;
+            document.getElementById('detail-email').textContent = order.customer.email;
+            document.getElementById('detail-phone').textContent = order.customer.phone;
+            document.getElementById('detail-gstin').textContent = order.customer.gstin;
+            
+            // Set address
+            document.getElementById('detail-address').textContent = order.address;
+            
+            // Set order items
+            const itemsContainer = document.getElementById('detail-items');
+            itemsContainer.innerHTML = '';
+            
+            order.items.forEach(item => {
+                const row = document.createElement('tr');
+                
+                // Format price and total
+                const formattedPrice = new Intl.NumberFormat('en-IN', {
+                    style: 'currency',
+                    currency: 'INR'
+                }).format(item.price);
+                
+                const formattedTotal = new Intl.NumberFormat('en-IN', {
+                    style: 'currency',
+                    currency: 'INR'
+                }).format(item.total);
+                
+                row.innerHTML = `
+                    <td class="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-900">${item.product}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">${formattedPrice}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">${item.quantity}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">${formattedTotal}</td>
+                `;
+                
+                itemsContainer.appendChild(row);
+            });
+            
+            // Set order totals
+            document.getElementById('detail-subtotal').textContent = formatCurrency(order.subtotal);
+            document.getElementById('detail-gst').textContent = formatCurrency(order.gst);
+            document.getElementById('detail-shipping').textContent = formatCurrency(order.shipping);
+            document.getElementById('detail-total').textContent = formatCurrency(order.total);
+            
+            // Set payment details based on payment method
+            if (order.payment.method.includes('Credit')) {
+                document.getElementById('detail-payment-info').classList.remove('hidden');
+                document.getElementById('detail-balance-info').classList.remove('hidden');
+                document.getElementById('detail-advance').textContent = formatCurrency(order.payment.advanceAmount);
+                document.getElementById('detail-balance').textContent = formatCurrency(order.payment.balanceDue);
+            } else {
+                document.getElementById('detail-payment-info').classList.add('hidden');
+                document.getElementById('detail-balance-info').classList.add('hidden');
+            }
+            
+            // Set current status in dropdown
+            document.getElementById('update-status').value = order.status;
+            
+            // Store order ID for status update
+            document.getElementById('save-status').dataset.orderId = order.id;
+            
+            // Show modal
+            orderDetailModal.classList.remove('hidden');
+        }
+        
+        // Update Order Status
+        function updateOrderStatus() {
+            const orderId = document.getElementById('save-status').dataset.orderId;
+            const newStatus = document.getElementById('update-status').value;
+            
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            if (orderIndex === -1) return;
+            
+            // Update order status in local array
+            orders[orderIndex].status = newStatus;
+            
+            // Update order status using ShubhamOrders if available
+            if (window.ShubhamOrders && typeof window.ShubhamOrders.updateOrderStatus === 'function') {
+                window.ShubhamOrders.updateOrderStatus(orderId, newStatus);
+            }
+            
+            // Show success message
+            showToast(`Order ${orderId} status updated to ${capitalizeFirstLetter(newStatus)}`);
+            
+            // Close modal and refresh table
+            orderDetailModal.classList.add('hidden');
+            renderOrders();
+        }
+        
+        // Print Order
+        function printOrder() {
+            showToast('Preparing order for printing...');
+            // In a real app, this would open a print-friendly version of the order
+        }
+        
+        // Print Invoice
+        function printInvoice(orderId) {
+            showToast(`Preparing invoice for order ${orderId}...`);
+            // In a real app, this would open a print-friendly invoice
+        }
+        
+        // Email Invoice
+        function emailInvoice() {
+            const orderId = document.getElementById('save-status').dataset.orderId;
+            showToast(`Invoice for order ${orderId} has been emailed to the customer`);
+        }
+        
+        // Export Orders
+        function exportOrders() {
+            showToast('Exporting orders to CSV...');
+            // In a real app, this would generate and download a CSV file
+        }
+        
+        // Show Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            // Set message
+            toastMessage.textContent = message;
+            
+            // Set toast color based on type
+            if (type === 'success') {
+                toast.classList.remove('bg-red-500');
+                toast.classList.add('bg-green-500');
+            } else if (type === 'error') {
+                toast.classList.remove('bg-green-500');
+                toast.classList.add('bg-red-500');
+            }
+            
+            // Show toast
+            toast.classList.remove('translate-x-full');
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+        
+        // Helper Functions
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR'
+            }).format(amount);
+        }
+        
+        // Make functions available globally
+        window.viewOrderDetails = viewOrderDetails;
+        window.printInvoice = printInvoice;
+    </script>
+    
+    <!-- Include required JavaScript files -->
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/orders.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

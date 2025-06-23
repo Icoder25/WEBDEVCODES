@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Shubham Enterprise</title>
+    <meta name="description" content="Complete your wholesale cosmetics order with secure checkout options including credit payment with 30% upfront.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Cashfree SDK -->
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#be185d', // rose
+                        accent: '#facc15', // gold
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Form focus styles */
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #be185d;
+            ring: 2px;
+            ring-color: rgba(190, 24, 93, 0.2);
+        }
+        
+        /* Custom radio buttons */
+        .custom-radio input[type="radio"] {
+            display: none;
+        }
+        
+        .custom-radio input[type="radio"] + label {
+            position: relative;
+            padding-left: 28px;
+            cursor: pointer;
+            display: inline-block;
+            line-height: 20px;
+        }
+        
+        .custom-radio input[type="radio"] + label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 100%;
+            background: white;
+        }
+        
+        .custom-radio input[type="radio"]:checked + label:before {
+            border-color: #be185d;
+        }
+        
+        .custom-radio input[type="radio"]:checked + label:after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: #be185d;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            border-radius: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header/Navbar -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary">
+                        <span class="text-primary">Shubham</span> <span class="text-accent">Enterprise</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-6">
+                    <a href="index.html" class="text-gray-800 hover:text-primary font-medium">Home</a>
+                    <a href="products.html" class="text-gray-800 hover:text-primary font-medium">Products</a>
+                    <a href="about.html" class="text-gray-800 hover:text-primary font-medium">About Us</a>
+                    <a href="contact.html" class="text-gray-800 hover:text-primary font-medium">Contact</a>
+                    <a href="faq.html" class="text-gray-800 hover:text-primary font-medium">FAQs</a>
+                </nav>
+                
+                <!-- Right Side Icons -->
+                <div class="flex items-center space-x-4">
+                    <a href="cart.html" class="text-primary relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <a href="login.html" class="text-gray-800 hover:text-primary">
+                        <i class="fas fa-user text-xl"></i>
+                    </a>
+                    <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 md:hidden">
+            <div class="p-4 border-b">
+                <div class="flex justify-between items-center">
+                    <span class="text-xl font-bold text-primary">Menu</span>
+                    <button id="close-menu-button" class="text-gray-800 hover:text-primary">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <nav class="p-4">
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="block text-gray-800 hover:text-primary font-medium">Home</a></li>
+                    <li><a href="products.html" class="block text-gray-800 hover:text-primary font-medium">Products</a></li>
+                    <li><a href="about.html" class="block text-gray-800 hover:text-primary font-medium">About Us</a></li>
+                    <li><a href="contact.html" class="block text-gray-800 hover:text-primary font-medium">Contact</a></li>
+                    <li><a href="faq.html" class="block text-gray-800 hover:text-primary font-medium">FAQs</a></li>
+                    <li><a href="login.html" class="block text-gray-800 hover:text-primary font-medium">Login/Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="bg-primary py-8">
+        <div class="container mx-auto px-4 text-white">
+            <h1 class="text-3xl md:text-4xl font-bold">Checkout</h1>
+            <div class="flex items-center mt-2">
+                <a href="index.html" class="text-accent hover:text-yellow-300">Home</a>
+                <span class="mx-2"><i class="fas fa-chevron-right text-xs"></i></span>
+                <a href="cart.html" class="text-accent hover:text-yellow-300">Cart</a>
+                <span class="mx-2"><i class="fas fa-chevron-right text-xs"></i></span>
+                <span>Checkout</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Checkout Form (Left Side) -->
+                <div class="lg:w-2/3">
+                    <form id="checkout-form" class="space-y-6">
+                        <!-- Buyer Information -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="p-6">
+                                <h2 class="text-xl font-bold mb-4">Buyer Information</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="name" class="block text-gray-700 mb-1">Full Name *</label>
+                                        <input type="text" id="name" name="name" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                                    </div>
+                                    <div>
+                                        <label for="email" class="block text-gray-700 mb-1">Email Address *</label>
+                                        <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                                    </div>
+                                    <div>
+                                        <label for="phone" class="block text-gray-700 mb-1">Phone Number *</label>
+                                        <input type="tel" id="phone" name="phone" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                                    </div>
+                                    <div>
+                                        <label for="gstin" class="block text-gray-700 mb-1">GSTIN *</label>
+                                        <input type="text" id="gstin" name="gstin" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label for="business-name" class="block text-gray-700 mb-1">Business Name *</label>
+                                        <input type="text" id="business-name" name="business-name" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-gray-700 mb-1">Business Type *</label>
+                                        <div class="flex flex-wrap gap-4 mt-2">
+                                            <div class="custom-radio">
+                                                <input type="radio" id="salon" name="business-type" value="salon" required>
+                                                <label for="salon">Salon</label>
+                                            </div>
+                                            <div class="custom-radio">
+                                                <input type="radio" id="retailer" name="business-type" value="retailer">
+                                                <label for="retailer">Retailer</label>
+                                            </div>
+                                            <div class="custom-radio">
+                                                <input type="radio" id="distributor" name="business-type" value="distributor">
+                                                <label for="distributor">Distributor</label>
+                                            </div>
+                                            <div class="custom-radio">
+                                                <input type="radio" id="other" name="business-type" value="other">
+                                                <label for="other">Other</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Shipping Address -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="p-6">
+                                <h2 class="text-xl font-bold mb-4">Shipping Address</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="md:col-span-2">
+                                        <label for="street" class="block text-gray-700 mb-1">Street Address *</label>
+                                        <input type="text" id="street" name="street" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                                    </div>
+                                    <div>
+                                        <label for="city" class="block text-gray-700 mb-1">City *</label>
+                                        <input type="text" id="city" name="city" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                                    </div>
+                                    <div>
+                                        <label for="pincode" class="block text-gray-700 mb-1">PIN Code *</label>
+                                        <input type="text" id="pincode" name="pincode" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                                    </div>
+                                    <div>
+                                        <label for="state" class="block text-gray-700 mb-1">State *</label>
+                                        <select id="state" name="state" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                                            <option value="">Select State</option>
+                                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                            <option value="Assam">Assam</option>
+                                            <option value="Bihar">Bihar</option>
+                                            <option value="Chhattisgarh">Chhattisgarh</option>
+                                            <option value="Goa">Goa</option>
+                                            <option value="Gujarat">Gujarat</option>
+                                            <option value="Haryana">Haryana</option>
+                                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                            <option value="Jharkhand">Jharkhand</option>
+                                            <option value="Karnataka">Karnataka</option>
+                                            <option value="Kerala">Kerala</option>
+                                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                            <option value="Maharashtra">Maharashtra</option>
+                                            <option value="Manipur">Manipur</option>
+                                            <option value="Meghalaya">Meghalaya</option>
+                                            <option value="Mizoram">Mizoram</option>
+                                            <option value="Nagaland">Nagaland</option>
+                                            <option value="Odisha">Odisha</option>
+                                            <option value="Punjab">Punjab</option>
+                                            <option value="Rajasthan">Rajasthan</option>
+                                            <option value="Sikkim">Sikkim</option>
+                                            <option value="Tamil Nadu">Tamil Nadu</option>
+                                            <option value="Telangana">Telangana</option>
+                                            <option value="Tripura">Tripura</option>
+                                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                            <option value="Uttarakhand">Uttarakhand</option>
+                                            <option value="West Bengal">West Bengal</option>
+                                            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                            <option value="Chandigarh">Chandigarh</option>
+                                            <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                                            <option value="Delhi">Delhi</option>
+                                            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                            <option value="Ladakh">Ladakh</option>
+                                            <option value="Lakshadweep">Lakshadweep</option>
+                                            <option value="Puducherry">Puducherry</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="country" class="block text-gray-700 mb-1">Country</label>
+                                        <input type="text" id="country" name="country" value="India" class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-gray-100" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Delivery Options -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="p-6">
+                                <h2 class="text-xl font-bold mb-4">Delivery Options</h2>
+                                <div class="space-y-4">
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:border-primary transition duration-300">
+                                        <div class="custom-radio">
+                    
+                                    
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:border-primary transition duration-300">
+                                        <div class="custom-radio">
+                                            
+                                            <label for="express-delivery" class="font-medium">Express delivery</label>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mt-2 ml-7">Ad</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Options -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="p-6">
+                                <h2 class="text-xl font-bold mb-4">Payment Options</h2>
+                                <div class="space-y-4">
+                                   
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:border-primary transition duration-300">
+                                        <div class="custom-radio">
+                                            <input type="radio" id="credit-payment" name="payment" value="credit">
+                                            <label for="credit-payment" class="font-medium">Credit Payment (30% Upfront)</label>
+                                        </div>
+                                        <div class="ml-7 mt-2">
+                                            <p class="text-gray-600 text-sm">Pay 30% now and the rest upon delivery</p>
+                                            <div id="credit-details" class="mt-3 p-3 bg-gray-50 rounded-lg hidden">
+                                                <p class="text-sm font-medium">Credit Payment Details:</p>
+                                                <div class="flex justify-between mt-2">
+                                                    <span class="text-sm">Total Order Amount:</span>
+                                                    <span id="credit-total-amount" class="text-sm font-medium">₹0.00</span>
+                                                </div>
+                                                <div class="flex justify-between mt-1">
+                                                    <span class="text-sm">Upfront Payment (30%):</span>
+                                                    <span id="credit-upfront" class="text-sm font-medium">₹0.00</span>
+                                                </div>
+                                                <div class="flex justify-between mt-1">
+                                                    <span class="text-sm">Remaining Payment:</span>
+                                                    <span id="credit-remaining" class="text-sm font-medium">₹0.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- UPI Payment Option (Cashfree) -->
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:border-primary transition duration-300">
+                                        <div class="custom-radio">
+                                            <input type="radio" id="upi-payment" name="payment" value="upi">
+                                            <label for="upi-payment" class="font-medium">UPI Payment (Instant)</label>
+                                        </div>
+                                        <div class="ml-7 mt-2">
+                                            <p class="text-gray-600 text-sm">Pay instantly using any UPI app (PhonePe, Google Pay, BHIM, etc.)</p>
+                                            <div id="upi-details" class="mt-3 p-3 bg-gray-50 rounded-lg hidden">
+                                                <div class="space-y-4">
+                                                    <!-- Smart UPI Button -->
+                                                    <div class="text-center">
+                                                        <button type="button" id="smart-upi-btn" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                                                            <i class="fas fa-mobile-alt mr-2"></i>
+                                                            Pay with UPI - ₹<span id="upi-amount-btn">0.00</span>
+                                                        </button>
+                                                        <p class="text-xs text-gray-500 mt-2">Secure payment powered by Cashfree</p>
+                                                    </div>
+                                                    
+                                                    <!-- OR Divider -->
+                                                    <div class="flex items-center my-4">
+                                                        <div class="flex-1 border-t border-gray-300"></div>
+                                                        <span class="px-3 text-gray-500 text-sm">OR</span>
+                                                        <div class="flex-1 border-t border-gray-300"></div>
+                                                    </div>
+                                                    
+                                                    <!-- QR Code Fallback -->
+                                                    <div id="upi-qr-section" class="text-center p-4 border border-gray-200 rounded-lg bg-white">
+                                                        <p class="text-sm font-medium mb-3">Scan QR code with any UPI app</p>
+                                                        <div class="bg-gray-50 p-4 inline-block rounded-lg mb-3">
+                                                            <div id="upi-qr-code" class="w-48 h-48 mx-auto flex items-center justify-center">
+                                                                <div class="text-center">
+                                                                    <i class="fas fa-qrcode text-4xl text-gray-400 mb-2"></i>
+                                                                    <p class="text-gray-400 text-sm">QR Code will appear here</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="space-y-2">
+                                                            <p class="text-xs text-gray-600">UPI ID: <span class="font-medium text-blue-600">shubhamenterprise@okaxis</span></p>
+                                                            <p class="text-xs text-gray-600">Amount: ₹<span id="upi-amount-display" class="font-medium text-green-600">0.00</span></p>
+                                                            <p class="text-xs text-gray-500">Merchant: Shubham Enterprise</p>
+                                                        </div>
+                                                        <button type="button" id="generate-qr-btn" class="mt-3 bg-gray-600 hover:bg-gray-700 text-white text-sm py-2 px-4 rounded-lg transition duration-300">
+                                                            <i class="fas fa-sync-alt mr-1"></i>
+                                                            Generate QR Code
+                                                        </button>
+                                                    </div>
+                                                    
+                                                    <!-- Payment Status -->
+                                                    <div id="upi-payment-status" class="hidden p-3 rounded-lg">
+                                                        <div class="flex items-center justify-center">
+                                                            <div id="payment-spinner" class="hidden">
+                                                                <i class="fas fa-spinner fa-spin text-blue-500 mr-2"></i>
+                                                                <span class="text-blue-600">Processing payment...</span>
+                                                            </div>
+                                                            <div id="payment-success" class="hidden text-green-600">
+                                                                <i class="fas fa-check-circle mr-2"></i>
+                                                                <span>Payment successful!</span>
+                                                            </div>
+                                                            <div id="payment-failed" class="hidden text-red-600">
+                                                                <i class="fas fa-times-circle mr-2"></i>
+                                                                <span>Payment failed. Please try again.</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- WhatsApp Fallback -->
+                                                    <div class="text-center pt-3 border-t border-gray-200">
+                                                        <p class="text-xs text-gray-500 mb-2">Having trouble with payment?</p>
+                                                        <button type="button" id="whatsapp-quote-btn" class="bg-green-500 hover:bg-green-600 text-white text-sm py-2 px-4 rounded-lg transition duration-300">
+                                                            <i class="fab fa-whatsapp mr-1"></i>
+                                                            Request Quote on WhatsApp
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Place Order Button -->
+                        <div class="text-right">
+                            <button type="submit" id="place-order-btn" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-primary-dark transition duration-300">
+                                Place Order
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Order Summary (Right Side) -->
+                <div class="lg:w-1/3">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden sticky top-24">
+                        <div class="p-6">
+                            <h2 class="text-xl font-bold mb-6">Order Summary</h2>
+                            
+                            <!-- Cart Items -->
+                            <div id="checkout-items" class="space-y-4 mb-6 max-h-64 overflow-y-auto">
+                                <!-- Cart items will be dynamically inserted here -->
+                            </div>
+                            
+                            <!-- Summary Details -->
+                            <div class="space-y-3 border-t border-gray-200 pt-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Subtotal</span>
+                                    <span id="checkout-subtotal" class="font-medium">₹0.00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">GST (18%)</span>
+                                    <span id="checkout-gst" class="font-medium">₹0.00</span>
+                                </div>
+                                <div id="shipping-fee-container" class="flex justify-between hidden">
+                                    <span class="text-gray-600">Shipping Fee</span>
+                                    <span id="checkout-shipping" class="font-medium">₹0.00</span>
+                                </div>
+                                <div class="flex justify-between border-t border-gray-200 pt-3">
+                                    <span class="text-lg font-bold">Total</span>
+                                    <span id="checkout-total" class="text-lg font-bold text-primary">₹0.00</span>
+                                </div>
+                                <div id="upfront-payment-container" class="flex justify-between pt-2 hidden">
+                                    <span class="text-primary font-medium">Upfront Payment (30%)</span>
+                                    <span id="checkout-upfront" class="font-medium text-primary">₹0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Success Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-lg p-8 max-w-md w-full mx-4">
+            <div class="text-center">
+                <div class="bg-green-100 text-green-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check-circle text-3xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold mb-2">Order Placed Successfully!</h2>
+                <p class="text-gray-600 mb-6">Thank you for your order. We'll process it right away.</p>
+                <div class="bg-gray-50 rounded-lg p-4 text-left mb-6">
+                    <p class="font-medium">Order #<span id="order-number">12345</span></p>
+                    <p class="text-sm text-gray-600 mt-1">A confirmation email has been sent to <span id="order-email">your email</span></p>
+                    <div id="upi-payment-note" class="mt-3 pt-3 border-t border-gray-200 hidden">
+                        <p class="text-sm text-amber-600">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            <span>UPI Payment Status: <span id="upi-payment-status" class="font-medium">Pending Verification</span></span>
+                        </p>
+                        <p class="text-xs text-gray-500 mt-1">We'll verify your UPI payment and update the order status shortly. You'll receive a confirmation once verified.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="index.html" class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-300 transition duration-300 flex-1 text-center">
+                        Back to Home
+                    </a>
+                    <a href="orders.html" class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-primary-dark transition duration-300 flex-1 text-center">
+                        View Order
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Shubham Enterprise</h3>
+                    <p class="text-gray-400 mb-4">Premium wholesale cosmetics supplier for salons, retailers, and bulk resellers.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition duration-300">Products</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition duration-300">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Categories</h3>
+                    <ul class="space-y-2">
+                        <li><a href="products.html?category=skincare" class="text-gray-400 hover:text-white transition duration-300">Skincare</a></li>
+                        <li><a href="products.html?category=haircare" class="text-gray-400 hover:text-white transition duration-300">Haircare</a></li>
+                        <li><a href="products.html?category=makeup" class="text-gray-400 hover:text-white transition duration-300">Makeup</a></li>
+                        <li><a href="products.html?category=personal-hygiene" class="text-gray-400 hover:text-white transition duration-300">Personal Hygiene</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-accent"></i>
+                            <span class="text-gray-400">123 Business District, Mumbai, Maharashtra 400001</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2 text-accent"></i>
+                            <span class="text-gray-400">+91 9923416225
+                                
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-accent"></i>
+                            <span class="text-gray-400">info@shubhamenterprise.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock mr-2 text-accent"></i>
+                            <span class="text-gray-400">Mon-Sat: 9:00 AM - 6:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="border-gray-700 my-6">
+            
+            <!-- Bottom Footer -->
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">© 2025 Shubham Enterprise. All rights reserved.</p>
+                <div class="mt-4 md:mt-0">
+                    <ul class="flex space-x-4 text-sm">
+                        <li><a href="privacy-policy.html" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-white transition duration-300">Terms & Conditions</a></li>
+                        <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white transition duration-300">Shipping Policy</a></li>
+                        <li><a href="return-policy.html" class="text-gray-400 hover:text-white transition duration-300">Return Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/919XXXXXXXXX" class="fixed bottom-6 right-6 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition duration-300 z-50">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Configuration
+        const API_BASE_URL = 'http://localhost:3000/api';
+        const CASHFREE_ENVIRONMENT = 'sandbox'; // 'sandbox' or 'production'
+        
+        // Global variables
+        let cashfree;
+        let currentOrder = null;
+        let paymentSessionId = null;
+        
+        // Initialize Cashfree SDK
+        async function initializeCashfree() {
+            try {
+                cashfree = new Cashfree({
+                    mode: CASHFREE_ENVIRONMENT
+                });
+                console.log('✅ Cashfree SDK initialized');
+            } catch (error) {
+                console.error('❌ Failed to initialize Cashfree SDK:', error);
+                showToast('Failed to initialize payment system', 'error');
+            }
+        }
+        
+        // Toast notification system
+        function showToast(message, type = 'info', duration = 5000) {
+            const toast = document.createElement('div');
+            const bgColor = {
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500',
+                'info': 'bg-blue-500'
+            }[type] || 'bg-blue-500';
+            
+            const icon = {
+                'success': 'fas fa-check-circle',
+                'error': 'fas fa-times-circle',
+                'warning': 'fas fa-exclamation-triangle',
+                'info': 'fas fa-info-circle'
+            }[type] || 'fas fa-info-circle';
+            
+            toast.className = `${bgColor} text-white px-6 py-4 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full opacity-0`;
+            toast.innerHTML = `
+                <div class="flex items-center">
+                    <i class="${icon} mr-3"></i>
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('toast-container').appendChild(toast);
+            
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('translate-x-full', 'opacity-0');
+            }, 100);
+            
+            // Auto remove
+            setTimeout(() => {
+                toast.classList.add('translate-x-full', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+        
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+            });
+        }
+        
+        if (closeMenuButton) {
+            closeMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        }
+        
+        // Load cart from localStorage
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Update cart count
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                cartCountElement.textContent = cart.length;
+            }
+            
+            // If cart is empty, redirect to cart page
+            if (cart.length === 0) {
+                showToast('Your cart is empty. Redirecting to cart page...', 'warning');
+                setTimeout(() => {
+                    window.location.href = 'cart.html';
+                }, 2000);
+                return;
+            }
+            
+            // Populate checkout items
+            const checkoutItemsContainer = document.getElementById('checkout-items');
+            if (checkoutItemsContainer) {
+                checkoutItemsContainer.innerHTML = '';
+                
+                let subtotal = 0;
+                
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    subtotal += itemTotal;
+                    
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'flex justify-between items-center';
+                    itemElement.innerHTML = `
+                        <div class="flex items-center">
+                            <div class="h-10 w-10 bg-gray-200 rounded-md mr-3"></div>
+                            <div>
+                                <h4 class="font-medium text-sm">${item.name}</h4>
+                                <p class="text-xs text-gray-600">${item.quantity} × ₹${item.price}</p>
+                            </div>
+                        </div>
+                        <span class="font-medium">₹${itemTotal.toLocaleString()}</span>
+                    `;
+                    
+                    checkoutItemsContainer.appendChild(itemElement);
+                });
+                
+                // Calculate GST and total
+                const gst = subtotal * 0.18; // 18% GST
+                let total = subtotal + gst;
+                
+                // Update summary
+                document.getElementById('checkout-subtotal').textContent = `₹${subtotal.toLocaleString()}`;
+                document.getElementById('checkout-gst').textContent = `₹${gst.toLocaleString()}`;
+                document.getElementById('checkout-total').textContent = `₹${total.toLocaleString()}`;
+                
+                // Calculate credit payment details
+                const upfrontPayment = total * 0.3; // 30% upfront
+                const remainingPayment = total * 0.7; // 70% remaining
+                
+                document.getElementById('credit-total-amount').textContent = `₹${total.toLocaleString()}`;
+                document.getElementById('credit-upfront').textContent = `₹${upfrontPayment.toLocaleString()}`;
+                document.getElementById('credit-remaining').textContent = `₹${remainingPayment.toLocaleString()}`;
+                document.getElementById('checkout-upfront').textContent = `₹${upfrontPayment.toLocaleString()}`;
+                
+                // Update UPI amount displays
+                document.getElementById('upi-amount-btn').textContent = total.toLocaleString();
+                document.getElementById('upi-amount-display').textContent = total.toLocaleString();
+                
+                // Store order total for later use
+                window.orderTotal = total;
+                window.upfrontPayment = upfrontPayment;
+                window.cartItems = cart;
+            }
+        }
+        
+        // Handle delivery option change
+        const standardDelivery = document.getElementById('standard-delivery');
+        const expressDelivery = document.getElementById('express-delivery');
+        const shippingFeeContainer = document.getElementById('shipping-fee-container');
+        const checkoutShipping = document.getElementById('checkout-shipping');
+        
+        function updateTotal() {
+            const subtotal = parseFloat(document.getElementById('checkout-subtotal').textContent.replace('₹', '').replace(/,/g, ''));
+            const gst = parseFloat(document.getElementById('checkout-gst').textContent.replace('₹', '').replace(/,/g, ''));
+            let shippingFee = 0;
+            
+            if (expressDelivery && expressDelivery.checked) {
+                shippingFee = 500;
+                shippingFeeContainer.classList.remove('hidden');
+                checkoutShipping.textContent = `₹${shippingFee.toLocaleString()}`;
+            } else if (shippingFeeContainer) {
+                shippingFeeContainer.classList.add('hidden');
+            }
+            
+            const total = subtotal + gst + shippingFee;
+            document.getElementById('checkout-total').textContent = `₹${total.toLocaleString()}`;
+            
+            // Update credit payment details
+            const upfrontPayment = total * 0.3; // 30% upfront
+            const remainingPayment = total * 0.7; // 70% remaining
+            
+            document.getElementById('credit-total-amount').textContent = `₹${total.toLocaleString()}`;
+            document.getElementById('credit-upfront').textContent = `₹${upfrontPayment.toLocaleString()}`;
+            document.getElementById('credit-remaining').textContent = `₹${remainingPayment.toLocaleString()}`;
+            document.getElementById('checkout-upfront').textContent = `₹${upfrontPayment.toLocaleString()}`;
+            
+            // Update UPI amount displays
+            document.getElementById('upi-amount-btn').textContent = total.toLocaleString();
+            document.getElementById('upi-amount-display').textContent = total.toLocaleString();
+            
+            // Store order total for later use
+            window.orderTotal = total;
+            window.upfrontPayment = upfrontPayment;
+        }
+        
+        if (standardDelivery) standardDelivery.addEventListener('change', updateTotal);
+        if (expressDelivery) expressDelivery.addEventListener('change', updateTotal);
+        
+        // Handle payment option change
+        const fullPayment = document.getElementById('full-payment');
+        const creditPayment = document.getElementById('credit-payment');
+        const upiPayment = document.getElementById('upi-payment');
+        const creditDetails = document.getElementById('credit-details');
+        const upiDetails = document.getElementById('upi-details');
+        const upfrontPaymentContainer = document.getElementById('upfront-payment-container');
+        
+        // Payment method selection handlers
+        if (fullPayment) {
+            fullPayment.addEventListener('change', () => {
+                if (creditDetails) creditDetails.classList.add('hidden');
+                if (upiDetails) upiDetails.classList.add('hidden');
+                if (upfrontPaymentContainer) upfrontPaymentContainer.classList.add('hidden');
+            });
+        }
+        
+        if (creditPayment) {
+            creditPayment.addEventListener('change', () => {
+                if (creditDetails) creditDetails.classList.remove('hidden');
+                if (upiDetails) upiDetails.classList.add('hidden');
+                if (upfrontPaymentContainer) upfrontPaymentContainer.classList.remove('hidden');
+            });
+        }
+        
+        if (upiPayment) {
+            upiPayment.addEventListener('change', () => {
+                if (upiDetails) upiDetails.classList.remove('hidden');
+                if (creditDetails) creditDetails.classList.add('hidden');
+                if (upfrontPaymentContainer) upfrontPaymentContainer.classList.add('hidden');
+            });
+        }
+        
+        // Generate UPI QR Code
+        async function generateUpiQrCode() {
+            try {
+                const total = window.orderTotal || 0;
+                if (total <= 0) {
+                    showToast('Invalid order amount', 'error');
+                    return;
+                }
+                
+                const orderId = `ORDER_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+                
+                const response = await fetch(`${API_BASE_URL}/cashfree/upi-link/${orderId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success && data.data.qrCodeData) {
+                    // Display QR code (you would use a QR code library here)
+                    const qrCodeElement = document.getElementById('upi-qr-code');
+                    qrCodeElement.innerHTML = `
+                        <div class="text-center">
+                            <div class="bg-white p-2 rounded border">
+                                <img src="data:image/png;base64,${data.data.qrCodeData}" alt="UPI QR Code" class="w-full h-full">
+                            </div>
+                        </div>
+                    `;
+                    
+                    showToast('QR Code generated successfully', 'success');
+                } else {
+                    throw new Error(data.message || 'Failed to generate QR code');
+                }
+                
+            } catch (error) {
+                console.error('❌ QR Code generation error:', error);
+                showToast('Failed to generate QR code. Please try again.', 'error');
+                
+                // Fallback: Show manual UPI details
+                const qrCodeElement = document.getElementById('upi-qr-code');
+                qrCodeElement.innerHTML = `
+                    <div class="text-center p-4">
+                        <i class="fas fa-qrcode text-4xl text-gray-400 mb-2"></i>
+                        <p class="text-sm text-gray-600">QR Code unavailable</p>
+                        <p class="text-xs text-gray-500 mt-2">Please use manual UPI transfer</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Smart UPI Payment
+        async function initiateUpiPayment() {
+            try {
+                const smartUpiBtn = document.getElementById('smart-upi-btn');
+                const paymentStatus = document.getElementById('upi-payment-status');
+                const paymentSpinner = document.getElementById('payment-spinner');
+                
+                // Disable button and show loading
+                smartUpiBtn.disabled = true;
+                smartUpiBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+                paymentStatus.classList.remove('hidden');
+                paymentSpinner.classList.remove('hidden');
+                
+                // Get form data
+                const formData = new FormData(document.getElementById('checkout-form'));
+                const orderData = {
+                    customerName: formData.get('first-name') + ' ' + formData.get('last-name'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    amount: window.orderTotal,
+                    items: window.cartItems || [],
+                    businessInfo: {
+                        name: formData.get('business-name'),
+                        type: formData.get('business-type'),
+                        gstin: formData.get('gstin')
+                    },
+                    shippingAddress: {
+                        street: formData.get('street'),
+                        city: formData.get('city'),
+                        state: formData.get('state'),
+                        pincode: formData.get('pincode'),
+                        country: formData.get('country')
+                    },
+                    deliveryOption: formData.get('delivery'),
+                    paymentMethod: 'upi'
+                };
+                
+                // Create payment session
+                const response = await fetch(`${API_BASE_URL}/cashfree/pay`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.message || 'Failed to create payment session');
+                }
+                
+                currentOrder = data.data.order;
+                paymentSessionId = data.data.paymentSessionId;
+                
+                // Initialize Cashfree checkout
+                const checkoutOptions = {
+                    paymentSessionId: paymentSessionId,
+                    returnUrl: `${window.location.origin}/checkout.html?status=success&order_id=${currentOrder.orderId}`,
+                    redirectTarget: '_self'
+                };
+                
+                // Open Cashfree checkout
+                cashfree.checkout(checkoutOptions).then((result) => {
+                    if (result.error) {
+                        console.error('❌ Payment error:', result.error);
+                        showPaymentError(result.error.message || 'Payment failed');
+                    } else if (result.redirect) {
+                        console.log('✅ Payment initiated, redirecting...');
+                        showToast('Redirecting to payment...', 'info');
+                    }
+                }).catch((error) => {
+                    console.error('❌ Checkout error:', error);
+                    showPaymentError('Failed to open payment interface');
+                });
+                
+            } catch (error) {
+                console.error('❌ UPI payment error:', error);
+                showPaymentError(error.message || 'Payment initiation failed');
+            }
+        }
+        
+        // Show payment error
+        function showPaymentError(message) {
+            const smartUpiBtn = document.getElementById('smart-upi-btn');
+            const paymentStatus = document.getElementById('upi-payment-status');
+            const paymentSpinner = document.getElementById('payment-spinner');
+            const paymentFailed = document.getElementById('payment-failed');
+            
+            // Reset button
+            smartUpiBtn.disabled = false;
+            smartUpiBtn.innerHTML = '<i class="fas fa-mobile-alt mr-2"></i>Pay with UPI - ₹<span id="upi-amount-btn">' + (window.orderTotal || 0).toLocaleString() + '</span>';
+            
+            // Show error status
+            paymentSpinner.classList.add('hidden');
+            paymentFailed.classList.remove('hidden');
+            paymentFailed.querySelector('span').textContent = message;
+            
+            showToast(message, 'error');
+            
+            // Hide error after 5 seconds
+            setTimeout(() => {
+                paymentStatus.classList.add('hidden');
+                paymentFailed.classList.add('hidden');
+            }, 5000);
+        }
+        
+        // WhatsApp quote request
+        function requestWhatsAppQuote() {
+            const total = window.orderTotal || 0;
+            const items = window.cartItems || [];
+            
+            let message = `Hi! I'd like to request a quote for the following items:\n\n`;
+            
+            items.forEach(item => {
+                message += `• ${item.name} - Qty: ${item.quantity} - ₹${item.price}\n`;
+            });
+            
+            message += `\nTotal Amount: ₹${total.toLocaleString()}\n`;
+            message += `\nPlease provide me with payment options and delivery details.`;
+            
+            const whatsappUrl = `https://wa.me/919XXXXXXXXX?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            
+            showToast('Opening WhatsApp...', 'info');
+        }
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize
+            initializeCashfree();
+            loadCart();
+            
+            // Smart UPI button
+            const smartUpiBtn = document.getElementById('smart-upi-btn');
+            if (smartUpiBtn) {
+                smartUpiBtn.addEventListener('click', initiateUpiPayment);
+            }
+            
+            // Generate QR button
+            const generateQrBtn = document.getElementById('generate-qr-btn');
+            if (generateQrBtn) {
+                generateQrBtn.addEventListener('click', generateUpiQrCode);
+            }
+            
+            // WhatsApp quote button
+            const whatsappQuoteBtn = document.getElementById('whatsapp-quote-btn');
+            if (whatsappQuoteBtn) {
+                whatsappQuoteBtn.addEventListener('click', requestWhatsAppQuote);
+            }
+            
+            // Form submission
+            const checkoutForm = document.getElementById('checkout-form');
+            const successModal = document.getElementById('success-modal');
+            
+            if (checkoutForm) {
+                checkoutForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    // Validate form
+                    if (!checkoutForm.checkValidity()) {
+                        showToast('Please fill in all required fields', 'warning');
+                        return;
+                    }
+                    
+                    // Get selected payment method
+                    const paymentMethod = document.querySelector('input[name="payment"]:checked')?.value;
+                    
+                    if (!paymentMethod) {
+                        showToast('Please select a payment method', 'warning');
+                        return;
+                    }
+                    
+                    if (paymentMethod === 'upi') {
+                        // UPI payment is handled by the Smart UPI button
+                        showToast('Please use the "Pay with UPI" button above', 'info');
+                        return;
+                    }
+                    
+                    // Handle other payment methods
+                    try {
+                        // Generate order number
+                        const orderNumber = Math.floor(100000 + Math.random() * 900000);
+                        document.getElementById('order-number').textContent = orderNumber;
+                        
+                        // Set order email
+                        const email = document.getElementById('email').value;
+                        document.getElementById('order-email').textContent = email;
+                        
+                        // Show success modal
+                        successModal.classList.remove('hidden');
+                        
+                        // Clear cart
+                        localStorage.removeItem('cart');
+                        
+                        showToast('Order placed successfully!', 'success');
+                        
+                    } catch (error) {
+                        console.error('❌ Order submission error:', error);
+                        showToast('Failed to place order. Please try again.', 'error');
+                    }
+                });
+            }
+            
+            // Close success modal when clicking outside
+            if (successModal) {
+                successModal.addEventListener('click', (e) => {
+                    if (e.target === successModal) {
+                        successModal.classList.add('hidden');
+                    }
+                });
+            }
+            
+            // Check for payment status in URL (return from Cashfree)
+            const urlParams = new URLSearchParams(window.location.search);
+            const paymentStatus = urlParams.get('status');
+            const orderId = urlParams.get('order_id');
+            
+            if (paymentStatus && orderId) {
+                handlePaymentReturn(paymentStatus, orderId);
+            }
+        });
+        
+        // Handle payment return from Cashfree
+        async function handlePaymentReturn(status, orderId) {
+            try {
+                if (status === 'success') {
+                    // Verify payment status with backend
+                    const response = await fetch(`${API_BASE_URL}/orders/${orderId}`);
+                    const data = await response.json();
+                    
+                    if (data.success && data.data.status === 'paid') {
+                        // Show success modal
+                        document.getElementById('order-number').textContent = orderId;
+                        document.getElementById('upi-payment-note').classList.remove('hidden');
+                        document.getElementById('upi-payment-status').textContent = 'Confirmed';
+                        document.getElementById('success-modal').classList.remove('hidden');
+                        
+                        // Clear cart
+                        localStorage.removeItem('cart');
+                        
+                        showToast('Payment successful! Order confirmed.', 'success');
+                    } else {
+                        showToast('Payment verification pending. Please check your order status.', 'warning');
+                    }
+                } else {
+                    showToast('Payment was not completed. Please try again.', 'error');
+                }
+                
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+            } catch (error) {
+                console.error('❌ Payment verification error:', error);
+                showToast('Unable to verify payment status. Please contact support.', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Shubham Enterprise</title>
+    <meta name="description" content="Admin dashboard for managing products, orders, and users for Shubham Enterprise wholesale cosmetics platform.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#be185d', // rose
+                        accent: '#facc15', // gold
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Sidebar styles */
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+        
+        /* Form focus styles */
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #be185d;
+            ring: 2px;
+            ring-color: rgba(190, 24, 93, 0.2);
+        }
+        
+        /* Tab styles */
+        .tab-active {
+            background-color: #be185d;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar bg-gray-800 text-white w-64 min-h-screen fixed md:relative z-30">
+            <!-- Logo -->
+            <div class="p-4 border-b border-gray-700">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold">Shubham Enterprise</span>
+                </div>
+                <div class="text-xs text-gray-400 mt-1">Admin Dashboard</div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="mt-4">
+                <ul>
+                    <li>
+                        <a href="#dashboard" class="flex items-center px-4 py-3 bg-primary text-white">
+                            <i class="fas fa-tachometer-alt w-6"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#products" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-box w-6"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#orders" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-shopping-cart w-6"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#customers" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-users w-6"></i>
+                            <span>Customers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#inquiries" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-question-circle w-6"></i>
+                            <span>Inquiries</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#settings" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-cog w-6"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Logout -->
+            <div class="absolute bottom-0 w-full p-4 border-t border-gray-700">
+                <a href="index.html" class="flex items-center text-gray-300 hover:text-white transition duration-200">
+                    <i class="fas fa-store w-6"></i>
+                    <span>View Store</span>
+                </a>
+                <a href="#" id="logout-button" class="flex items-center mt-2 text-gray-300 hover:text-white transition duration-200">
+                    <i class="fas fa-sign-out-alt w-6"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Header -->
+            <header class="bg-white shadow-sm z-10">
+                <div class="flex items-center justify-between p-4">
+                    <!-- Mobile Menu Toggle -->
+                    <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <!-- Search Bar -->
+                    <div class="hidden md:flex items-center flex-1 mx-4">
+                        <div class="relative w-full max-w-md">
+                            <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- User Profile -->
+                    <div class="flex items-center">
+                        <div class="relative">
+                            <button id="profile-menu-button" class="flex items-center focus:outline-none">
+                                <div class="h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center mr-2">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <span class="hidden md:block font-medium">Admin User</span>
+                                <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                            </button>
+                            
+                            <!-- Profile Dropdown (Hidden by default) -->
+                            <div id="profile-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden">
+                                <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                    <i class="fas fa-user-circle mr-2"></i> Profile
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                    <i class="fas fa-cog mr-2"></i> Settings
+                                </a>
+                                <div class="border-t border-gray-200 my-1"></div>
+                                <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-100">
+                <!-- Dashboard Section -->
+                <section id="dashboard-section">
+                    <div class="mb-6">
+                        <h1 class="text-2xl font-bold text-gray-800">Dashboard</h1>
+                        <p class="text-gray-600">Welcome back, Admin User</p>
+                    </div>
+                    
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                        <!-- Total Sales -->
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-blue-100 p-3 mr-4">
+                                    <i class="fas fa-rupee-sign text-blue-500"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-gray-500 text-sm">Total Sales</h3>
+                                    <p class="text-2xl font-bold">₹1,25,000</p>
+                                    <p class="text-green-500 text-xs mt-1">
+                                        <i class="fas fa-arrow-up mr-1"></i> 12% from last month
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Orders -->
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-green-100 p-3 mr-4">
+                                    <i class="fas fa-shopping-cart text-green-500"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-gray-500 text-sm">Orders</h3>
+                                    <p class="text-2xl font-bold">45</p>
+                                    <p class="text-green-500 text-xs mt-1">
+                                        <i class="fas fa-arrow-up mr-1"></i> 8% from last month
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Customers -->
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-purple-100 p-3 mr-4">
+                                    <i class="fas fa-users text-purple-500"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-gray-500 text-sm">Customers</h3>
+                                    <p class="text-2xl font-bold">128</p>
+                                    <p class="text-green-500 text-xs mt-1">
+                                        <i class="fas fa-arrow-up mr-1"></i> 5% from last month
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Products -->
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-yellow-100 p-3 mr-4">
+                                    <i class="fas fa-box text-yellow-500"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-gray-500 text-sm">Products</h3>
+                                    <p class="text-2xl font-bold">85</p>
+                                    <p class="text-green-500 text-xs mt-1">
+                                        <i class="fas fa-arrow-up mr-1"></i> 3% from last month
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Orders & Top Products -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <!-- Recent Orders -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="p-6 border-b border-gray-200">
+                                <h2 class="text-lg font-bold">Recent Orders</h2>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-5142</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">Beauty Salon</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">₹12,500</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Delivered</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-5141</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">Glamour Store</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">₹8,750</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Processing</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-5140</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">Style Hub</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">₹15,200</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Confirmed</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-5139</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">Glow Cosmetics</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">₹9,300</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Delivered</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-5138</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">Radiance Beauty</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">₹6,800</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Cancelled</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="p-4 border-t border-gray-200 text-right">
+                                <a href="#orders" class="text-primary hover:underline text-sm font-medium">View All Orders</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Top Products -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="p-6 border-b border-gray-200">
+                                <h2 class="text-lg font-bold">Top Selling Products</h2>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sales</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">Moisturizing Cream</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">Skincare</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">₹450</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">128 units</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">Hair Serum</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">Haircare</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">₹350</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">112 units</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">Facial Cleanser</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">Skincare</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">₹280</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">95 units</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">Lipstick Set</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">Makeup</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">₹550</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">87 units</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">Body Lotion</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">Personal Hygiene</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">₹320</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">76 units</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="p-4 border-t border-gray-200 text-right">
+                                <a href="#products" class="text-primary hover:underline text-sm font-medium">View All Products</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Inquiries -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+                        <div class="p-6 border-b border-gray-200">
+                            <h2 class="text-lg font-bold">Recent Inquiries</h2>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">Rahul Sharma</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">rahul@example.com</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">+91 9876543210</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">Bulk Order Inquiry</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">2023-07-15</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">Priya Patel</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">priya@example.com</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">+91 9876543211</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">Product Availability</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">2023-07-14</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Responded</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">Amit Kumar</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">amit@example.com</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">+91 9876543212</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">Credit Payment Terms</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">2023-07-13</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Responded</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 border-t border-gray-200 text-right">
+                            <a href="#inquiries" class="text-primary hover:underline text-sm font-medium">View All Inquiries</a>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="toast-message">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/orders.js"></script>
+    <script src="js/admin.js"></script>
+    
+    <script>
+        // Mobile Sidebar Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const sidebar = document.getElementById('sidebar');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+        
+        // Profile Dropdown Toggle
+        const profileMenuButton = document.getElementById('profile-menu-button');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        
+        profileMenuButton.addEventListener('click', () => {
+            profileDropdown.classList.toggle('hidden');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!profileMenuButton.contains(e.target) && !profileDropdown.contains(e.target)) {
+                profileDropdown.classList.add('hidden');
+            }
+        });
+        
+        // Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.remove('translate-x-full');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+        
+        // Logout Button
+        const logoutButton = document.getElementById('logout-button');
+        
+        logoutButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Show confirmation dialog
+            if (confirm('Are you sure you want to logout?')) {
+                // Use Auth module to logout
+                if (window.ShubhamAuth) {
+                    window.ShubhamAuth.logout();
+                } else {
+                    localStorage.removeItem('adminUser');
+                }
+                
+                // Redirect to login page
+                window.location.href = 'admin-login.html';
+            }
+        });
+        
+        // Navigation Links
+        const navLinks = document.querySelectorAll('nav a');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Remove active class from all links
+                navLinks.forEach(l => {
+                    l.classList.remove('bg-primary', 'text-white');
+                    l.classList.add('text-gray-300', 'hover:bg-gray-700', 'hover:text-white');
+                });
+                
+                // Add active class to clicked link
+                link.classList.add('bg-primary', 'text-white');
+                link.classList.remove('text-gray-300', 'hover:bg-gray-700', 'hover:text-white');
+                
+                // On mobile, close sidebar after clicking a link
+                if (window.innerWidth < 768) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        });
+        
+        // Initialize admin dashboard if admin.js is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.ShubhamAdmin) {
+                // Check if user is admin
+                window.ShubhamAdmin.requireAdmin();
+                
+                // Update dashboard stats with dynamic data
+                const dashboardStats = window.ShubhamAdmin.getDashboardStats();
+                
+                // You can update specific elements with the dynamic data
+                // This is just an example - you would need to adapt this to your actual dashboard structure
+                if (dashboardStats) {
+                    // Update any elements that should display dynamic data
+                    console.log('Dashboard stats loaded:', dashboardStats);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

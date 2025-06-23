@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inquiries Management - Shubham Enterprise</title>
+    <meta name="description" content="Admin inquiries management for Shubham Enterprise wholesale cosmetics platform.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#be185d', // rose
+                        accent: '#facc15', // gold
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Sidebar styles */
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+        
+        /* Form focus styles */
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #be185d;
+            ring: 2px;
+            ring-color: rgba(190, 24, 93, 0.2);
+        }
+        
+        /* Status badge styles */
+        .status-badge {
+            @apply px-2 py-1 rounded-full text-xs font-medium;
+        }
+        
+        .status-new {
+            @apply bg-blue-100 text-blue-800;
+        }
+        
+        .status-inprogress {
+            @apply bg-yellow-100 text-yellow-800;
+        }
+        
+        .status-resolved {
+            @apply bg-green-100 text-green-800;
+        }
+        
+        .status-closed {
+            @apply bg-gray-100 text-gray-800;
+        }
+        
+        /* Priority badge styles */
+        .priority-badge {
+            @apply px-2 py-1 rounded-full text-xs font-medium;
+        }
+        
+        .priority-low {
+            @apply bg-gray-100 text-gray-800;
+        }
+        
+        .priority-medium {
+            @apply bg-yellow-100 text-yellow-800;
+        }
+        
+        .priority-high {
+            @apply bg-red-100 text-red-800;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar bg-gray-800 text-white w-64 min-h-screen fixed md:relative z-30">
+            <!-- Logo -->
+            <div class="p-4 border-b border-gray-700">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold">Shubham Enterprise</span>
+                </div>
+                <div class="text-xs text-gray-400 mt-1">Admin Dashboard</div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="mt-4">
+                <ul>
+                    <li>
+                        <a href="admin-dashboard.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-tachometer-alt w-6"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-products.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-box w-6"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-orders.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-shopping-cart w-6"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-customers.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-users w-6"></i>
+                            <span>Customers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-inquiries.html" class="flex items-center px-4 py-3 bg-primary text-white">
+                            <i class="fas fa-question-circle w-6"></i>
+                            <span>Inquiries</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-settings.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-cog w-6"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Logout -->
+            <div class="absolute bottom-0 w-full p-4 border-t border-gray-700">
+                <a href="index.html" class="flex items-center text-gray-300 hover:text-white transition duration-200">
+                    <i class="fas fa-store w-6"></i>
+                    <span>View Store</span>
+                </a>
+                <a href="#" id="logout-button" class="flex items-center mt-2 text-gray-300 hover:text-white transition duration-200">
+                    <i class="fas fa-sign-out-alt w-6"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Header -->
+            <header class="bg-white shadow-sm z-10">
+                <div class="flex items-center justify-between p-4">
+                    <!-- Mobile Menu Toggle -->
+                    <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <!-- Search Bar -->
+                    <div class="hidden md:flex items-center flex-1 mx-4">
+                        <div class="relative w-full max-w-md">
+                            <input type="text" id="inquiry-search" placeholder="Search inquiries..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Export Button -->
+                    <button id="export-inquiries" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition duration-200 flex items-center">
+                        <i class="fas fa-download mr-2"></i>
+                        <span class="hidden md:inline">Export</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-100">
+                <!-- Inquiries Section -->
+                <section id="inquiries-section">
+                    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-800">Inquiries Management</h1>
+                            <p class="text-gray-600">View and manage customer inquiries</p>
+                        </div>
+                        
+                        <!-- Filter & Sort -->
+                        <div class="mt-4 md:mt-0 flex flex-col sm:flex-row gap-2">
+                            <select id="status-filter" class="border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                                <option value="">All Statuses</option>
+                                <option value="new">New</option>
+                                <option value="inprogress">In Progress</option>
+                                <option value="resolved">Resolved</option>
+                                <option value="closed">Closed</option>
+                            </select>
+                            
+                            <select id="priority-filter" class="border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                                <option value="">All Priorities</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                            
+                            <select id="sort-inquiries" class="border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                                <option value="date-desc">Date (Newest)</option>
+                                <option value="date-asc">Date (Oldest)</option>
+                                <option value="priority-desc">Priority (High to Low)</option>
+                                <option value="priority-asc">Priority (Low to High)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Inquiries Table -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="inquiries-table-body" class="divide-y divide-gray-200">
+                                    <!-- Inquiry rows will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Empty State -->
+                        <div id="empty-state" class="hidden p-8 text-center">
+                            <div class="text-gray-400 mb-4">
+                                <i class="fas fa-inbox text-5xl"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-800 mb-1">No inquiries found</h3>
+                            <p class="text-gray-600">Try adjusting your search or filter to find what you're looking for.</p>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                            <div class="text-sm text-gray-600">
+                                Showing <span id="showing-start">1</span> to <span id="showing-end">10</span> of <span id="total-inquiries">0</span> inquiries
+                            </div>
+                            <div class="flex space-x-2">
+                                <button id="prev-page" class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button id="next-page" class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Inquiry Detail Modal -->
+    <div id="inquiry-detail-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h2 id="modal-title" class="text-xl font-bold">Inquiry Details</h2>
+                <button id="close-modal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Inquiry Details Content -->
+            <div id="inquiry-details" class="p-6">
+                <!-- Inquiry Info -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Basic Info -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-lg font-medium mb-3">Inquiry Information</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">ID:</span>
+                                <span id="detail-id" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Subject:</span>
+                                <span id="detail-subject" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Date:</span>
+                                <span id="detail-date" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Status:</span>
+                                <span id="detail-status" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Priority:</span>
+                                <span id="detail-priority" class="font-medium"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Customer Info -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-lg font-medium mb-3">Customer Information</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Name:</span>
+                                <span id="detail-name" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Email:</span>
+                                <span id="detail-email" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Phone:</span>
+                                <span id="detail-phone" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Business:</span>
+                                <span id="detail-business" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Customer Type:</span>
+                                <span id="detail-customer-type" class="font-medium"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Message Content -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <h3 class="text-lg font-medium mb-3">Message</h3>
+                    <div id="detail-message" class="text-gray-700 whitespace-pre-line"></div>
+                </div>
+                
+                <!-- Response Section -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <h3 class="text-lg font-medium mb-3">Response</h3>
+                    <textarea id="inquiry-response" class="w-full p-3 border border-gray-300 rounded-lg" rows="4" placeholder="Type your response here..."></textarea>
+                    <div class="flex justify-end mt-2">
+                        <button id="save-response" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition duration-200">
+                            Send Response
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Notes -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <h3 class="text-lg font-medium mb-3">Internal Notes</h3>
+                    <textarea id="inquiry-notes" class="w-full p-3 border border-gray-300 rounded-lg" rows="3" placeholder="Add internal notes about this inquiry..."></textarea>
+                    <div class="flex justify-end mt-2">
+                        <button id="save-notes" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition duration-200">
+                            Save Notes
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex justify-end space-x-3">
+                    <button id="update-priority-button" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200 flex items-center">
+                        <i class="fas fa-flag mr-2"></i>
+                        Update Priority
+                    </button>
+                    <button id="update-status-button" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        Update Status
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Status Modal -->
+    <div id="update-status-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h2 class="text-xl font-bold">Update Inquiry Status</h2>
+                <button id="close-status-modal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Status Form -->
+            <div class="p-6">
+                <div class="mb-4">
+                    <label for="update-inquiry-status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select id="update-inquiry-status" class="w-full p-2 border border-gray-300 rounded-lg">
+                        <option value="new">New</option>
+                        <option value="inprogress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="status-reason" class="block text-sm font-medium text-gray-700 mb-1">Reason for Status Change (Optional)</label>
+                    <textarea id="status-reason" class="w-full p-2 border border-gray-300 rounded-lg" rows="3"></textarea>
+                </div>
+                
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button id="cancel-status-update" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
+                        Cancel
+                    </button>
+                    <button id="confirm-status-update" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition duration-200">
+                        Update Status
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Priority Modal -->
+    <div id="update-priority-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h2 class="text-xl font-bold">Update Inquiry Priority</h2>
+                <button id="close-priority-modal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Priority Form -->
+            <div class="p-6">
+                <div class="mb-4">
+                    <label for="update-inquiry-priority" class="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+                    <select id="update-inquiry-priority" class="w-full p-2 border border-gray-300 rounded-lg">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button id="cancel-priority-update" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
+                        Cancel
+                    </button>
+                    <button id="confirm-priority-update" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition duration-200">
+                        Update Priority
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="toast-message">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Sample inquiry data (in a real app, this would come from a database)
+        let inquiries = [
+            {
+                id: 'INQ-1001',
+                subject: 'Product Availability Inquiry',
+                message: 'Hello, I am interested in purchasing your skincare products in bulk for my salon. Do you have the complete range of facial cleansers and moisturizers available? Also, what is the minimum order quantity for wholesale purchases?\n\nI would appreciate information on pricing tiers and delivery timeframes to Mumbai.\n\nThank you,\nRajesh',
+                date: '2023-07-15',
+                status: 'new',
+                priority: 'medium',
+                customer: {
+                    name: 'Rajesh Kumar',
+                    email: 'rajesh@example.com',
+                    phone: '+91 9876543210',
+                    business: 'Beauty Salon',
+                    type: 'Existing Customer'
+                },
+                response: '',
+                notes: ''
+            },
+            {
+                id: 'INQ-1002',
+                subject: 'Bulk Order Discount Request',
+                message: 'Dear Shubham Enterprise,\n\nI run a chain of beauty stores in Bangalore and I am looking to place a large order of your makeup products. I am particularly interested in your lipstick and foundation ranges.\n\nCould you please provide information about any special discounts available for orders above ₹100,000? Also, do you offer any promotional materials or display stands for retailers?\n\nBest regards,\nNeha Gupta',
+                date: '2023-07-14',
+                status: 'inprogress',
+                priority: 'high',
+                customer: {
+                    name: 'Neha Gupta',
+                    email: 'neha@example.com',
+                    phone: '+91 9876543213',
+                    business: 'Glow Cosmetics',
+                    type: 'Existing Customer'
+                },
+                response: 'Dear Neha,\n\nThank you for your interest in our products. We do offer special discounts for bulk orders exceeding ₹100,000. I will prepare a detailed quotation and send it to you shortly.\n\nRegards,\nAdmin',
+                notes: 'High-value potential order. Prepare special discount package and include information about our new display stands.'
+            },
+            {
+                id: 'INQ-1003',
+                subject: 'Product Quality Concern',
+                message: 'Hello,\n\nI recently received an order of hair care products (Order #ORD-5120) and noticed that some of the shampoo bottles were leaking during transit. Could you please advise on the return process or if replacements can be sent?\n\nThank you,\nPriya Patel',
+                date: '2023-07-13',
+                status: 'resolved',
+                priority: 'high',
+                customer: {
+                    name: 'Priya Patel',
+                    email: 'priya@example.com',
+                    phone: '+91 9876543211',
+                    business: 'Glamour Store',
+                    type: 'Existing Customer'
+                },
+                response: 'Dear Priya,\n\nWe sincerely apologize for the inconvenience caused. We have processed a replacement order for the damaged items, which will be shipped priority. You should receive them within 2-3 business days. There is no need to return the damaged items.\n\nPlease let us know if you have any other concerns.\n\nBest regards,\nAdmin',
+                notes: 'Issue resolved. Replacement order #ORD-5145 processed on July 14th.'
+            },
+            {
+                id: 'INQ-1004',
+                subject: 'New Product Inquiry',
+                message: 'Hi there,\n\nI saw on social media that you might be launching a new organic skincare line. As a retailer focusing on natural and organic products, I would be very interested in learning more about this range, including ingredients, pricing, and launch dates.\n\nIs there any information you can share at this stage?\n\nThanks,\nAkash Sharma',
+                date: '2023-07-12',
+                status: 'inprogress',
+                priority: 'medium',
+                customer: {
+                    name: 'Akash Sharma',
+                    email: 'akash@example.com',
+                    phone: '+91 9876543220',
+                    business: 'Natural Beauty Store',
+                    type: 'Potential Customer'
+                },
+                response: '',
+                notes: 'Forward to marketing team for information about the upcoming organic line launch.'
+            },
+            {
+                id: 'INQ-1005',
+                subject: 'Credit Payment Terms',
+                message: 'Dear Team,\n\nIve been a customer for over a year now and would like to inquire about your credit payment terms. Currently, I am on the 30% advance payment plan, but I am wondering if there are options for extended payment terms for long-term customers with good payment history.\n\nLooking forward to your response.\n\nRegards,\nAmit Shah',
+                date: '2023-07-10',
+                status: 'new',
+                priority: 'low',
+                customer: {
+                    name: 'Amit Shah',
+                    email: 'amit@example.com',
+                    phone: '+91 9876543212',
+                    business: 'Style Hub',
+                    type: 'Existing Customer'
+                },
+                response: '',
+                notes: ''
+            },
+            {
+                id: 'INQ-1006',
+                subject: 'Wholesale Partnership Opportunity',
+                message: 'Hello Shubham Enterprise,\n\nI represent a new chain of beauty supply stores opening across Delhi NCR. We are looking for reliable wholesale suppliers of quality cosmetics and personal care products.\n\nCould we schedule a meeting to discuss a potential partnership? I\'d like to learn more about your product range, pricing structure, and delivery capabilities for multiple store locations.\n\nBest regards,\nSunita Verma\nProcurement Manager\nGlam Supply Chain',
+                date: '2023-07-09',
+                status: 'inprogress',
+                priority: 'high',
+                customer: {
+                    name: 'Sunita Verma',
+                    email: 'sunita@example.com',
+                    phone: '+91 9876543225',
+                    business: 'Glam Supply Chain',
+                    type: 'Potential Customer'
+                },
+                response: 'Dear Sunita,\n\nThank you for your interest in partnering with Shubham Enterprise. We would be delighted to schedule a meeting to discuss wholesale opportunities for your new chain.\n\nHow does next Tuesday at 11:00 AM work for you? We can arrange either an in-person meeting at our office or a video call, whichever is more convenient.\n\nI\'ll prepare a presentation of our product catalog and wholesale terms for the meeting.\n\nLooking forward to your response.\n\nBest regards,\nAdmin',
+                notes: 'High-potential new business opportunity. Prepare comprehensive presentation for the meeting.'
+            },
+            {
+                id: 'INQ-1007', 
+                subject: 'Website Technical Issue',
+                message: 'Hi,\n\nI\'m trying to place an order on your website but keep getting an error at the checkout page. The error says "Unable to process payment at this time." I\'ve tried multiple times over the past two days.\n\nCan you please help resolve this issue? I\'m eager to complete my purchase.\n\nThanks,\nVikram Singh',
+                date: '2023-07-08',
+                status: 'closed',
+                priority: 'medium',
+                customer: {
+                    name: 'Vikram Singh',
+                    email: 'vikram@example.com',
+                    phone: '+91 9876543216',
+                    business: 'Royal Salon',
+                    type: 'Existing Customer'
+                },
+                response: 'Dear Vikram,\n\nThank you for bringing this to our attention. Our technical team has identified and fixed the issue with our payment gateway.\n\nPlease try placing your order again. As a token of apology for the inconvenience, weve added a 5% discount coupon to your account which will be automatically applied at checkout.\n\nIf you encounter any further issues, please dont hesitate to contact us.\n\nBest regards,\nAdmin',
+                notes: 'Issue was with payment gateway integration. Fixed on July 9th. Added 5% discount coupon to customer account.'
+            }
+        ];
+        
+        // DOM Elements
+        const inquiriesTableBody = document.getElementById('inquiries-table-body');
+        const emptyState = document.getElementById('empty-state');
+        const inquiryDetailModal = document.getElementById('inquiry-detail-modal');
+        const updateStatusModal = document.getElementById('update-status-modal');
+        const updatePriorityModal = document.getElementById('update-priority-modal');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        const inquirySearch = document.getElementById('inquiry-search');
+        const statusFilter = document.getElementById('status-filter');
+        const priorityFilter = document.getElementById('priority-filter');
+        const sortInquiries = document.getElementById('sort-inquiries');
+        const showingStart = document.getElementById('showing-start');
+        const showingEnd = document.getElementById('showing-end');
+        const totalInquiries = document.getElementById('total-inquiries');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        
+        // Pagination state
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let filteredInquiries = [...inquiries];
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if admin is logged in
+            const adminUser = localStorage.getItem('adminUser');
+            if (!adminUser) {
+                window.location.href = 'admin-login.html';
+                return;
+            }
+            
+            // Load inquiries
+            renderInquiries();
+            updatePagination();
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+        
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const sidebar = document.getElementById('sidebar');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+            
+            // Export button
+            document.getElementById('export-inquiries').addEventListener('click', () => {
+                exportInquiries();
+            });
+            
+            // Close modals
+            document.getElementById('close-modal').addEventListener('click', () => {
+                inquiryDetailModal.classList.add('hidden');
+            });
+            
+            document.getElementById('close-status-modal').addEventListener('click', () => {
+                updateStatusModal.classList.add('hidden');
+            });
+            
+            document.getElementById('cancel-status-update').addEventListener('click', () => {
+                updateStatusModal.classList.add('hidden');
+            });
+            
+            document.getElementById('close-priority-modal').addEventListener('click', () => {
+                updatePriorityModal.classList.add('hidden');
+            });
+            
+            document.getElementById('cancel-priority-update').addEventListener('click', () => {
+                updatePriorityModal.classList.add('hidden');
+            });
+            
+            // Update Status button
+            document.getElementById('update-status-button').addEventListener('click', () => {
+                const inquiryId = document.getElementById('update-status-button').dataset.inquiryId;
+                const inquiry = inquiries.find(i => i.id === inquiryId);
+                
+                if (inquiry) {
+                    document.getElementById('update-inquiry-status').value = inquiry.status;
+                    document.getElementById('confirm-status-update').dataset.inquiryId = inquiryId;
+                    updateStatusModal.classList.remove('hidden');
+                }
+            });
+            
+            // Update Priority button
+            document.getElementById('update-priority-button').addEventListener('click', () => {
+                const inquiryId = document.getElementById('update-priority-button').dataset.inquiryId;
+                const inquiry = inquiries.find(i => i.id === inquiryId);
+                
+                if (inquiry) {
+                    document.getElementById('update-inquiry-priority').value = inquiry.priority;
+                    document.getElementById('confirm-priority-update').dataset.inquiryId = inquiryId;
+                    updatePriorityModal.classList.remove('hidden');
+                }
+            });
+            
+            // Confirm Status Update
+            document.getElementById('confirm-status-update').addEventListener('click', () => {
+                const inquiryId = document.getElementById('confirm-status-update').dataset.inquiryId;
+                const newStatus = document.getElementById('update-inquiry-status').value;
+                const reason = document.getElementById('status-reason').value;
+                
+                updateInquiryStatus(inquiryId, newStatus, reason);
+            });
+            
+            // Confirm Priority Update
+            document.getElementById('confirm-priority-update').addEventListener('click', () => {
+                const inquiryId = document.getElementById('confirm-priority-update').dataset.inquiryId;
+                const newPriority = document.getElementById('update-inquiry-priority').value;
+                
+                updateInquiryPriority(inquiryId, newPriority);
+            });
+            
+            // Save Response
+            document.getElementById('save-response').addEventListener('click', () => {
+                const inquiryId = document.getElementById('save-response').dataset.inquiryId;
+                const response = document.getElementById('inquiry-response').value;
+                
+                saveInquiryResponse(inquiryId, response);
+            });
+            
+            // Save Notes
+            document.getElementById('save-notes').addEventListener('click', () => {
+                const inquiryId = document.getElementById('save-notes').dataset.inquiryId;
+                const notes = document.getElementById('inquiry-notes').value;
+                
+                saveInquiryNotes(inquiryId, notes);
+            });
+            
+            // Search and filter
+            inquirySearch.addEventListener('input', handleSearch);
+            statusFilter.addEventListener('change', handleFilter);
+            priorityFilter.addEventListener('change', handleFilter);
+            sortInquiries.addEventListener('change', handleSort);
+            
+            // Pagination
+            prevPageBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderInquiries();
+                    updatePagination();
+                }
+            });
+            
+            nextPageBtn.addEventListener('click', () => {
+                const totalPages = Math.ceil(filteredInquiries.length / itemsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderInquiries();
+                    updatePagination();
+                }
+            });
+            
+            // Logout button
+            const logoutButton = document.getElementById('logout-button');
+            logoutButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('adminUser');
+                    window.location.href = 'admin-login.html';
+                }
+            });
+        }
+        
+        // Render Inquiries Table
+        function renderInquiries() {
+            // Apply filters and sorting
+            applyFiltersAndSort();
+            
+            // Clear the table
+            inquiriesTableBody.innerHTML = '';
+            
+            // Check if there are inquiries
+            if (filteredInquiries.length === 0) {
+                emptyState.classList.remove('hidden');
+                document.querySelector('table').classList.add('hidden');
+                return;
+            }
+            
+            // Show the table, hide empty state
+            emptyState.classList.add('hidden');
+            document.querySelector('table').classList.remove('hidden');
+            
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredInquiries.length);
+            const paginatedInquiries = filteredInquiries.slice(startIndex, endIndex);
+            
+            // Render each inquiry row
+            paginatedInquiries.forEach(inquiry => {
+                const row = document.createElement('tr');
+                
+                // Format date
+                const inquiryDate = new Date(inquiry.date);
+                const formattedDate = inquiryDate.toLocaleDateString('en-IN', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                // Get status and priority badge classes
+                const statusClass = `status-${inquiry.status.toLowerCase()}`;
+                const priorityClass = `priority-${inquiry.priority.toLowerCase()}`;
+                
+                // Truncate subject if too long
+                const truncatedSubject = inquiry.subject.length > 30 ? 
+                    inquiry.subject.substring(0, 30) + '...' : 
+                    inquiry.subject;
+                
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${inquiry.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">${inquiry.customer.name}</div>
+                        <div class="text-sm text-gray-500">${inquiry.customer.email}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">${truncatedSubject}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formattedDate}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="status-badge ${statusClass}">
+                            ${capitalizeFirstLetter(inquiry.status)}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="priority-badge ${priorityClass}">
+                            ${capitalizeFirstLetter(inquiry.priority)}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button class="text-primary hover:text-primary/80" onclick="viewInquiryDetails('${inquiry.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="text-blue-600 hover:text-blue-700" onclick="quickReply('${inquiry.id}')">
+                                <i class="fas fa-reply"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                inquiriesTableBody.appendChild(row);
+            });
+        }
+        
+        // Update pagination info and buttons
+        function updatePagination() {
+            const totalItems = filteredInquiries.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            const startIndex = (currentPage - 1) * itemsPerPage + 1;
+            const endIndex = Math.min(startIndex + itemsPerPage - 1, totalItems);
+            
+            // Update text
+            showingStart.textContent = totalItems > 0 ? startIndex : 0;
+            showingEnd.textContent = endIndex;
+            totalInquiries.textContent = totalItems;
+            
+            // Update button states
+            prevPageBtn.disabled = currentPage <= 1;
+            nextPageBtn.disabled = currentPage >= totalPages;
+            
+            // Add visual indication for disabled buttons
+            if (prevPageBtn.disabled) {
+                prevPageBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                prevPageBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+            
+            if (nextPageBtn.disabled) {
+                nextPageBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                nextPageBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+        
+        // Apply filters and sorting
+        function applyFiltersAndSort() {
+            const searchTerm = inquirySearch.value.toLowerCase();
+            const statusValue = statusFilter.value;
+            const priorityValue = priorityFilter.value;
+            const sortValue = sortInquiries.value;
+            
+            // Filter by search term, status, and priority
+            filteredInquiries = inquiries.filter(inquiry => {
+                // Search term filter
+                const matchesSearch = 
+                    inquiry.id.toLowerCase().includes(searchTerm) ||
+                    inquiry.subject.toLowerCase().includes(searchTerm) ||
+                    inquiry.message.toLowerCase().includes(searchTerm) ||
+                    inquiry.customer.name.toLowerCase().includes(searchTerm) ||
+                    inquiry.customer.email.toLowerCase().includes(searchTerm) ||
+                    inquiry.customer.business.toLowerCase().includes(searchTerm);
+                    
+                // Status filter
+                const matchesStatus = statusValue === '' || inquiry.status === statusValue;
+                
+                // Priority filter
+                const matchesPriority = priorityValue === '' || inquiry.priority === priorityValue;
+                
+                return matchesSearch && matchesStatus && matchesPriority;
+            });
+            
+            // Sort inquiries
+            filteredInquiries.sort((a, b) => {
+                switch (sortValue) {
+                    case 'date-desc':
+                        return new Date(b.date) - new Date(a.date);
+                    case 'date-asc':
+                        return new Date(a.date) - new Date(b.date);
+                    case 'priority-desc':
+                        return getPriorityValue(b.priority) - getPriorityValue(a.priority);
+                    case 'priority-asc':
+                        return getPriorityValue(a.priority) - getPriorityValue(b.priority);
+                    default:
+                        return 0;
+                }
+            });
+            
+            // Reset to first page when filters change
+            currentPage = 1;
+        }
+        
+        // Helper function to convert priority to numeric value for sorting
+        function getPriorityValue(priority) {
+            switch (priority) {
+                case 'high': return 3;
+                case 'medium': return 2;
+                case 'low': return 1;
+                default: return 0;
+            }
+        }
+        
+        // Handle search input
+        function handleSearch() {
+            renderInquiries();
+            updatePagination();
+        }
+        
+        // Handle filter change
+        function handleFilter() {
+            renderInquiries();
+            updatePagination();
+        }
+        
+        // Handle sort change
+        function handleSort() {
+            renderInquiries();
+            updatePagination();
+        }
+        
+        // View Inquiry Details
+        function viewInquiryDetails(inquiryId) {
+            const inquiry = inquiries.find(i => i.id === inquiryId);
+            if (!inquiry) return;
+            
+            // Set inquiry details in modal
+            document.getElementById('detail-id').textContent = inquiry.id;
+            document.getElementById('detail-subject').textContent = inquiry.subject;
+            
+            // Format date
+            const inquiryDate = new Date(inquiry.date);
+            const formattedDate = inquiryDate.toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('detail-date').textContent = formattedDate;
+            
+            // Set status with badge
+            const statusElement = document.getElementById('detail-status');
+            statusElement.textContent = capitalizeFirstLetter(inquiry.status);
+            statusElement.className = `status-badge ${`status-${inquiry.status.toLowerCase()}`}`;
+            
+            // Set priority with badge
+            const priorityElement = document.getElementById('detail-priority');
+            priorityElement.textContent = capitalizeFirstLetter(inquiry.priority);
+            priorityElement.className = `priority-badge ${`priority-${inquiry.priority.toLowerCase()}`}`;
+            
+            // Set customer info
+            document.getElementById('detail-name').textContent = inquiry.customer.name;
+            document.getElementById('detail-email').textContent = inquiry.customer.email;
+            document.getElementById('detail-phone').textContent = inquiry.customer.phone;
+            document.getElementById('detail-business').textContent = inquiry.customer.business;
+            document.getElementById('detail-customer-type').textContent = inquiry.customer.type;
+            
+            // Set message
+            document.getElementById('detail-message').textContent = inquiry.message;
+            
+            // Set response and notes
+            document.getElementById('inquiry-response').value = inquiry.response || '';
+            document.getElementById('inquiry-notes').value = inquiry.notes || '';
+            
+            // Store inquiry ID for actions
+            document.getElementById('update-status-button').dataset.inquiryId = inquiry.id;
+            document.getElementById('update-priority-button').dataset.inquiryId = inquiry.id;
+            document.getElementById('save-response').dataset.inquiryId = inquiry.id;
+            document.getElementById('save-notes').dataset.inquiryId = inquiry.id;
+            
+            // Show modal
+            inquiryDetailModal.classList.remove('hidden');
+        }
+        
+        // Quick Reply (opens the detail modal with focus on response)
+        function quickReply(inquiryId) {
+            viewInquiryDetails(inquiryId);
+            
+            // Focus on response textarea
+            setTimeout(() => {
+                document.getElementById('inquiry-response').focus();
+            }, 100);
+        }
+        
+        // Update Inquiry Status
+        function updateInquiryStatus(inquiryId, newStatus, reason) {
+            const index = inquiries.findIndex(i => i.id === inquiryId);
+            if (index !== -1) {
+                inquiries[index].status = newStatus;
+                
+                // Add reason to notes if provided
+                if (reason) {
+                    const date = new Date().toLocaleDateString('en-IN');
+                    const statusNote = `[${date}] Status changed to ${newStatus}: ${reason}`;
+                    
+                    if (inquiries[index].notes) {
+                        inquiries[index].notes += '\n\n' + statusNote;
+                    } else {
+                        inquiries[index].notes = statusNote;
+                    }
+                    
+                    // Update notes in modal if open
+                    document.getElementById('inquiry-notes').value = inquiries[index].notes;
+                }
+                
+                showToast(`Inquiry status updated to ${capitalizeFirstLetter(newStatus)}`);
+                
+                // Close status modal
+                updateStatusModal.classList.add('hidden');
+                
+                // Update status in detail modal
+                const statusElement = document.getElementById('detail-status');
+                statusElement.textContent = capitalizeFirstLetter(newStatus);
+                statusElement.className = `status-badge ${`status-${newStatus.toLowerCase()}`}`;
+                
+                // Refresh table
+                renderInquiries();
+                updatePagination();
+            }
+        }
+        
+        // Update Inquiry Priority
+        function updateInquiryPriority(inquiryId, newPriority) {
+            const index = inquiries.findIndex(i => i.id === inquiryId);
+            if (index !== -1) {
+                inquiries[index].priority = newPriority;
+                
+                showToast(`Inquiry priority updated to ${capitalizeFirstLetter(newPriority)}`);
+                
+                // Close priority modal
+                updatePriorityModal.classList.add('hidden');
+                
+                // Update priority in detail modal
+                const priorityElement = document.getElementById('detail-priority');
+                priorityElement.textContent = capitalizeFirstLetter(newPriority);
+                priorityElement.className = `priority-badge ${`priority-${newPriority.toLowerCase()}`}`;
+                
+                // Refresh table
+                renderInquiries();
+                updatePagination();
+            }
+        }
+        
+        // Save Inquiry Response
+        function saveInquiryResponse(inquiryId, response) {
+            const index = inquiries.findIndex(i => i.id === inquiryId);
+            if (index !== -1) {
+                inquiries[index].response = response;
+                
+                // If response is provided and status is 'new', update to 'inprogress'
+                if (response && inquiries[index].status === 'new') {
+                    inquiries[index].status = 'inprogress';
+                    
+                    // Update status in detail modal
+                    const statusElement = document.getElementById('detail-status');
+                    statusElement.textContent = 'In Progress';
+                    statusElement.className = 'status-badge status-inprogress';
+                }
+                
+                showToast('Response saved successfully');
+                
+                // Refresh table
+                renderInquiries();
+                updatePagination();
+            }
+        }
+        
+        // Save Inquiry Notes
+        function saveInquiryNotes(inquiryId, notes) {
+            const index = inquiries.findIndex(i => i.id === inquiryId);
+            if (index !== -1) {
+                inquiries[index].notes = notes;
+                showToast('Notes saved successfully');
+            }
+        }
+        
+        // Export Inquiries (placeholder function)
+        function exportInquiries() {
+            // In a real app, this would generate a CSV or Excel file
+            showToast('Exporting inquiries... This would download a file in a real application.', 'info');
+        }
+        
+        // Helper Functions
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            
+            // Set toast color based on type
+            if (type === 'success') {
+                toast.classList.remove('bg-red-500', 'bg-blue-500');
+                toast.classList.add('bg-green-500');
+            } else if (type === 'error') {
+                toast.classList.remove('bg-green-500', 'bg-blue-500');
+                toast.classList.add('bg-red-500');
+            } else if (type === 'info') {
+                toast.classList.remove('bg-green-500', 'bg-red-500');
+                toast.classList.add('bg-blue-500');
+            }
+            
+            // Show toast
+            toast.classList.remove('translate-x-full');
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+        
+        // Make functions available globally
+        window.viewInquiryDetails = viewInquiryDetails;
+        window.quickReply = quickReply;
+    </script>
+</body>
+</html>

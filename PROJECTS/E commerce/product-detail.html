@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - Shubham Enterprise</title>
+    <meta name="description" content="View detailed information about our wholesale cosmetic products including pricing tiers, minimum order quantities, and shipping details.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#be185d', // rose
+                        accent: '#facc15', // gold
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Image zoom effect */
+        .zoom-container {
+            overflow: hidden;
+        }
+        
+        .zoom-image {
+            transition: transform 0.5s ease;
+        }
+        
+        .zoom-container:hover .zoom-image {
+            transform: scale(1.1);
+        }
+        
+        /* Carousel indicators */
+        .carousel-indicator {
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-indicator.active {
+            border-color: #be185d;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header/Navbar -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary">
+                        <span class="text-primary">Shubham</span> <span class="text-accent">Enterprise</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-6">
+                    <a href="index.html" class="text-gray-800 hover:text-primary font-medium">Home</a>
+                    <a href="products.html" class="text-primary font-medium border-b-2 border-primary">Products</a>
+                    <a href="about.html" class="text-gray-800 hover:text-primary font-medium">About Us</a>
+                    <a href="contact.html" class="text-gray-800 hover:text-primary font-medium">Contact</a>
+                    <a href="faq.html" class="text-gray-800 hover:text-primary font-medium">FAQs</a>
+                </nav>
+                
+                <!-- Right Side Icons -->
+                <div class="flex items-center space-x-4">
+                    <a href="cart.html" class="text-gray-800 hover:text-primary relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <a href="login.html" class="text-gray-800 hover:text-primary">
+                        <i class="fas fa-user text-xl"></i>
+                    </a>
+                    <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 md:hidden">
+            <div class="p-4 border-b">
+                <div class="flex justify-between items-center">
+                    <span class="text-xl font-bold text-primary">Menu</span>
+                    <button id="close-menu-button" class="text-gray-800 hover:text-primary">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <nav class="p-4">
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="block text-gray-800 hover:text-primary font-medium">Home</a></li>
+                    <li><a href="products.html" class="block text-primary font-medium">Products</a></li>
+                    <li><a href="about.html" class="block text-gray-800 hover:text-primary font-medium">About Us</a></li>
+                    <li><a href="contact.html" class="block text-gray-800 hover:text-primary font-medium">Contact</a></li>
+                    <li><a href="faq.html" class="block text-gray-800 hover:text-primary font-medium">FAQs</a></li>
+                    <li><a href="login.html" class="block text-gray-800 hover:text-primary font-medium">Login/Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-100 py-3">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center text-sm">
+                <a href="index.html" class="text-gray-600 hover:text-primary">Home</a>
+                <span class="mx-2"><i class="fas fa-chevron-right text-xs text-gray-400"></i></span>
+                <a href="products.html" class="text-gray-600 hover:text-primary">Products</a>
+                <span class="mx-2"><i class="fas fa-chevron-right text-xs text-gray-400"></i></span>
+                <span class="text-primary" id="product-breadcrumb-name">Premium Face Cream</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Section -->
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="md:flex">
+                    <!-- Product Images (Left Side) -->
+                    <div class="md:w-1/2 p-6">
+                        <!-- Main Image with Zoom -->
+                        <div class="zoom-container rounded-lg overflow-hidden mb-4 border border-gray-200">
+                            <img id="main-product-image" src="https://via.placeholder.com/600x600" alt="Premium Face Cream" class="w-full h-auto zoom-image">
+                        </div>
+                        
+                        <!-- Thumbnail Images -->
+                        <div class="grid grid-cols-4 gap-2">
+                            <div class="carousel-indicator active border-2 border-transparent rounded-md overflow-hidden cursor-pointer">
+                                <img src="https://via.placeholder.com/150x150" alt="Product thumbnail 1" class="w-full h-auto" onclick="changeImage(this.src)">
+                            </div>
+                            <div class="carousel-indicator border-2 border-transparent rounded-md overflow-hidden cursor-pointer">
+                                <img src="https://via.placeholder.com/150x150?text=Image+2" alt="Product thumbnail 2" class="w-full h-auto" onclick="changeImage(this.src)">
+                            </div>
+                            <div class="carousel-indicator border-2 border-transparent rounded-md overflow-hidden cursor-pointer">
+                                <img src="https://via.placeholder.com/150x150?text=Image+3" alt="Product thumbnail 3" class="w-full h-auto" onclick="changeImage(this.src)">
+                            </div>
+                            <div class="carousel-indicator border-2 border-transparent rounded-md overflow-hidden cursor-pointer">
+                                <img src="https://via.placeholder.com/150x150?text=Image+4" alt="Product thumbnail 4" class="w-full h-auto" onclick="changeImage(this.src)">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Details (Right Side) -->
+                    <div class="md:w-1/2 p-6 md:border-l border-gray-200">
+                        <!-- Product Title and Badge -->
+                        <div class="flex justify-between items-start mb-2">
+                            <h1 id="product-title" class="text-2xl md:text-3xl font-bold text-gray-800">Premium Face Cream</h1>
+                            <span class="bg-accent text-gray-900 text-xs font-bold px-2 py-1 rounded">Best Seller</span>
+                        </div>
+                        
+                        <!-- Brand and Category -->
+                        <div class="mb-4">
+                            <span id="product-brand" class="text-gray-600">Brand: <span class="font-medium">Glamour Pro</span></span>
+                            <span class="mx-2">|</span>
+                            <span id="product-category" class="text-gray-600">Category: <span class="font-medium">Skincare</span></span>
+                        </div>
+                        
+                        <!-- Short Description -->
+                        <p id="product-short-desc" class="text-gray-700 mb-6">A premium quality face cream specially formulated for professional salon use. Enriched with natural ingredients that nourish and hydrate the skin.</p>
+                        
+                        <!-- MOQ-based Tier Pricing Table -->
+                        <div class="mb-6">
+                            <h3 class="font-semibold text-lg mb-2">Wholesale Pricing</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full border-collapse">
+                                    <thead>
+                                        <tr class="bg-gray-100">
+                                            <th class="py-2 px-3 text-left text-sm font-semibold text-gray-700 border border-gray-200">Quantity</th>
+                                            <th class="py-2 px-3 text-left text-sm font-semibold text-gray-700 border border-gray-200">Price Per Unit</th>
+                                            <th class="py-2 px-3 text-left text-sm font-semibold text-gray-700 border border-gray-200">Savings</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="py-2 px-3 text-sm border border-gray-200">12-49 units</td>
+                                            <td class="py-2 px-3 text-sm font-medium text-primary border border-gray-200">₹140/unit</td>
+                                            <td class="py-2 px-3 text-sm border border-gray-200">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-3 text-sm border border-gray-200">50-99 units</td>
+                                            <td class="py-2 px-3 text-sm font-medium text-primary border border-gray-200">₹125/unit</td>
+                                            <td class="py-2 px-3 text-sm text-green-600 border border-gray-200">Save ₹15/unit</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-3 text-sm border border-gray-200">100+ units</td>
+                                            <td class="py-2 px-3 text-sm font-medium text-primary border border-gray-200">₹110/unit</td>
+                                            <td class="py-2 px-3 text-sm text-green-600 border border-gray-200">Save ₹30/unit</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-2">Minimum Order Quantity (MOQ): <span id="product-moq" class="font-medium">12 units</span></p>
+                        </div>
+                        
+                        <!-- Quantity Selector -->
+                        <div class="mb-6">
+                            <label for="quantity" class="block font-medium text-gray-700 mb-2">Quantity:</label>
+                            <div class="flex">
+                                <button id="decrease-quantity" class="bg-gray-200 px-3 py-2 rounded-l-lg hover:bg-gray-300 transition duration-300">-</button>
+                                <input type="number" id="quantity" min="12" value="12" class="w-20 text-center border-t border-b border-gray-300 py-2">
+                                <button id="increase-quantity" class="bg-gray-200 px-3 py-2 rounded-r-lg hover:bg-gray-300 transition duration-300">+</button>
+                            </div>
+                            <p id="quantity-price" class="mt-2 text-sm text-gray-600">Total: <span class="font-medium">₹1,680</span> (12 units × ₹140)</p>
+                        </div>
+                        
+                        <!-- Add to Cart and Request Quote Buttons -->
+                        <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 mb-6">
+                            <button id="add-to-cart-btn" class="flex-1 bg-primary text-white py-3 px-6 rounded-lg hover:bg-primary-dark transition duration-300 flex items-center justify-center">
+                                <i class="fas fa-shopping-cart mr-2"></i> Add to Cart
+                            </button>
+                            <a href="https://wa.me/919XXXXXXXXX" class="flex-1 bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600 transition duration-300 flex items-center justify-center">
+                                <i class="fab fa-whatsapp mr-2"></i> Request Quote
+                            </a>
+                        </div>
+                        
+                        <!-- Credit/Payment Preview -->
+                        <div class="bg-gray-100 p-4 rounded-lg mb-6">
+                            <h3 class="font-semibold text-lg mb-2">Payment Options</h3>
+                            <div class="space-y-2">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <div>
+                                        <p class="font-medium">Full Advance Payment</p>
+                                        <p class="text-sm text-gray-600">Pay the entire amount upfront</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <div>
+                                        <p class="font-medium">Credit Option (For Registered Buyers)</p>
+                                        <p class="text-sm text-gray-600">30% advance payment, remaining within 30 days</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Shipping Info -->
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-2">Shipping Information</h3>
+                            <div class="space-y-2">
+                                <div class="flex items-start">
+                                    <i class="fas fa-truck text-primary mt-1 mr-2"></i>
+                                    <div>
+                                        <p class="font-medium">Free Shipping</p>
+                                        <p class="text-sm text-gray-600">On orders above ₹5,000</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-box text-primary mt-1 mr-2"></i>
+                                    <div>
+                                        <p class="font-medium">Standard Delivery</p>
+                                        <p class="text-sm text-gray-600">3-5 business days</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-bolt text-primary mt-1 mr-2"></i>
+                                    <div>
+                                        <p class="font-medium">Express Delivery</p>
+                                        <p class="text-sm text-gray-600">1-2 business days (additional charges apply)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product Details Tabs -->
+            <div class="mt-8 bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="border-b border-gray-200">
+                    <div class="flex overflow-x-auto">
+                        <button class="tab-button active px-6 py-3 font-medium text-primary border-b-2 border-primary" data-tab="description">Description</button>
+                        <button class="tab-button px-6 py-3 font-medium text-gray-600 hover:text-primary" data-tab="specifications">Specifications</button>
+                        <button class="tab-button px-6 py-3 font-medium text-gray-600 hover:text-primary" data-tab="reviews">Reviews</button>
+                    </div>
+                </div>
+                
+                <!-- Tab Content -->
+                <div class="p-6">
+                    <!-- Description Tab -->
+                    <div id="description-tab" class="tab-content active">
+                        <h3 class="text-xl font-semibold mb-4">Product Description</h3>
+                        <div class="prose max-w-none">
+                            <p class="mb-4">Our Premium Face Cream is specially formulated for professional salon use, providing deep hydration and nourishment to all skin types. This luxurious cream is enriched with natural ingredients that help improve skin texture and appearance.</p>
+                            
+                            <p class="mb-4">The unique blend of vitamins, antioxidants, and essential oils works together to:</p>
+                            
+                            <ul class="list-disc pl-5 mb-4 space-y-2">
+                                <li>Deeply hydrate and moisturize the skin</li>
+                                <li>Improve skin elasticity and firmness</li>
+                                <li>Reduce the appearance of fine lines and wrinkles</li>
+                                <li>Protect against environmental damage</li>
+                                <li>Promote a radiant and youthful complexion</li>
+                            </ul>
+                            
+                            <p class="mb-4">Perfect for salon treatments, this cream can be used as part of facial treatments, massages, and daily skincare routines. Its lightweight, non-greasy formula absorbs quickly into the skin, leaving it feeling soft, smooth, and rejuvenated.</p>
+                            
+                            <p>Available in bulk quantities for salons, spas, and beauty professionals, our Premium Face Cream is a must-have addition to your skincare inventory.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Specifications Tab -->
+                    <div id="specifications-tab" class="tab-content hidden">
+                        <h3 class="text-xl font-semibold mb-4">Product Specifications</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="bg-gray-50 px-4 py-2 font-medium">Product Details</div>
+                                <div class="p-4 space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Product Type</span>
+                                        <span>Face Cream</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Size</span>
+                                        <span>100ml</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Shelf Life</span>
+                                        <span>24 months</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Country of Origin</span>
+                                        <span>India</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="bg-gray-50 px-4 py-2 font-medium">Ingredients</div>
+                                <div class="p-4 space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Key Ingredients</span>
+                                        <span>Aloe Vera, Vitamin E, Jojoba Oil</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Skin Type</span>
+                                        <span>All Skin Types</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Fragrance</span>
+                                        <span>Mild, Natural</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Paraben Free</span>
+                                        <span>Yes</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="bg-gray-50 px-4 py-2 font-medium">Packaging</div>
+                                <div class="p-4 space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Packaging Type</span>
+                                        <span>Jar</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Units per Box</span>
+                                        <span>12</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Box Dimensions</span>
+                                        <span>30cm × 25cm × 15cm</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Weight per Unit</span>
+                                        <span>120g</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="bg-gray-50 px-4 py-2 font-medium">Usage & Storage</div>
+                                <div class="p-4 space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Application</span>
+                                        <span>Facial, Massage</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Frequency</span>
+                                        <span>Daily</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Storage</span>
+                                        <span>Cool, Dry Place</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Temperature</span>
+                                        <span>Below 30°C</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reviews Tab -->
+                    <div id="reviews-tab" class="tab-content hidden">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-semibold">Customer Reviews</h3>
+                            <div class="flex items-center">
+                                <div class="flex mr-2">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star-half-alt text-yellow-400"></i>
+                                </div>
+                                <span class="text-gray-600">4.5/5 (24 reviews)</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Review List -->
+                        <div class="space-y-6">
+                            <!-- Review 1 -->
+                            <div class="border-b border-gray-200 pb-6">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h4 class="font-medium">Priya's Beauty Salon</h4>
+                                        <div class="flex text-yellow-400 text-sm mt-1">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm text-gray-500">2 months ago</span>
+                                </div>
+                                <p class="text-gray-700">We've been using this face cream in our salon for the past 3 months and our clients absolutely love it! The texture is perfect for facial massages and it leaves the skin feeling hydrated and refreshed. Will definitely reorder.</p>
+                            </div>
+                            
+                            <!-- Review 2 -->
+                            <div class="border-b border-gray-200 pb-6">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h4 class="font-medium">Glamour World</h4>
+                                        <div class="flex text-yellow-400 text-sm mt-1">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm text-gray-500">1 month ago</span>
+                                </div>
+                                <p class="text-gray-700">Good quality product at a competitive price. Our customers have given positive feedback about the results. The only improvement could be in the packaging - a pump dispenser would make it more convenient for salon use.</p>
+                            </div>
+                            
+                            <!-- Review 3 -->
+                            <div>
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h4 class="font-medium">Beauty Express Store</h4>
+                                        <div class="flex text-yellow-400 text-sm mt-1">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm text-gray-500">2 weeks ago</span>
+                                </div>
+                                <p class="text-gray-700">Fast delivery and excellent product quality. The cream has a pleasant fragrance and absorbs well into the skin. We've seen a significant increase in facial treatment bookings since we started using this product. The tiered pricing is also great for bulk orders.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Related Products -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold mb-6">Related Products</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Related Product 1 -->
+                    <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                        <div class="relative">
+                            <div class="h-48 bg-gray-200"></div>
+                            <div class="hover-actions absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center space-x-2 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                <a href="product-detail.html?id=5" class="bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <button class="add-to-cart-related bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300" data-id="5" data-name="Hydrating Face Mask" data-price="160" data-moq="15">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Hydrating Face Mask</h3>
+                            <p class="text-gray-600 text-sm mb-2">Skincare</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-primary font-bold">₹160</span>
+                                    <span class="text-gray-500 text-sm">/unit</span>
+                                </div>
+                                <div class="text-sm text-gray-600">MOQ: 15 units</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Related Product 2 -->
+                    <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                        <div class="relative">
+                            <div class="h-48 bg-gray-200"></div>
+                            <div class="hover-actions absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center space-x-2 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                <a href="product-detail.html?id=9" class="bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <button class="add-to-cart-related bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300" data-id="9" data-name="Facial Cleanser" data-price="110" data-moq="18">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Facial Cleanser</h3>
+                            <p class="text-gray-600 text-sm mb-2">Skincare</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-primary font-bold">₹110</span>
+                                    <span class="text-gray-500 text-sm">/unit</span>
+                                </div>
+                                <div class="text-sm text-gray-600">MOQ: 18 units</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Related Product 3 -->
+                    <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                        <div class="relative">
+                            <div class="h-48 bg-gray-200"></div>
+                            <div class="hover-actions absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center space-x-2 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                <a href="product-detail.html?id=10" class="bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <button class="add-to-cart-related bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300" data-id="10" data-name="Skin Toner" data-price="95" data-moq="20">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Skin Toner</h3>
+                            <p class="text-gray-600 text-sm mb-2">Skincare</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-primary font-bold">₹95</span>
+                                    <span class="text-gray-500 text-sm">/unit</span>
+                                </div>
+                                <div class="text-sm text-gray-600">MOQ: 20 units</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Related Product 4 -->
+                    <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                        <div class="relative">
+                            <div class="h-48 bg-gray-200"></div>
+                            <div class="hover-actions absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center space-x-2 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                <a href="product-detail.html?id=11" class="bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <button class="add-to-cart-related bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300" data-id="11" data-name="Anti-Aging Serum" data-price="210" data-moq="10">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Anti-Aging Serum</h3>
+                            <p class="text-gray-600 text-sm mb-2">Skincare</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-primary font-bold">₹210</span>
+                                    <span class="text-gray-500 text-sm">/unit</span>
+                                </div>
+                                <div class="text-sm text-gray-600">MOQ: 10 units</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Shubham Enterprise</h3>
+                    <p class="text-gray-400 mb-4">Premium wholesale cosmetics supplier for salons, retailers, and bulk resellers.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition duration-300">Products</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition duration-300">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Categories</h3>
+                    <ul class="space-y-2">
+                        <li><a href="products.html?category=skincare" class="text-gray-400 hover:text-white transition duration-300">Skincare</a></li>
+                        <li><a href="products.html?category=haircare" class="text-gray-400 hover:text-white transition duration-300">Haircare</a></li>
+                        <li><a href="products.html?category=makeup" class="text-gray-400 hover:text-white transition duration-300">Makeup</a></li>
+                        <li><a href="products.html?category=personal-hygiene" class="text-gray-400 hover:text-white transition duration-300">Personal Hygiene</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-accent"></i>
+                            <span class="text-gray-400">123 Business District, Mumbai, Maharashtra 400001</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2 text-accent"></i>
+                            <span class="text-gray-400">+91 9XXXXXXXXX</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-accent"></i>
+                            <span class="text-gray-400">info@shubhamenterprise.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock mr-2 text-accent"></i>
+                            <span class="text-gray-400">Mon-Sat: 9:00 AM - 6:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="border-gray-700 my-6">
+            
+            <!-- Bottom Footer -->
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">© 2023 Shubham Enterprise. All rights reserved.</p>
+                <div class="mt-4 md:mt-0">
+                    <ul class="flex space-x-4 text-sm">
+                        <li><a href="privacy-policy.html" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-white transition duration-300">Terms & Conditions</a></li>
+                        <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white transition duration-300">Shipping Policy</a></li>
+                        <li><a href="return-policy.html" class="text-gray-400 hover:text-white transition duration-300">Return Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/919XXXXXXXXX" class="fixed bottom-6 right-6 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition duration-300 z-50">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="toast-message">Item added to cart!</span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+        
+        closeMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+        
+        // Product Image Carousel
+        function changeImage(src) {
+            document.getElementById('main-product-image').src = src;
+            
+            // Update active indicator
+            document.querySelectorAll('.carousel-indicator').forEach(indicator => {
+                indicator.classList.remove('active');
+                if (indicator.querySelector('img').src === src) {
+                    indicator.classList.add('active');
+                }
+            });
+        }
+        
+        // Tab Switching
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active', 'border-primary', 'text-primary'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active', 'border-primary', 'text-primary');
+                
+                // Show corresponding content
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.remove('hidden');
+            });
+        });
+        
+        // Quantity Selector
+        const quantityInput = document.getElementById('quantity');
+        const decreaseBtn = document.getElementById('decrease-quantity');
+        const increaseBtn = document.getElementById('increase-quantity');
+        const quantityPrice = document.getElementById('quantity-price');
+        const moq = 12; // Minimum Order Quantity
+        
+        // Update price based on quantity and tier
+        function updatePrice() {
+            const quantity = parseInt(quantityInput.value);
+            let pricePerUnit;
+            
+            // Determine price tier based on quantity
+            if (quantity >= 100) {
+                pricePerUnit = 110;
+            } else if (quantity >= 50) {
+                pricePerUnit = 125;
+            } else {
+                pricePerUnit = 140;
+            }
+            
+            const totalPrice = quantity * pricePerUnit;
+            quantityPrice.innerHTML = `Total: <span class="font-medium">₹${totalPrice.toLocaleString()}</span> (${quantity} units × ₹${pricePerUnit})`;
+        }
+        
+        // Decrease quantity button
+        decreaseBtn.addEventListener('click', () => {
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > moq) {
+                quantityInput.value = currentValue - 1;
+                updatePrice();
+            }
+        });
+        
+        // Increase quantity button
+        increaseBtn.addEventListener('click', () => {
+            let currentValue = parseInt(quantityInput.value);
+            quantityInput.value = currentValue + 1;
+            updatePrice();
+        });
+        
+        // Manual input change
+        quantityInput.addEventListener('change', () => {
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue < moq) {
+                quantityInput.value = moq;
+            }
+            updatePrice();
+        });
+        
+        // Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.remove('translate-x-full');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+        
+        // Add to Cart Button
+        document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+            const productId = '1'; // This would be dynamic in a real implementation
+            const productName = document.getElementById('product-title').textContent;
+            const quantity = parseInt(quantityInput.value);
+            
+            // Determine price tier based on quantity
+            let pricePerUnit;
+            if (quantity >= 100) {
+                pricePerUnit = 110;
+            } else if (quantity >= 50) {
+                pricePerUnit = 125;
+            } else {
+                pricePerUnit = 140;
+            }
+            
+            // Get existing cart or initialize empty array
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if product already in cart
+            const existingProductIndex = cart.findIndex(item => item.id === productId);
+            
+            if (existingProductIndex >= 0) {
+                // Update quantity if product exists
+                cart[existingProductIndex].quantity = quantity;
+                cart[existingProductIndex].price = pricePerUnit;
+            } else {
+                // Add new product to cart
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: pricePerUnit,
+                    moq: moq,
+                    quantity: quantity
+                });
+            }
+            
+            // Save cart to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Show toast notification
+            showToast(`Added ${quantity} units of ${productName} to cart`);
+        });
+        
+        // Add to Cart for Related Products
+        const addToCartRelatedButtons = document.querySelectorAll('.add-to-cart-related');
+        
+        addToCartRelatedButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const productId = button.getAttribute('data-id');
+                const productName = button.getAttribute('data-name');
+                const productPrice = parseFloat(button.getAttribute('data-price'));
+                const productMOQ = parseInt(button.getAttribute('data-moq'));
+                
+                // Get existing cart or initialize empty array
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                
+                // Check if product already in cart
+                const existingProductIndex = cart.findIndex(item => item.id === productId);
+                
+                if (existingProductIndex >= 0) {
+                    // Update quantity if product exists
+                    cart[existingProductIndex].quantity += productMOQ;
+                } else {
+                    // Add new product to cart
+                    cart.push({
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        moq: productMOQ,
+                        quantity: productMOQ
+                    });
+                }
+                
+                // Save cart to localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                // Update cart count
+                updateCartCount();
+                
+                // Show toast notification
+                showToast(`Added ${productMOQ} units of ${productName} to cart`);
+            });
+        });
+        
+        // Update cart count from localStorage
+        function updateCartCount() {
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cartItems.length;
+        }
+        
+        // Call on page load
+        updateCartCount();
+        
+        // URL Parameter Handling (for dynamic product loading)
+        function getProductIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+        
+        // This would be replaced with actual API call in a real implementation
+        function loadProductData() {
+            const productId = getProductIdFromUrl() || '1'; // Default to product 1 if no ID in URL
+            
+            // In a real implementation, this would fetch product data from an API
+            // For now, we'll just use the default data already in the HTML
+            
+            // Example of how you would update the UI with fetched data:
+            // document.getElementById('product-title').textContent = productData.name;
+            // document.getElementById('product-brand').innerHTML = `Brand: <span class="font-medium">${productData.brand}</span>`;
+            // etc.
+            
+            // Update breadcrumb
+            document.getElementById('product-breadcrumb-name').textContent = document.getElementById('product-title').textContent;
+        }
+        
+        // Call on page load
+        loadProductData();
+    </script>
+</body>
+</html>

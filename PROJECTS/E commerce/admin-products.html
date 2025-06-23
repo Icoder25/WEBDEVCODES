@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management - Shubham Enterprise</title>
+    <meta name="description" content="Admin product management for Shubham Enterprise wholesale cosmetics platform.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#be185d', // rose
+                        accent: '#facc15', // gold
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Sidebar styles */
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+        
+        /* Form focus styles */
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #be185d;
+            ring: 2px;
+            ring-color: rgba(190, 24, 93, 0.2);
+        }
+        
+        /* Tab styles */
+        .tab-active {
+            background-color: #be185d;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar bg-gray-800 text-white w-64 min-h-screen fixed md:relative z-30">
+            <!-- Logo -->
+            <div class="p-4 border-b border-gray-700">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold">Shubham Enterprise</span>
+                </div>
+                <div class="text-xs text-gray-400 mt-1">Admin Dashboard</div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="mt-4">
+                <ul>
+                    <li>
+                        <a href="admin-dashboard.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-tachometer-alt w-6"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-products.html" class="flex items-center px-4 py-3 bg-primary text-white">
+                            <i class="fas fa-box w-6"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-orders.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-shopping-cart w-6"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-customers.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-users w-6"></i>
+                            <span>Customers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-inquiries.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-question-circle w-6"></i>
+                            <span>Inquiries</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-settings.html" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                            <i class="fas fa-cog w-6"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Logout -->
+            <div class="absolute bottom-0 w-full p-4 border-t border-gray-700">
+                <a href="index.html" class="flex items-center text-gray-300 hover:text-white transition duration-200">
+                    <i class="fas fa-store w-6"></i>
+                    <span>View Store</span>
+                </a>
+                <a href="#" id="logout-button" class="flex items-center mt-2 text-gray-300 hover:text-white transition duration-200">
+                    <i class="fas fa-sign-out-alt w-6"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Header -->
+            <header class="bg-white shadow-sm z-10">
+                <div class="flex items-center justify-between p-4">
+                    <!-- Mobile Menu Toggle -->
+                    <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <!-- Search Bar -->
+                    <div class="hidden md:flex items-center flex-1 mx-4">
+                        <div class="relative w-full max-w-md">
+                            <input type="text" id="product-search" placeholder="Search products..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Add New Product Button -->
+                    <button id="add-product-button" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition duration-200 flex items-center">
+                        <i class="fas fa-plus mr-2"></i>
+                        <span class="hidden md:inline">Add New Product</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-100">
+                <!-- Products Section -->
+                <section id="products-section">
+                    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-800">Product Management</h1>
+                            <p class="text-gray-600">Manage your product catalog</p>
+                        </div>
+                        
+                        <!-- Filter & Sort -->
+                        <div class="mt-4 md:mt-0 flex flex-col sm:flex-row gap-2">
+                            <select id="category-filter" class="border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                                <option value="">All Categories</option>
+                                <option value="skincare">Skincare</option>
+                                <option value="haircare">Haircare</option>
+                                <option value="makeup">Makeup</option>
+                                <option value="personal-hygiene">Personal Hygiene</option>
+                            </select>
+                            
+                            <select id="sort-products" class="border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                                <option value="name-asc">Name (A-Z)</option>
+                                <option value="name-desc">Name (Z-A)</option>
+                                <option value="price-asc">Price (Low to High)</option>
+                                <option value="price-desc">Price (High to Low)</option>
+                                <option value="stock-asc">Stock (Low to High)</option>
+                                <option value="stock-desc">Stock (High to Low)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Products Table -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">MOQ</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Base Price</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="products-table-body" class="divide-y divide-gray-200">
+                                    <!-- Product rows will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Empty State -->
+                        <div id="empty-state" class="hidden p-8 text-center">
+                            <div class="text-gray-400 mb-4">
+                                <i class="fas fa-box text-5xl"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-800 mb-1">No products found</h3>
+                            <p class="text-gray-600 mb-4">Add your first product to get started</p>
+                            <button id="empty-add-product" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition duration-200">
+                                <i class="fas fa-plus mr-2"></i>
+                                Add New Product
+                            </button>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                            <div class="text-sm text-gray-600">
+                                Showing <span id="showing-start">1</span> to <span id="showing-end">10</span> of <span id="total-products">0</span> products
+                            </div>
+                            <div class="flex space-x-2">
+                                <button id="prev-page" class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button id="next-page" class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Product Form Modal (Hidden by default) -->
+                <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                    <div class="bg-white rounded-xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+                        <!-- Modal Header -->
+                        <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                            <h2 id="modal-title" class="text-xl font-bold">Add New Product</h2>
+                            <button id="close-modal" class="text-gray-400 hover:text-gray-500">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Product Form -->
+                        <form id="product-form" class="p-6">
+                            <input type="hidden" id="product-id">
+                            
+                            <!-- Basic Info Section -->
+                            <div class="mb-6">
+                                <h3 class="text-lg font-medium mb-4 pb-2 border-b border-gray-200">Basic Information</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Product Name -->
+                                    <div>
+                                        <label for="product-name" class="block text-sm font-medium text-gray-700 mb-1">Product Name *</label>
+                                        <input type="text" id="product-name" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                    </div>
+                                    
+                                    <!-- Brand -->
+                                    <div>
+                                        <label for="product-brand" class="block text-sm font-medium text-gray-700 mb-1">Brand</label>
+                                        <input type="text" id="product-brand" name="brand" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                                    </div>
+                                    
+                                    <!-- Category -->
+                                    <div>
+                                        <label for="product-category" class="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+                                        <select id="product-category" name="category" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                            <option value="">Select Category</option>
+                                            <option value="skincare">Skincare</option>
+                                            <option value="haircare">Haircare</option>
+                                            <option value="makeup">Makeup</option>
+                                            <option value="personal-hygiene">Personal Hygiene</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <!-- Stock -->
+                                    <div>
+                                        <label for="product-stock" class="block text-sm font-medium text-gray-700 mb-1">Stock Quantity *</label>
+                                        <input type="number" id="product-stock" name="stock" min="0" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Description Section -->
+                            <div class="mb-6">
+                                <h3 class="text-lg font-medium mb-4 pb-2 border-b border-gray-200">Description & Details</h3>
+                                
+                                <!-- Description -->
+                                <div class="mb-4">
+                                    <label for="product-description" class="block text-sm font-medium text-gray-700 mb-1">Description *</label>
+                                    <textarea id="product-description" name="description" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required></textarea>
+                                </div>
+                                
+                                <!-- Specifications -->
+                                <div>
+                                    <label for="product-specifications" class="block text-sm font-medium text-gray-700 mb-1">Specifications</label>
+                                    <textarea id="product-specifications" name="specifications" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Enter product specifications, ingredients, or other details"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Pricing Section -->
+                            <div class="mb-6">
+                                <h3 class="text-lg font-medium mb-4 pb-2 border-b border-gray-200">MOQ & Tier Pricing</h3>
+                                
+                                <!-- MOQ -->
+                                <div class="mb-4">
+                                    <label for="product-moq" class="block text-sm font-medium text-gray-700 mb-1">Minimum Order Quantity (MOQ) *</label>
+                                    <input type="number" id="product-moq" name="moq" min="1" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                    <p class="text-sm text-gray-500 mt-1">Minimum quantity a buyer must purchase</p>
+                                </div>
+                                
+                                <!-- Price Tiers -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Price Tiers *</label>
+                                    <p class="text-sm text-gray-500 mb-3">Set different price points based on order quantity</p>
+                                    
+                                    <div id="price-tiers" class="space-y-3">
+                                        <!-- Tier 1 -->
+                                        <div class="tier-row grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm text-gray-600 mb-1">Min Quantity</label>
+                                                <input type="number" name="tier-min-qty[]" min="1" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm text-gray-600 mb-1">Price Per Unit (₹)</label>
+                                                <input type="number" name="tier-price[]" min="0" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Add Tier Button -->
+                                    <button type="button" id="add-tier" class="mt-3 text-primary hover:text-primary/80 text-sm font-medium flex items-center">
+                                        <i class="fas fa-plus-circle mr-1"></i> Add Another Price Tier
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Images Section -->
+                            <div class="mb-6">
+                                <h3 class="text-lg font-medium mb-4 pb-2 border-b border-gray-200">Product Images</h3>
+                                
+                                <div class="mb-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Upload Images *</label>
+                                    <p class="text-sm text-gray-500 mb-3">Upload at least one product image (JPEG, PNG, or WebP)</p>
+                                </div>
+                                
+                                <!-- Image Upload Area -->
+                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                                    <input type="file" id="image-upload" multiple accept="image/*" class="hidden">
+                                    <label for="image-upload" class="cursor-pointer">
+                                        <div class="text-gray-400 mb-2">
+                                            <i class="fas fa-cloud-upload-alt text-3xl"></i>
+                                        </div>
+                                        <p class="text-gray-700 font-medium">Drag & drop images here</p>
+                                        <p class="text-gray-500 text-sm mb-3">or click to browse</p>
+                                        <button type="button" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition duration-200">
+                                            Select Files
+                                        </button>
+                                    </label>
+                                </div>
+                                
+                                <!-- Image Preview -->
+                                <div id="image-preview" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 hidden">
+                                    <!-- Image previews will be added here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Form Actions -->
+                            <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+                                <button type="button" id="cancel-product" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition duration-200">
+                                    <span id="submit-button-text">Add Product</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Delete Confirmation Modal -->
+                <div id="delete-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                    <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
+                        <div class="text-center mb-6">
+                            <div class="bg-red-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Delete Product</h3>
+                            <p class="text-gray-600">Are you sure you want to delete this product? This action cannot be undone.</p>
+                        </div>
+                        
+                        <div class="flex justify-center space-x-3">
+                            <button id="cancel-delete" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
+                                Cancel
+                            </button>
+                            <button id="confirm-delete" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200">
+                                Delete Product
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="toast-message">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/product-utils.js"></script>
+    <script src="js/admin.js"></script>
+    
+    <script>
+        // Use products from our products.js module
+        let products = window.ShubhamProducts ? [...window.ShubhamProducts.products] : [
+            {
+                id: 1,
+                name: 'Moisturizing Cream',
+                brand: 'Shubham Naturals',
+                category: 'skincare',
+                description: 'Deep moisturizing cream for all skin types.',
+                specifications: 'Ingredients: Water, Glycerin, Shea Butter, Aloe Vera Extract',
+                images: ['moisturizer1.jpg', 'moisturizer2.jpg'],
+                moq: 12,
+                priceTiers: [
+                    { minQty: 12, pricePerUnit: 450 },
+                    { minQty: 50, pricePerUnit: 425 },
+                    { minQty: 100, pricePerUnit: 400 }
+                ],
+                stock: 250
+            },
+            {
+                id: 2,
+                name: 'Hair Serum',
+                brand: 'Shubham Haircare',
+                category: 'haircare',
+                description: 'Nourishing hair serum for damaged hair.',
+                specifications: 'Ingredients: Argan Oil, Vitamin E, Jojoba Oil',
+                images: ['hairserum1.jpg'],
+                moq: 24,
+                priceTiers: [
+                    { minQty: 24, pricePerUnit: 350 },
+                    { minQty: 50, pricePerUnit: 325 },
+                    { minQty: 100, pricePerUnit: 300 }
+                ],
+                stock: 180
+            },
+            {
+                id: 3,
+                name: 'Facial Cleanser',
+                brand: 'Shubham Naturals',
+                category: 'skincare',
+                description: 'Gentle facial cleanser for daily use.',
+                specifications: 'Ingredients: Purified Water, Glycerin, Aloe Vera, Cucumber Extract',
+                images: ['cleanser1.jpg', 'cleanser2.jpg'],
+                moq: 12,
+                priceTiers: [
+                    { minQty: 12, pricePerUnit: 280 },
+                    { minQty: 50, pricePerUnit: 260 },
+                    { minQty: 100, pricePerUnit: 240 }
+                ],
+                stock: 200
+            },
+            {
+                id: 4,
+                name: 'Lipstick Set',
+                brand: 'Shubham Cosmetics',
+                category: 'makeup',
+                description: 'Set of 5 matte lipsticks in popular shades.',
+                specifications: 'Long-lasting, cruelty-free formula',
+                images: ['lipstick1.jpg'],
+                moq: 10,
+                priceTiers: [
+                    { minQty: 10, pricePerUnit: 550 },
+                    { minQty: 25, pricePerUnit: 525 },
+                    { minQty: 50, pricePerUnit: 500 }
+                ],
+                stock: 150
+            },
+            {
+                id: 5,
+                name: 'Body Lotion',
+                brand: 'Shubham Naturals',
+                category: 'personal-hygiene',
+                description: 'Hydrating body lotion with natural ingredients.',
+                specifications: 'Ingredients: Shea Butter, Coconut Oil, Vitamin E',
+                images: ['bodylotion1.jpg'],
+                moq: 12,
+                priceTiers: [
+                    { minQty: 12, pricePerUnit: 320 },
+                    { minQty: 50, pricePerUnit: 300 },
+                    { minQty: 100, pricePerUnit: 280 }
+                ],
+                stock: 220
+            }
+        ];
+        
+        // DOM Elements
+        const productsTableBody = document.getElementById('products-table-body');
+        const emptyState = document.getElementById('empty-state');
+        const productModal = document.getElementById('product-modal');
+        const productForm = document.getElementById('product-form');
+        const modalTitle = document.getElementById('modal-title');
+        const submitButtonText = document.getElementById('submit-button-text');
+        const deleteModal = document.getElementById('delete-modal');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        const productSearch = document.getElementById('product-search');
+        const categoryFilter = document.getElementById('category-filter');
+        const sortProducts = document.getElementById('sort-products');
+        const showingStart = document.getElementById('showing-start');
+        const showingEnd = document.getElementById('showing-end');
+        const totalProducts = document.getElementById('total-products');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        
+        // Pagination state
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let filteredProducts = [...products];
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if admin is logged in using Auth module
+            if (window.ShubhamAuth) {
+                if (!window.ShubhamAuth.isAdmin()) {
+                    window.location.href = 'admin-login.html';
+                    return;
+                }
+            } else {
+                // Fallback to checking localStorage
+                const adminUser = localStorage.getItem('adminUser');
+                if (!adminUser) {
+                    window.location.href = 'admin-login.html';
+                    return;
+                }
+                
+                try {
+                    const user = JSON.parse(adminUser);
+                    if (!user || user.role !== 'admin') {
+                        window.location.href = 'admin-login.html';
+                        return;
+                    }
+                } catch (e) {
+                    localStorage.removeItem('adminUser');
+                    window.location.href = 'admin-login.html';
+                    return;
+                }
+            }
+            
+            // Initialize Admin module if available
+            if (window.ShubhamAdmin) {
+                window.ShubhamAdmin.requireAdmin();
+            }
+            
+            // Load products
+            renderProducts();
+            updatePagination();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Populate category filter if ProductUtils is available
+            if (window.ShubhamProductUtils) {
+                populateCategoryFilter();
+            }
+        });
+        
+        // Populate category filter from ProductUtils
+        function populateCategoryFilter() {
+            if (!window.ShubhamProductUtils) return;
+            
+            const categories = window.ShubhamProductUtils.getUniqueCategories();
+            const categoryFilter = document.getElementById('category-filter');
+            
+            // Clear existing options except the first one
+            while (categoryFilter.options.length > 1) {
+                categoryFilter.remove(1);
+            }
+            
+            // Add categories from ProductUtils
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.value;
+                option.textContent = category.label;
+                categoryFilter.appendChild(option);
+            });
+        }
+        
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const sidebar = document.getElementById('sidebar');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+            
+            // Add product button
+            const addProductButton = document.getElementById('add-product-button');
+            const emptyAddProduct = document.getElementById('empty-add-product');
+            
+            addProductButton.addEventListener('click', openAddProductModal);
+            emptyAddProduct.addEventListener('click', openAddProductModal);
+            
+            // Close modal buttons
+            const closeModal = document.getElementById('close-modal');
+            const cancelProduct = document.getElementById('cancel-product');
+            
+            closeModal.addEventListener('click', closeProductModal);
+            cancelProduct.addEventListener('click', closeProductModal);
+            
+            // Add tier button
+            const addTierButton = document.getElementById('add-tier');
+            addTierButton.addEventListener('click', addPriceTier);
+            
+            // Product form submission
+            productForm.addEventListener('submit', handleProductFormSubmit);
+            
+            // Delete modal buttons
+            const cancelDelete = document.getElementById('cancel-delete');
+            const confirmDelete = document.getElementById('confirm-delete');
+            
+            cancelDelete.addEventListener('click', () => {
+                deleteModal.classList.add('hidden');
+            });
+            
+            confirmDelete.addEventListener('click', confirmDeleteProduct);
+            
+            // Search and filter
+            productSearch.addEventListener('input', handleSearch);
+            categoryFilter.addEventListener('change', handleFilter);
+            sortProducts.addEventListener('change', handleSort);
+            
+            // Pagination
+            prevPageBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderProducts();
+                    updatePagination();
+                }
+            });
+            
+            nextPageBtn.addEventListener('click', () => {
+                const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderProducts();
+                    updatePagination();
+                }
+            });
+            
+            // Logout button
+            const logoutButton = document.getElementById('logout-button');
+            logoutButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                if (confirm('Are you sure you want to logout?')) {
+                    // Use Auth module if available
+                    if (window.ShubhamAuth) {
+                        window.ShubhamAuth.logout();
+                    } else {
+                        localStorage.removeItem('adminUser');
+                    }
+                    window.location.href = 'admin-login.html';
+                }
+            });
+        }
+        
+        // Render Products Table
+        function renderProducts() {
+            // Apply filters and sorting
+            applyFiltersAndSort();
+            
+            // Clear the table
+            productsTableBody.innerHTML = '';
+            
+            // Check if there are products
+            if (filteredProducts.length === 0) {
+                emptyState.classList.remove('hidden');
+                document.querySelector('table').classList.add('hidden');
+                document.querySelector('.pagination').classList.add('hidden');
+                return;
+            }
+            
+            // Show the table, hide empty state
+            emptyState.classList.add('hidden');
+            document.querySelector('table').classList.remove('hidden');
+            document.querySelector('.pagination').classList.remove('hidden');
+            
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
+            const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+            
+            // Render each product row
+            paginatedProducts.forEach(product => {
+                const row = document.createElement('tr');
+                
+                // Format category name for display
+                const categoryDisplay = {
+                    'skincare': 'Skincare',
+                    'haircare': 'Haircare',
+                    'makeup': 'Makeup',
+                    'personal-hygiene': 'Personal Hygiene'
+                }[product.category] || product.category;
+                
+                // Get base price (first tier)
+                const basePrice = product.priceTiers[0].pricePerUnit;
+                
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="h-10 w-10 flex-shrink-0 bg-gray-200 rounded-md overflow-hidden">
+                                <img src="${product.images[0] || 'placeholder.jpg'}" alt="${product.name}" class="h-full w-full object-cover">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">${product.name}</div>
+                                <div class="text-sm text-gray-500">${product.brand || 'No brand'}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${categoryDisplay}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.moq} units</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹${basePrice}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="${product.stock > 50 ? 'text-green-600' : product.stock > 10 ? 'text-yellow-600' : 'text-red-600'} text-sm">
+                            ${product.stock} units
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button class="text-primary hover:text-primary/80" onclick="editProduct(${product.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="text-red-600 hover:text-red-700" onclick="deleteProduct(${product.id})">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                productsTableBody.appendChild(row);
+            });
+        }
+        
+        // Update pagination info and buttons
+        function updatePagination() {
+            const totalItems = filteredProducts.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            const startIndex = (currentPage - 1) * itemsPerPage + 1;
+            const endIndex = Math.min(startIndex + itemsPerPage - 1, totalItems);
+            
+            // Update text
+            showingStart.textContent = totalItems > 0 ? startIndex : 0;
+            showingEnd.textContent = endIndex;
+            totalProducts.textContent = totalItems;
+            
+            // Update button states
+            prevPageBtn.disabled = currentPage <= 1;
+            nextPageBtn.disabled = currentPage >= totalPages;
+            
+            // Add visual indication for disabled buttons
+            if (prevPageBtn.disabled) {
+                prevPageBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                prevPageBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+            
+            if (nextPageBtn.disabled) {
+                nextPageBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                nextPageBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+        
+        // Apply filters and sorting
+        function applyFiltersAndSort() {
+            const searchTerm = productSearch.value.toLowerCase();
+            const categoryValue = categoryFilter.value;
+            const sortValue = sortProducts.value;
+            
+            // Filter by search term and category
+            filteredProducts = products.filter(product => {
+                const matchesSearch = 
+                    product.name.toLowerCase().includes(searchTerm) ||
+                    (product.brand && product.brand.toLowerCase().includes(searchTerm)) ||
+                    product.description.toLowerCase().includes(searchTerm);
+                    
+                const matchesCategory = categoryValue === '' || product.category === categoryValue;
+                
+                return matchesSearch && matchesCategory;
+            });
+            
+            // Sort products
+            filteredProducts.sort((a, b) => {
+                switch (sortValue) {
+                    case 'name-asc':
+                        return a.name.localeCompare(b.name);
+                    case 'name-desc':
+                        return b.name.localeCompare(a.name);
+                    case 'price-asc':
+                        return a.priceTiers[0].pricePerUnit - b.priceTiers[0].pricePerUnit;
+                    case 'price-desc':
+                        return b.priceTiers[0].pricePerUnit - a.priceTiers[0].pricePerUnit;
+                    case 'stock-asc':
+                        return a.stock - b.stock;
+                    case 'stock-desc':
+                        return b.stock - a.stock;
+                    default:
+                        return 0;
+                }
+            });
+            
+            // Reset to first page when filters change
+            currentPage = 1;
+        }
+        
+        // Handle search input
+        function handleSearch() {
+            renderProducts();
+            updatePagination();
+        }
+        
+        // Handle category filter change
+        function handleFilter() {
+            renderProducts();
+            updatePagination();
+        }
+        
+        // Handle sort change
+        function handleSort() {
+            renderProducts();
+            updatePagination();
+        }
+        
+        // Open Add Product Modal
+        function openAddProductModal() {
+            // Reset form
+            productForm.reset();
+            document.getElementById('product-id').value = '';
+            modalTitle.textContent = 'Add New Product';
+            submitButtonText.textContent = 'Add Product';
+            
+            // Reset price tiers
+            const priceTiers = document.getElementById('price-tiers');
+            priceTiers.innerHTML = `
+                <div class="tier-row grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">Min Quantity</label>
+                        <input type="number" name="tier-min-qty[]" min="1" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">Price Per Unit (₹)</label>
+                        <input type="number" name="tier-price[]" min="0" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                    </div>
+                </div>
+            `;
+            
+            // Reset image preview
+            const imagePreview = document.getElementById('image-preview');
+            imagePreview.innerHTML = '';
+            imagePreview.classList.add('hidden');
+            
+            // Show modal
+            productModal.classList.remove('hidden');
+        }
+        
+        // Close Product Modal
+        function closeProductModal() {
+            productModal.classList.add('hidden');
+        }
+        
+        // Add Price Tier
+        function addPriceTier() {
+            const priceTiers = document.getElementById('price-tiers');
+            const tierRow = document.createElement('div');
+            tierRow.className = 'tier-row grid grid-cols-2 gap-4 relative';
+            
+            tierRow.innerHTML = `
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">Min Quantity</label>
+                    <input type="number" name="tier-min-qty[]" min="1" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                </div>
+                <div class="relative">
+                    <label class="block text-sm text-gray-600 mb-1">Price Per Unit (₹)</label>
+                    <input type="number" name="tier-price[]" min="0" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                    <button type="button" class="remove-tier absolute right-0 top-0 -mt-1 text-red-500 hover:text-red-700">
+                        <i class="fas fa-times-circle"></i>
+                    </button>
+                </div>
+            `;
+            
+            priceTiers.appendChild(tierRow);
+            
+            // Add event listener to remove button
+            const removeButton = tierRow.querySelector('.remove-tier');
+            removeButton.addEventListener('click', function() {
+                tierRow.remove();
+            });
+        }
+        
+        // Handle Product Form Submit
+        function handleProductFormSubmit(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const productId = document.getElementById('product-id').value;
+            const name = document.getElementById('product-name').value;
+            const brand = document.getElementById('product-brand').value;
+            const category = document.getElementById('product-category').value;
+            const description = document.getElementById('product-description').value;
+            const specifications = document.getElementById('product-specifications').value;
+            const moq = parseInt(document.getElementById('product-moq').value);
+            const stock = parseInt(document.getElementById('product-stock').value);
+            
+            // Get price tiers
+            const tierMinQtyInputs = document.querySelectorAll('input[name="tier-min-qty[]"]');
+            const tierPriceInputs = document.querySelectorAll('input[name="tier-price[]"]');
+            const priceTiers = [];
+            
+            for (let i = 0; i < tierMinQtyInputs.length; i++) {
+                priceTiers.push({
+                    minQty: parseInt(tierMinQtyInputs[i].value),
+                    pricePerUnit: parseFloat(tierPriceInputs[i].value)
+                });
+            }
+            
+            // Sort price tiers by minQty
+            priceTiers.sort((a, b) => a.minQty - b.minQty);
+            
+            // Validate MOQ against first tier
+            if (moq < priceTiers[0].minQty) {
+                showToast('MOQ must be at least equal to the first price tier minimum quantity', 'error');
+                return;
+            }
+            
+            // Create product object
+            const product = {
+                name,
+                brand,
+                category,
+                description,
+                specifications,
+                moq,
+                priceTiers,
+                stock,
+                images: ['placeholder.jpg'] // In a real app, this would be uploaded images
+            };
+            
+            // Add or update product
+            if (productId) {
+                // Update existing product
+                const index = products.findIndex(p => p.id == productId);
+                if (index !== -1) {
+                    product.id = parseInt(productId);
+                    product.images = products[index].images; // Preserve existing images
+                    products[index] = product;
+                    showToast('Product updated successfully');
+                }
+            } else {
+                // Add new product
+                product.id = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+                products.push(product);
+                showToast('Product added successfully');
+            }
+            
+            // Close modal and refresh table
+            closeProductModal();
+            renderProducts();
+            updatePagination();
+        }
+        
+        // Edit Product
+        function editProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+            
+            // Set form values
+            document.getElementById('product-id').value = product.id;
+            document.getElementById('product-name').value = product.name;
+            document.getElementById('product-brand').value = product.brand || '';
+            document.getElementById('product-category').value = product.category;
+            document.getElementById('product-description').value = product.description;
+            document.getElementById('product-specifications').value = product.specifications || '';
+            document.getElementById('product-moq').value = product.moq;
+            document.getElementById('product-stock').value = product.stock;
+            
+            // Set price tiers
+            const priceTiers = document.getElementById('price-tiers');
+            priceTiers.innerHTML = '';
+            
+            product.priceTiers.forEach((tier, index) => {
+                const tierRow = document.createElement('div');
+                tierRow.className = 'tier-row grid grid-cols-2 gap-4 relative';
+                
+                tierRow.innerHTML = `
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">Min Quantity</label>
+                        <input type="number" name="tier-min-qty[]" min="1" value="${tier.minQty}" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                    </div>
+                    <div class="relative">
+                        <label class="block text-sm text-gray-600 mb-1">Price Per Unit (₹)</label>
+                        <input type="number" name="tier-price[]" min="0" step="0.01" value="${tier.pricePerUnit}" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                        ${index > 0 ? `
+                            <button type="button" class="remove-tier absolute right-0 top-0 -mt-1 text-red-500 hover:text-red-700">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+                
+                priceTiers.appendChild(tierRow);
+                
+                // Add event listener to remove button if not the first tier
+                if (index > 0) {
+                    const removeButton = tierRow.querySelector('.remove-tier');
+                    removeButton.addEventListener('click', function() {
+                        tierRow.remove();
+                    });
+                }
+            });
+            
+            // Update modal title and button text
+            modalTitle.textContent = 'Edit Product';
+            submitButtonText.textContent = 'Update Product';
+            
+            // Show modal
+            productModal.classList.remove('hidden');
+        }
+        
+        // Delete Product
+        function deleteProduct(id) {
+            // Store the ID to be deleted
+            deleteModal.dataset.productId = id;
+            
+            // Show delete confirmation modal
+            deleteModal.classList.remove('hidden');
+        }
+        
+        // Confirm Delete Product
+        function confirmDeleteProduct() {
+            const productId = parseInt(deleteModal.dataset.productId);
+            
+            // Remove product from array
+            products = products.filter(p => p.id !== productId);
+            
+            // Hide delete modal
+            deleteModal.classList.add('hidden');
+            
+            // Show success message
+            showToast('Product deleted successfully');
+            
+            // Refresh table
+            renderProducts();
+            updatePagination();
+        }
+        
+        // Show Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            // Set message
+            toastMessage.textContent = message;
+            
+            // Set toast color based on type
+            if (type === 'success') {
+                toast.classList.remove('bg-red-500');
+                toast.classList.add('bg-green-500');
+            } else if (type === 'error') {
+                toast.classList.remove('bg-green-500');
+                toast.classList.add('bg-red-500');
+            }
+            
+            // Show toast
+            toast.classList.remove('translate-x-full');
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+        
+        // Make functions available globally
+        window.editProduct = editProduct;
+        window.deleteProduct = deleteProduct;
+    </script>
+</body>
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shubham Enterprise - Wholesale Cosmetics Supplier</title>
+    <meta name="description" content="Shubham Enterprise - Premium wholesale cosmetics supplier for salons, retailers, and bulk resellers. Quality products at competitive prices.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#be185d', // rose
+                        accent: '#facc15', // gold
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .hero-slide {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .hero-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header/Navbar -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary">
+                        <span class="text-primary">SHUBHAM</span> <span class="text-accent">ENTERPRISES</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-6">
+                    <a href="index.html" class="text-gray-800 hover:text-primary font-medium">Home</a>
+                    <a href="products.html" class="text-gray-800 hover:text-primary font-medium">Products</a>
+                    <a href="about.html" class="text-gray-800 hover:text-primary font-medium">About Us</a>
+                    <a href="contact.html" class="text-gray-800 hover:text-primary font-medium">Contact</a>
+                    <a href="faq.html" class="text-gray-800 hover:text-primary font-medium">FAQs</a>
+                    <a href="privacy-policy.html" class="text-gray-800 hover:text-primary font-medium">Privacy</a>
+                    <a href="terms-conditions.html" class="text-gray-800 hover:text-primary font-medium">Terms</a>
+                </nav>
+                
+                <!-- Right Side Icons -->
+                <div class="flex items-center space-x-4">
+                    <a href="cart.html" class="text-gray-800 hover:text-primary relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <!-- <a href="login.html" class="text-gray-800 hover:text-primary">
+                        <i class="fas fa-user text-xl"></i> -->
+                    </a>
+                    <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 md:hidden">
+            <div class="p-4 border-b">
+                <div class="flex justify-between items-center">
+                    <span class="text-xl font-bold text-primary">Menu</span>
+                    <button id="close-menu-button" class="text-gray-800 hover:text-primary">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <nav class="p-4">
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="block text-gray-800 hover:text-primary font-medium">Home</a></li>
+                    <li><a href="products.html" class="block text-gray-800 hover:text-primary font-medium">Products</a></li>
+                    <li><a href="about.html" class="block text-gray-800 hover:text-primary font-medium">About Us</a></li>
+                    <li><a href="contact.html" class="block text-gray-800 hover:text-primary font-medium">Contact</a></li>
+                    <li><a href="faq.html" class="block text-gray-800 hover:text-primary font-medium">FAQs</a></li>
+                    <li><a href="cart.html" class="block text-gray-800 hover:text-primary font-medium">Cart</a></li>
+                    <li><a href="checkout.html" class="block text-gray-800 hover:text-primary font-medium">Checkout</a></li>
+                    <!-- <li><a href="login.html" class="block text-gray-800 hover:text-primary font-medium">Login/Register</a></li> -->
+                    <li><a href="privacy-policy.html" class="block text-gray-800 hover:text-primary font-medium">Privacy Policy</a></li>
+                    <li><a href="terms-conditions.html" class="block text-gray-800 hover:text-primary font-medium">Terms & Conditions</a></li>
+                    <li><a href="shipping-policy.html" class="block text-gray-800 hover:text-primary font-medium">Shipping Policy</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Carousel -->
+    <section class="relative bg-gray-100 overflow-hidden" style="height: 500px;">
+        <div id="hero-carousel" class="relative h-full">
+            <!-- Slide 1 -->
+            <div class="hero-slide active bg-gradient-to-r from-primary to-purple-700 flex items-center">
+                <div class="container mx-auto px-4 py-12 text-white">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Premium Wholesale Cosmetics</h1>
+                    <p class="text-xl mb-8">Quality products for salons, retailers, and bulk resellers</p>
+                    <a href="products.html" class="bg-accent text-gray-900 hover:bg-yellow-400 font-bold py-3 px-6 rounded-lg inline-block transition duration-300">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Slide 2 -->
+            <div class="hero-slide bg-gradient-to-r from-blue-600 to-blue-800 flex items-center">
+                <div class="container mx-auto px-4 py-12 text-white">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Exclusive B2B Pricing</h1>
+                    <p class="text-xl mb-8">Special tiered pricing for bulk orders</p>
+                    <a href="products.html" class="bg-accent text-gray-900 hover:bg-yellow-400 font-bold py-3 px-6 rounded-lg inline-block transition duration-300">View Offers</a>
+                </div>
+            </div>
+            
+            <!-- Slide 3 -->
+            <div class="hero-slide bg-gradient-to-r from-green-600 to-green-800 flex items-center">
+                <div class="container mx-auto px-4 py-12 text-white">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Flexible Payment Options</h1>
+                    <p class="text-xl mb-8">Credit payment with 30% upfront for eligible businesses</p>
+                    <a href="contact.html" class="bg-accent text-gray-900 hover:bg-yellow-400 font-bold py-3 px-6 rounded-lg inline-block transition duration-300">Contact Us</a>
+                </div>
+            </div>
+            
+            <!-- Carousel Controls -->
+            <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+                <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-100 transition duration-300 active"></button>
+                <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-100 transition duration-300"></button>
+                <button class="carousel-dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-100 transition duration-300"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Shop by Category</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Skincare Category -->
+                <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div class="h-48 bg-gray-200 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-primary opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 text-white">
+                            <h3 class="text-xl font-bold">Skincare</h3>
+                            <p class="text-sm">Premium face and body care</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <a href="products.html?category=skincare" class="text-primary hover:text-primary-dark font-medium flex items-center">
+                            Browse Products <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Haircare Category -->
+                <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div class="h-48 bg-gray-200 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-primary opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 text-white">
+                            <h3 class="text-xl font-bold">Haircare</h3>
+                            <p class="text-sm">Professional salon products</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <a href="products.html?category=haircare" class="text-primary hover:text-primary-dark font-medium flex items-center">
+                            Browse Products <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Makeup Category -->
+                <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div class="h-48 bg-gray-200 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-primary opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 text-white">
+                            <h3 class="text-xl font-bold">Makeup</h3>
+                            <p class="text-sm">Complete range of cosmetics</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <a href="products.html?category=makeup" class="text-primary hover:text-primary-dark font-medium flex items-center">
+                            Browse Products <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Personal Hygiene Category -->
+                <div class="bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div class="h-48 bg-gray-200 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-primary opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 text-white">
+                            <h3 class="text-xl font-bold">Personal Hygiene</h3>
+                            <p class="text-sm">Essential care products</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <a href="products.html?category=personal-hygiene" class="text-primary hover:text-primary-dark font-medium flex items-center">
+                            Browse Products <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Selling Products -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Top Selling Products</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Product 1 -->
+                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div class="relative">
+                        <div class="h-48 bg-gray-200"></div>
+                        <div class="absolute top-2 right-2 bg-accent text-gray-900 text-xs font-bold px-2 py-1 rounded">Best Seller</div>
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-2">
+                            <button class="bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg mb-1">Premium Face Cream</h3>
+                        <p class="text-gray-600 text-sm mb-2">Skincare</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-primary font-bold">₹140</span>
+                                <span class="text-gray-500 text-sm">/unit</span>
+                            </div>
+                            <div class="text-sm text-gray-600">MOQ: 12 units</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div class="relative">
+                        <div class="h-48 bg-gray-200"></div>
+                        <div class="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">New</div>
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-2">
+                            <button class="bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg mb-1">Professional Hair Serum</h3>
+                        <p class="text-gray-600 text-sm mb-2">Haircare</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-primary font-bold">₹180</span>
+                                <span class="text-gray-500 text-sm">/unit</span>
+                            </div>
+                            <div class="text-sm text-gray-600">MOQ: 10 units</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div class="relative">
+                        <div class="h-48 bg-gray-200"></div>
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-2">
+                            <button class="bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg mb-1">Luxury Lipstick Set</h3>
+                        <p class="text-gray-600 text-sm mb-2">Makeup</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-primary font-bold">₹120</span>
+                                <span class="text-gray-500 text-sm">/unit</span>
+                            </div>
+                            <div class="text-sm text-gray-600">MOQ: 24 units</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div class="relative">
+                        <div class="h-48 bg-gray-200"></div>
+                        <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">Limited</div>
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-2">
+                            <button class="bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="bg-white text-primary p-2 rounded-full hover:bg-primary hover:text-white transition duration-300">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg mb-1">Antibacterial Hand Wash</h3>
+                        <p class="text-gray-600 text-sm mb-2">Personal Hygiene</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-primary font-bold">₹90</span>
+                                <span class="text-gray-500 text-sm">/unit</span>
+                            </div>
+                            <div class="text-sm text-gray-600">MOQ: 30 units</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <a href="products.html" class="bg-primary text-white hover:bg-primary-dark font-bold py-3 px-6 rounded-lg inline-block transition duration-300">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Inquiry CTA -->
+    <section class="py-12 bg-primary">
+        <div class="container mx-auto px-4 text-center text-white">
+            <h2 class="text-3xl font-bold mb-4">Need a Custom Quote?</h2>
+            <p class="text-xl mb-6">Contact us directly on WhatsApp for quick responses and custom pricing</p>
+            <a href="https://wa.me/919XXXXXXXXX" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg inline-flex items-center transition duration-300">
+                <i class="fab fa-whatsapp text-2xl mr-2"></i> Chat on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">What Our Clients Say</h2>
+            
+            <div id="testimonials-slider" class="relative max-w-3xl mx-auto">
+                <div class="testimonial-slide active">
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-gray-200 rounded-full mr-4"></div>
+                            <div>
+                                <h4 class="font-bold">Priya's Beauty Salon</h4>
+                                <div class="text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic">"We've been ordering from Shubham Enterprise for over 2 years now. Their product quality is excellent and the tiered pricing helps us save significantly on bulk orders. Highly recommended for salon owners!"</p>
+                    </div>
+                </div>
+                
+                <div class="testimonial-slide hidden">
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-gray-200 rounded-full mr-4"></div>
+                            <div>
+                                <h4 class="font-bold">Glamour Cosmetics Store</h4>
+                                <div class="text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic">"The credit payment option with 30% upfront has been a game-changer for our retail business. It helps us manage cash flow while still getting premium products. Their customer service is also top-notch!"</p>
+                    </div>
+                </div>
+                
+                <div class="testimonial-slide hidden">
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-gray-200 rounded-full mr-4"></div>
+                            <div>
+                                <h4 class="font-bold">Luxe Beauty Distributors</h4>
+                                <div class="text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic">"As a distributor, reliability and consistency are crucial. Shubham Enterprise delivers on both fronts. Their product range is extensive and the quality is consistent across all categories. A trusted partner for our business."</p>
+                    </div>
+                </div>
+                
+                <!-- Testimonial Controls -->
+                <div class="flex justify-center mt-6 space-x-2">
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-primary opacity-50 hover:opacity-100 transition duration-300 active"></button>
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-primary opacity-50 hover:opacity-100 transition duration-300"></button>
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-primary opacity-50 hover:opacity-100 transition duration-300"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Shubham Enterprise</h3>
+                    <p class="text-gray-400 mb-4">Premium wholesale cosmetics supplier for salons, retailers, and bulk resellers.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition duration-300">Products</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition duration-300">FAQs</a></li>
+                        <li><a href="cart.html" class="text-gray-400 hover:text-white transition duration-300">Cart</a></li>
+                        <li><a href="checkout.html" class="text-gray-400 hover:text-white transition duration-300">Checkout</a></li>
+                        <li><a href="login.html" class="text-gray-400 hover:text-white transition duration-300">Login/Register</a></li>
+                        <li><a href="product-detail.html" class="text-gray-400 hover:text-white transition duration-300">Product Details</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Categories</h3>
+                    <ul class="space-y-2">
+                        <li><a href="products.html?category=skincare" class="text-gray-400 hover:text-white transition duration-300">Skincare</a></li>
+                        <li><a href="products.html?category=haircare" class="text-gray-400 hover:text-white transition duration-300">Haircare</a></li>
+                        <li><a href="products.html?category=makeup" class="text-gray-400 hover:text-white transition duration-300">Makeup</a></li>
+                        <li><a href="products.html?category=personal-hygiene" class="text-gray-400 hover:text-white transition duration-300">Personal Hygiene</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-accent"></i>
+                            <span class="text-gray-400">123 Business District, Mumbai, Maharashtra 400001</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2 text-accent"></i>
+                            <span class="text-gray-400">+91 9XXXXXXXXX</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-accent"></i>
+                            <span class="text-gray-400">info@shubhamenterprise.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock mr-2 text-accent"></i>
+                            <span class="text-gray-400">Mon-Sat: 9:00 AM - 6:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Admin Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Admin Area</h3>
+                    <ul class="space-y-2">
+                        <li><a href="admin-login.html" class="text-gray-400 hover:text-white transition duration-300">Admin Login</a></li>
+                        <li><a href="admin-dashboard.html" class="text-gray-400 hover:text-white transition duration-300">Dashboard</a></li>
+                        <li><a href="admin-products.html" class="text-gray-400 hover:text-white transition duration-300">Products</a></li>
+                        <li><a href="admin-orders.html" class="text-gray-400 hover:text-white transition duration-300">Orders</a></li>
+                        <li><a href="admin-customers.html" class="text-gray-400 hover:text-white transition duration-300">Customers</a></li>
+                        <li><a href="admin-inquiries.html" class="text-gray-400 hover:text-white transition duration-300">Inquiries</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="border-gray-700 my-6">
+            
+            <!-- Bottom Footer -->
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">© 2023 Shubham Enterprise. All rights reserved.</p>
+                <div class="mt-4 md:mt-0">
+                    <ul class="flex space-x-4 text-sm">
+                        <li><a href="privacy-policy.html" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a></li>
+                        <li><a href="terms-conditions.html" class="text-gray-400 hover:text-white transition duration-300">Terms & Conditions</a></li>
+                        <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white transition duration-300">Shipping Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/919356382562" class="fixed bottom-6 right-6 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition duration-300 z-50">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+        
+        closeMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+        
+        // Hero Carousel
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        const carouselDots = document.querySelectorAll('.carousel-dot');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            // Hide all slides
+            heroSlides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Remove active class from all dots
+            carouselDots.forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // Show the selected slide and activate dot
+            heroSlides[index].classList.add('active');
+            carouselDots[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+        
+        // Add click event to dots
+        carouselDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+        
+        // Auto rotate slides
+        setInterval(() => {
+            let nextSlide = (currentSlide + 1) % heroSlides.length;
+            showSlide(nextSlide);
+        }, 5000);
+        
+        // Testimonials Slider
+        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+        const testimonialDots = document.querySelectorAll('.testimonial-dot');
+        let currentTestimonial = 0;
+        
+        function showTestimonial(index) {
+            // Hide all testimonials
+            testimonialSlides.forEach(slide => {
+                slide.classList.add('hidden');
+                slide.classList.remove('active');
+            });
+            
+            // Remove active class from all dots
+            testimonialDots.forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // Show the selected testimonial and activate dot
+            testimonialSlides[index].classList.remove('hidden');
+            testimonialSlides[index].classList.add('active');
+            testimonialDots[index].classList.add('active');
+            
+            currentTestimonial = index;
+        }
+        
+        // Add click event to testimonial dots
+        testimonialDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showTestimonial(index);
+            });
+        });
+        
+        // Auto rotate testimonials
+        setInterval(() => {
+            let nextTestimonial = (currentTestimonial + 1) % testimonialSlides.length;
+            showTestimonial(nextTestimonial);
+        }, 6000);
+        
+        // Initialize cart count from localStorage
+        function updateCartCount() {
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cartItems.length;
+        }
+        
+        // Call on page load
+        updateCartCount();
+    </script>
+</body>
+</html>
