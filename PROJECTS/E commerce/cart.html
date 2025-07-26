@@ -13,11 +13,20 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#be185d', // rose
-                        accent: '#facc15', // gold
+                        primary: '#2563eb', // blue-600
+                        accent: '#2563eb',
+                        card: '#ffffff',
+                        section: '#f8fafc', // slate-50
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        xl: '1.25rem',
+                    },
+                    boxShadow: {
+                        card: '0 4px 24px 0 rgba(37,99,235,0.07)',
                     },
                 },
             },
@@ -28,7 +37,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* Custom styles */
@@ -58,61 +67,51 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Header/Navbar -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="index.html" class="text-2xl font-bold text-primary">
-                        <span class="text-primary">Shubham</span> <span class="text-accent">Enterprise</span>
-                    </a>
-                </div>
-                
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-6">
-                    <a href="index.html" class="text-gray-800 hover:text-primary font-medium">Home</a>
-                    <a href="products.html" class="text-gray-800 hover:text-primary font-medium">Products</a>
-                    <a href="about.html" class="text-gray-800 hover:text-primary font-medium">About Us</a>
-                    <a href="contact.html" class="text-gray-800 hover:text-primary font-medium">Contact</a>
-                    <a href="faq.html" class="text-gray-800 hover:text-primary font-medium">FAQs</a>
-                </nav>
-                
-                <!-- Right Side Icons -->
-                <div class="flex items-center space-x-4">
-                    <a href="cart.html" class="text-primary relative">
-                        <i class="fas fa-shopping-cart text-xl"></i>
-                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-                    </a>
-                    <a href="login.html" class="text-gray-800 hover:text-primary">
-                        <i class="fas fa-user text-xl"></i>
-                    </a>
-                    <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                </div>
+<body class="bg-section font-sans">
+    <!-- Header/Navbar (copied from index.html) -->
+    <header class="bg-white shadow-sky sticky top-0 z-50 border-b-2 border-transparent hover:border-primary transition-all duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold font-heading text-primary flex items-center hover:scale-105 transition-transform duration-300">
+                <span class="text-primary">SHUBHAM</span> <span class="text-primary ml-1">ENTERPRISES</span>
+            </a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Home</a>
+                <a href="products.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Products</a>
+                <a href="about.html" class="text-gray-800 hover:text-primary font-medium transition-colors">About Us</a>
+                <a href="contact.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Contact</a>
+                <a href="faq.html" class="text-gray-800 hover:text-primary font-medium transition-colors">FAQs</a>
+                <a href="privacy-policy.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Privacy</a>
+                <a href="terms-conditions.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Terms</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <a href="cart.html" class="text-gray-800 hover:text-primary relative transition-colors">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary transition-colors">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
             </div>
         </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 md:hidden">
-            <div class="p-4 border-b">
-                <div class="flex justify-between items-center">
-                    <span class="text-xl font-bold text-primary">Menu</span>
-                    <button id="close-menu-button" class="text-gray-800 hover:text-primary">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
-                </div>
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 md:hidden transform -translate-x-full transition-transform duration-300">
+            <div class="p-4 border-b flex justify-between items-center">
+                <span class="text-xl font-bold text-primary">Menu</span>
+                <button id="close-menu-button" class="text-gray-800 hover:text-primary transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
             </div>
             <nav class="p-4">
                 <ul class="space-y-4">
-                    <li><a href="index.html" class="block text-gray-800 hover:text-primary font-medium">Home</a></li>
-                    <li><a href="products.html" class="block text-gray-800 hover:text-primary font-medium">Products</a></li>
-                    <li><a href="about.html" class="block text-gray-800 hover:text-primary font-medium">About Us</a></li>
-                    <li><a href="contact.html" class="block text-gray-800 hover:text-primary font-medium">Contact</a></li>
-                    <li><a href="faq.html" class="block text-gray-800 hover:text-primary font-medium">FAQs</a></li>
-                    <li><a href="login.html" class="block text-gray-800 hover:text-primary font-medium">Login/Register</a></li>
+                    <li><a href="index.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Home</a></li>
+                    <li><a href="products.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Products</a></li>
+                    <li><a href="about.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">About Us</a></li>
+                    <li><a href="contact.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Contact</a></li>
+                    <li><a href="faq.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">FAQs</a></li>
+                    <li><a href="cart.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Cart</a></li>
+                    <li><a href="checkout.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Checkout</a></li>
+                    <li><a href="privacy-policy.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Privacy Policy</a></li>
+                    <li><a href="terms-conditions.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Terms & Conditions</a></li>
+                    <li><a href="shipping-policy.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Shipping Policy</a></li>
                 </ul>
             </nav>
         </div>
@@ -136,7 +135,7 @@
             <div id="cart-container" class="flex flex-col lg:flex-row gap-8">
                 <!-- Cart Items (Left Side) -->
                 <div class="lg:w-2/3">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+                    <div class="bg-card rounded-xl shadow-card overflow-hidden mb-6">
                         <div class="p-6">
                             <h2 class="text-2xl font-bold mb-6">Cart Items</h2>
                             
@@ -145,7 +144,9 @@
                                 <i class="fas fa-shopping-cart text-gray-300 text-5xl mb-4"></i>
                                 <h3 class="text-xl font-semibold text-gray-700 mb-2">Your cart is empty</h3>
                                 <p class="text-gray-600 mb-6">Looks like you haven't added any products to your cart yet.</p>
-                                <a href="products.html" class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-primary-dark transition duration-300">Browse Products</a>
+                                <a href="products.html" class="bg-primary text-white py-2 px-6 rounded-xl font-semibold hover:bg-blue-700 transition duration-300 text-center">
+                                    Browse Products
+                                </a>
                             </div>
                             
                             <!-- Cart Items Table -->
@@ -170,10 +171,10 @@
                     
                     <!-- Continue Shopping and Clear Cart Buttons -->
                     <div class="flex flex-col sm:flex-row justify-between gap-4 mb-6">
-                        <a href="products.html" class="bg-white text-primary border border-primary py-2 px-6 rounded-lg hover:bg-gray-50 transition duration-300 text-center">
+                        <a href="products.html" class="bg-primary text-white py-2 px-6 rounded-xl font-semibold hover:bg-blue-700 transition duration-300 text-center">
                             <i class="fas fa-arrow-left mr-2"></i> Continue Shopping
                         </a>
-                        <button id="clear-cart" class="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600 transition duration-300">
+                        <button id="clear-cart" class="bg-red-500 text-white py-2 px-6 rounded-xl font-semibold hover:bg-red-600 transition duration-300">
                             <i class="fas fa-trash-alt mr-2"></i> Clear Cart
                         </button>
                     </div>
@@ -181,7 +182,7 @@
                 
                 <!-- Order Summary (Right Side) -->
                 <div class="lg:w-1/3">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden sticky top-24">
+                    <div class="bg-card rounded-xl shadow-card overflow-hidden sticky top-24">
                         <div class="p-6">
                             <h2 class="text-xl font-bold mb-6">Order Summary</h2>
                             
@@ -203,16 +204,16 @@
                             
                             <!-- Checkout and WhatsApp Quote Buttons -->
                             <div class="space-y-3">
-                                <a href="checkout.html" id="checkout-button" class="block w-full bg-primary text-white py-3 px-6 rounded-lg hover:bg-primary-dark transition duration-300 text-center disabled:opacity-50 disabled:cursor-not-allowed">
+                                <a href="checkout.html" id="checkout-button" class="block w-full bg-primary text-white py-3 px-6 rounded-xl font-semibold hover:bg-blue-700 transition duration-300 text-center disabled:opacity-50 disabled:cursor-not-allowed">
                                     Proceed to Checkout
                                 </a>
-                                <a href="https://wa.me/919XXXXXXXXX" id="whatsapp-quote" class="block w-full bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600 transition duration-300 text-center">
+                                <a href="https://wa.me/919XXXXXXXXX" id="whatsapp-quote" class="block w-full bg-green-500 text-white py-3 px-6 rounded-xl font-semibold hover:bg-green-600 transition duration-300 text-center">
                                     <i class="fab fa-whatsapp mr-2"></i> Request Quote on WhatsApp
                                 </a>
                             </div>
                             
                             <!-- MOQ Warning -->
-                            <div id="moq-warning" class="hidden mt-4 p-3 bg-yellow-100 text-yellow-800 rounded-lg">
+                            <div id="moq-warning" class="hidden mt-4 p-3 bg-yellow-100 text-yellow-800 rounded-xl">
                                 <i class="fas fa-exclamation-triangle mr-2"></i>
                                 <span>Some products don't meet the minimum order quantity (MOQ) requirement.</span>
                             </div>
@@ -223,101 +224,29 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white pt-12 pb-6 mt-12">
+    <!-- Footer (copied from index.html) -->
+    <footer class="bg-card border-t mt-12 py-8 text-center text-gray-500 text-sm">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Company Info -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Shubham Enterprise</h3>
-                    <p class="text-gray-400 mb-4">Premium wholesale cosmetics supplier for salons, retailers, and bulk resellers.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
-                        <li><a href="products.html" class="text-gray-400 hover:text-white transition duration-300">Products</a></li>
-                        <li><a href="about.html" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
-                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
-                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition duration-300">FAQs</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Categories -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Categories</h3>
-                    <ul class="space-y-2">
-                        <li><a href="products.html?category=skincare" class="text-gray-400 hover:text-white transition duration-300">Skincare</a></li>
-                        <li><a href="products.html?category=haircare" class="text-gray-400 hover:text-white transition duration-300">Haircare</a></li>
-                        <li><a href="products.html?category=makeup" class="text-gray-400 hover:text-white transition duration-300">Makeup</a></li>
-                        <li><a href="products.html?category=personal-hygiene" class="text-gray-400 hover:text-white transition duration-300">Personal Hygiene</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Contact Info -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-accent"></i>
-                            <span class="text-gray-400">123 Business District, Mumbai, Maharashtra 400001</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone-alt mr-2 text-accent"></i>
-                            <span class="text-gray-400">+91 9XXXXXXXXX</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-2 text-accent"></i>
-                            <span class="text-gray-400">info@shubhamenterprise.com</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-clock mr-2 text-accent"></i>
-                            <span class="text-gray-400">Mon-Sat: 9:00 AM - 6:00 PM</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <hr class="border-gray-700 my-6">
-            
-            <!-- Bottom Footer -->
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 text-sm">© 2023 Shubham Enterprise. All rights reserved.</p>
-                <div class="mt-4 md:mt-0">
-                    <ul class="flex space-x-4 text-sm">
-                        <li><a href="privacy-policy.html" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a></li>
-                        <li><a href="terms.html" class="text-gray-400 hover:text-white transition duration-300">Terms & Conditions</a></li>
-                        <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white transition duration-300">Shipping Policy</a></li>
-                        <li><a href="return-policy.html" class="text-gray-400 hover:text-white transition duration-300">Return Policy</a></li>
-                    </ul>
+                <div class="mb-4 md:mb-0">
+                    &copy; 2024 Shubham Enterprise. All rights reserved.
+                </div>
+                <div class="flex space-x-4">
+                    <a href="privacy-policy.html" class="hover:text-primary">Privacy Policy</a>
+                    <a href="terms-conditions.html" class="hover:text-primary">Terms of Service</a>
+                    <a href="contact.html" class="hover:text-primary">Contact Us</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/919XXXXXXXXX" class="fixed bottom-6 right-6 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition duration-300 z-50">
+    <a href="https://wa.me/919XXXXXXXXX" class="fixed bottom-6 right-6 bg-green-500 text-white p-3 rounded-full shadow-card hover:bg-green-600 transition duration-300 z-50">
         <i class="fab fa-whatsapp text-2xl"></i>
     </a>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+    <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white py-2 px-4 rounded-xl shadow-card transform translate-x-full transition-transform duration-300 z-50">
         <div class="flex items-center">
             <i class="fas fa-check-circle mr-2"></i>
             <span id="toast-message">Item removed from cart!</span>

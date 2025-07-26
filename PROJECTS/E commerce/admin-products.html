@@ -543,26 +543,26 @@
             // Check if admin is logged in using Auth module
             if (window.ShubhamAuth) {
                 if (!window.ShubhamAuth.isAdmin()) {
-                    window.location.href = 'admin-login.html';
+                    window.location.href = 'login.html';
                     return;
                 }
             } else {
                 // Fallback to checking localStorage
                 const adminUser = localStorage.getItem('adminUser');
                 if (!adminUser) {
-                    window.location.href = 'admin-login.html';
+                    window.location.href = 'login.html';
                     return;
                 }
                 
                 try {
                     const user = JSON.parse(adminUser);
                     if (!user || user.role !== 'admin') {
-                        window.location.href = 'admin-login.html';
+                        window.location.href = 'login.html';
                         return;
                     }
                 } catch (e) {
                     localStorage.removeItem('adminUser');
-                    window.location.href = 'admin-login.html';
+                    window.location.href = 'login.html';
                     return;
                 }
             }
@@ -682,7 +682,7 @@
                     } else {
                         localStorage.removeItem('adminUser');
                     }
-                    window.location.href = 'admin-login.html';
+                    window.location.href = 'login.html';
                 }
             });
         }

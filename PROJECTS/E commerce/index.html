@@ -13,11 +13,17 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#be185d', // rose
-                        accent: '#facc15', // gold
+                        primary: '#00bcd4', // sky blue
+                        accent: '#00bcd4', // sky blue
+                        sky: {
+                            400: '#00bcd4',
+                            500: '#00acc1',
+                            600: '#0097a7'
+                        }
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
                     },
                 },
             },
@@ -28,7 +34,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* Custom styles */
@@ -62,13 +68,13 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-white font-sans">
     <!-- Header/Navbar -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <header class="bg-white shadow-sky sticky top-0 z-50 border-b-2 border-transparent hover:border-primary transition-all duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
                 <!-- Logo -->
-            <a href="index.html" class="text-2xl font-bold text-primary flex items-center">
-                <span class="text-primary">SHUBHAM</span> <span class="text-accent ml-1">ENTERPRISES</span>
+            <a href="index.html" class="text-2xl font-bold font-heading text-primary flex items-center hover:scale-105 transition-transform duration-300">
+                <span class="text-primary">SHUBHAM</span> <span class="text-primary ml-1">ENTERPRISES</span>
                     </a>
                 
                 <!-- Desktop Navigation -->
@@ -505,7 +511,7 @@
                 <div>
                     <h3 class="text-xl font-bold mb-4">Admin Area</h3>
                     <ul class="space-y-2">
-                        <li><a href="admin-login.html" class="text-gray-400 hover:text-white transition duration-300">Admin Login</a></li>
+        
                         <li><a href="admin-dashboard.html" class="text-gray-400 hover:text-white transition duration-300">Dashboard</a></li>
                         <li><a href="admin-products.html" class="text-gray-400 hover:text-white transition duration-300">Products</a></li>
                         <li><a href="admin-orders.html" class="text-gray-400 hover:text-white transition duration-300">Orders</a></li>

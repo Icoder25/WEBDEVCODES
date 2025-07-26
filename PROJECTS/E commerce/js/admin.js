@@ -20,7 +20,7 @@ const Admin = {
      */
     requireAdmin: function() {
         if (!this.isAdmin()) {
-            window.location.href = 'admin-login.html';
+            window.location.href = 'login.html';
         }
     },
     
@@ -582,7 +582,7 @@ const Admin = {
                 logoutButton.addEventListener('click', (e) => {
                     e.preventDefault();
                     window.ShubhamAuth.logout();
-                    window.location.href = 'admin-login.html';
+                    window.location.href = 'login.html';
                 });
             }
         });

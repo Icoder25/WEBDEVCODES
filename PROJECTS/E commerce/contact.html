@@ -6,29 +6,10 @@
     <title>Contact Us - Shubham Enterprise</title>
     <meta name="description" content="Contact Shubham Enterprise for wholesale cosmetics inquiries, bulk orders, and business partnerships.">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#be185d', // rose
-                        accent: '#facc15', // gold
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                },
-            },
-        }
-    </script>
-    
+    <!-- Modern CSS Theme -->
+    <link rel="stylesheet" href="css/styles.css">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* Custom styles */
@@ -39,9 +20,9 @@
         /* Form focus styles */
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #be185d;
+            border-color: #00bcd4;
             ring: 2px;
-            ring-color: rgba(190, 24, 93, 0.2);
+            ring-color: rgba(0, 188, 212, 0.2);
         }
         
         /* Mobile menu styles */
@@ -64,78 +45,51 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Header/Navigation -->
-    <header class="bg-white shadow-md sticky top-0 z-30">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <!-- Logo -->
-                <div class="flex-shrink-0">
-                    <a href="index.html" class="flex items-center">
-                        <span class="text-2xl font-bold text-primary">Shubham Enterprise</span>
-                    </a>
-                </div>
-                
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="index.html" class="text-gray-600 hover:text-primary transition duration-300">Home</a>
-                    <a href="products.html" class="text-gray-600 hover:text-primary transition duration-300">Products</a>
-                    <a href="about.html" class="text-gray-600 hover:text-primary transition duration-300">About Us</a>
-                    <a href="contact.html" class="text-primary font-medium">Contact</a>
-                    <a href="faq.html" class="text-gray-600 hover:text-primary transition duration-300">FAQs</a>
-                </nav>
-                
-                <!-- Right Navigation Items -->
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="cart.html" class="text-gray-600 hover:text-primary transition duration-300 relative">
-                        <i class="fas fa-shopping-cart text-xl"></i>
-                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
-                    </a>
-                    <a href="login.html" class="text-gray-600 hover:text-primary transition duration-300">
-                        <i class="fas fa-user text-xl"></i>
-                    </a>
-                </div>
-                
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-gray-600 hover:text-primary focus:outline-none">
-                        <i class="fas fa-bars text-2xl"></i>
-                    </button>
-                </div>
+<body class="bg-white font-sans">
+    <!-- Header/Navbar (copied from index.html) -->
+    <header class="bg-white shadow-sky sticky top-0 z-50 border-b-2 border-transparent hover:border-primary transition-all duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold font-heading text-primary flex items-center hover:scale-105 transition-transform duration-300">
+                <span class="text-primary">SHUBHAM</span> <span class="text-primary ml-1">ENTERPRISES</span>
+            </a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Home</a>
+                <a href="products.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Products</a>
+                <a href="about.html" class="text-gray-800 hover:text-primary font-medium transition-colors">About Us</a>
+                <a href="contact.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Contact</a>
+                <a href="faq.html" class="text-gray-800 hover:text-primary font-medium transition-colors">FAQs</a>
+                <a href="privacy-policy.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Privacy</a>
+                <a href="terms-conditions.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Terms</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <a href="cart.html" class="text-gray-800 hover:text-primary relative transition-colors">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-gray-800 hover:text-primary transition-colors">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
             </div>
         </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 w-full h-full bg-white z-40 hidden">
-            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-                <span class="text-xl font-bold text-primary">Shubham Enterprise</span>
-                <button id="close-menu-button" class="text-gray-600 hover:text-primary focus:outline-none">
-                    <i class="fas fa-times text-2xl"></i>
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 md:hidden transform -translate-x-full transition-transform duration-300">
+            <div class="p-4 border-b flex justify-between items-center">
+                <span class="text-xl font-bold text-primary">Menu</span>
+                <button id="close-menu-button" class="text-gray-800 hover:text-primary transition-colors">
+                    <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             <nav class="p-4">
                 <ul class="space-y-4">
-                    <li>
-                        <a href="index.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Home</a>
-                    </li>
-                    <li>
-                        <a href="products.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Products</a>
-                    </li>
-                    <li>
-                        <a href="about.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">About Us</a>
-                    </li>
-                    <li>
-                        <a href="contact.html" class="text-primary font-medium block py-2">Contact</a>
-                    </li>
-                    <li>
-                        <a href="faq.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">FAQs</a>
-                    </li>
-                    <li class="border-t border-gray-200 pt-4 mt-4">
-                        <a href="cart.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Cart</a>
-                    </li>
-                    <li>
-                        <a href="login.html" class="text-gray-600 hover:text-primary transition duration-300 block py-2">Login / Register</a>
-                    </li>
+                    <li><a href="index.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Home</a></li>
+                    <li><a href="products.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Products</a></li>
+                    <li><a href="about.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">About Us</a></li>
+                    <li><a href="contact.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Contact</a></li>
+                    <li><a href="faq.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">FAQs</a></li>
+                    <li><a href="cart.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Cart</a></li>
+                    <li><a href="checkout.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Checkout</a></li>
+                    <li><a href="privacy-policy.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Privacy Policy</a></li>
+                    <li><a href="terms-conditions.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Terms & Conditions</a></li>
+                    <li><a href="shipping-policy.html" class="block text-gray-800 hover:text-primary font-medium transition-colors">Shipping Policy</a></li>
                 </ul>
             </nav>
         </div>
@@ -433,82 +387,17 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white pt-12 pb-6">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Footer Top -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-                <!-- Company Info -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Shubham Enterprise</h3>
-                    <p class="text-gray-400 mb-4">Your trusted partner for wholesale cosmetics and beauty supplies since 2010.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </div>
+    <!-- Footer (copied from index.html) -->
+    <footer class="bg-white border-t mt-12 py-8 text-center text-gray-500 text-sm">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    &copy; 2024 Shubham Enterprise. All rights reserved.
                 </div>
-                
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
-                        <li><a href="products.html" class="text-gray-400 hover:text-white transition duration-300">Products</a></li>
-                        <li><a href="about.html" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
-                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
-                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition duration-300">FAQs</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Categories -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Categories</h3>
-                    <ul class="space-y-2">
-                        <li><a href="products.html?category=skincare" class="text-gray-400 hover:text-white transition duration-300">Skincare</a></li>
-                        <li><a href="products.html?category=haircare" class="text-gray-400 hover:text-white transition duration-300">Haircare</a></li>
-                        <li><a href="products.html?category=makeup" class="text-gray-400 hover:text-white transition duration-300">Makeup</a></li>
-                        <li><a href="products.html?category=personal-hygiene" class="text-gray-400 hover:text-white transition duration-300">Personal Hygiene</a></li>
-                        <li><a href="products.html?category=salon-supplies" class="text-gray-400 hover:text-white transition duration-300">Salon Supplies</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Contact Info -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
-                            <span class="text-gray-400">123 Business Park, Sector 5<br>Noida, Uttar Pradesh 201301</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone-alt mr-2"></i>
-                            <span class="text-gray-400">+91 98765 43210</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-2"></i>
-                            <span class="text-gray-400">info@shubhamenterprise.com</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Footer Bottom -->
-            <div class="pt-8 border-t border-gray-700 text-center md:flex md:justify-between md:text-left">
-                <p class="text-gray-400">&copy; 2023 Shubham Enterprise. All rights reserved.</p>
-                <div class="mt-4 md:mt-0">
-                    <a href="privacy-policy.html" class="text-gray-400 hover:text-white transition duration-300 mr-4">Privacy Policy</a>
-                    <a href="terms-conditions.html" class="text-gray-400 hover:text-white transition duration-300 mr-4">Terms & Conditions</a>
-                    <a href="shipping-policy.html" class="text-gray-400 hover:text-white transition duration-300">Shipping Policy</a>
+                <div class="flex space-x-4">
+                    <a href="privacy-policy.html" class="hover:text-primary">Privacy Policy</a>
+                    <a href="terms-conditions.html" class="hover:text-primary">Terms of Service</a>
+                    <a href="contact.html" class="hover:text-primary">Contact Us</a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenoCare.ai - Emergency? ZenoCare is 3 taps away.</title>
+    <meta name="description" content="AI-powered emergency ambulance platform with blockchain medical records, smart contracts, and real-time hospital availability. Voice booking, GPS tracking, and verified healthcare network.">
+    <meta name="keywords" content="emergency ambulance, AI healthcare, blockchain medical records, smart contracts, voice booking, hospital availability, GPS tracking">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="additional-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Emergency Status Bar -->
+    <div class="emergency-status-bar">
+        <div class="container">
+            <div class="status-content">
+                <div class="status-indicator">
+                    <div class="pulse-dot"></div>
+                    <span>Live Emergency Response System Active</span>
+                </div>
+                <div class="response-timer">
+                    <i class="fas fa-clock"></i>
+                    <span id="response-time">Avg Response: 2.3 min</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="logo-text">
+                    <h2>ZenoCare<span class="ai-badge">.ai</span></h2>
+                    <span class="tagline">Blockchain Healthcare</span>
+                </div>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#features" class="nav-link">AI Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#hospitals" class="nav-link">Hospital Network</a>
+                <a href="#partnership" class="nav-link">Partnership</a>
+                <a href="#emergency" class="nav-link emergency-btn">🚨 Emergency</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="neural-network"></div>
+            <div class="blockchain-grid"></div>
+            <div class="floating-particles"></div>
+        </div>
+        
+        <!-- Triage Priority Banner -->
+        <div class="triage-banner">
+            <div class="container">
+                <div class="triage-content">
+                    <div class="triage-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="triage-text">
+                        <span class="triage-status">AI Triage Active</span>
+                        <span class="triage-message">Your response time is being optimized...</span>
+                    </div>
+                    <div class="triage-priority">
+                        <span class="priority-level">Priority: HIGH</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-main">
+                <div class="hero-badge">
+                    <i class="fas fa-robot"></i>
+                    <span>AI-Powered Emergency Response</span>
+                </div>
+                <h1 class="hero-title animate__animated animate__fadeInUp">
+                    Emergency?<br>
+                    <span class="highlight">ZenoCare is 3 taps away.</span>
+                </h1>
+                <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">
+                    Blockchain-secured medical records • AI-powered triage • Voice booking • Smart contract consent • Real-time hospital availability
+                </p>
+                
+                <!-- Live Stats -->
+                <div class="live-stats animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="stat-item">
+                        <div class="stat-number" id="ambulances-active">247</div>
+                        <div class="stat-label">Active Ambulances</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="hospitals-connected">156</div>
+                        <div class="stat-label">Connected Hospitals</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="avg-response">2.3</div>
+                        <div class="stat-label">Avg Response (min)</div>
+                    </div>
+                </div>
+
+                <div class="hero-buttons animate__animated animate__fadeInUp animate__delay-3s">
+                    <button class="btn btn-emergency" id="emergency-btn">
+                        <i class="fas fa-ambulance"></i>
+                        Get Ambulance Now
+                    </button>
+                    <button class="btn btn-voice" id="voice-booking">
+                        <i class="fas fa-microphone"></i>
+                        Voice Booking
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-play"></i>
+                        See Demo
+                    </button>
+                </div>
+
+                <!-- Wallet Connect -->
+                <div class="wallet-connect animate__animated animate__fadeInUp animate__delay-4s">
+                    <span class="wallet-text">Connect wallet for instant medical record access</span>
+                    <div class="wallet-options">
+                        <button class="wallet-btn" data-wallet="metamask">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask" width="20">
+                            MetaMask
+                        </button>
+                        <button class="wallet-btn" data-wallet="walletconnect">
+                            <i class="fas fa-wallet"></i>
+                            WalletConnect
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bed Availability Widget -->
+            <div class="bed-availability-widget animate__animated animate__fadeInRight animate__delay-2s">
+                <div class="widget-header">
+                    <h3><i class="fas fa-bed"></i> Live Hospital Availability</h3>
+                    <span class="last-updated">Updated 30s ago</span>
+                </div>
+                <div class="availability-list">
+                    <div class="hospital-item">
+                        <div class="hospital-info">
+                            <span class="hospital-name">AIIMS Delhi</span>
+                            <span class="distance">2.4 km</span>
+                        </div>
+                        <div class="bed-status">
+                            <span class="beds-available">12 ICU</span>
+                            <span class="status-indicator available"></span>
+                        </div>
+                    </div>
+                    <div class="hospital-item">
+                        <div class="hospital-info">
+                            <span class="hospital-name">Max Hospital</span>
+                            <span class="distance">3.1 km</span>
+                        </div>
+                        <div class="bed-status">
+                            <span class="beds-available">8 General</span>
+                            <span class="status-indicator limited"></span>
+                        </div>
+                    </div>
+                    <div class="hospital-item">
+                        <div class="hospital-info">
+                            <span class="hospital-name">Apollo Hospital</span>
+                            <span class="distance">4.2 km</span>
+                        </div>
+                        <div class="bed-status">
+                            <span class="beds-available">Full</span>
+                            <span class="status-indicator unavailable"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-footer">
+                    <button class="btn-link">View All Hospitals</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <i class="fas fa-brain"></i>
+                    <span>AI-Powered Healthcare Technology</span>
+                </div>
+                <h2 class="section-title">Revolutionary Features</h2>
+                <p class="section-subtitle">Blockchain security meets AI intelligence for life-saving emergency response</p>
+            </div>
+            
+            <div class="features-grid">
+                <!-- One-tap Ambulance Booking -->
+                <div class="feature-card blockchain-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hand-pointer"></i>
+                        <div class="tech-badge">Voice AI</div>
+                    </div>
+                    <h3>One-tap Ambulance Booking</h3>
+                    <p>Voice assistant integration with Google Cloud Speech-to-Text + Dialogflow. Just say "ZenoCare, emergency!" or tap once.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Google Cloud AI</span>
+                        <span class="tech-tag">Dialogflow</span>
+                        <span class="tech-tag coming-soon">Coming Soon</span>
+                    </div>
+                </div>
+
+                <!-- Blockchain Medical Vault -->
+                <div class="feature-card blockchain-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="tech-badge">Blockchain</div>
+                    </div>
+                    <h3>Blockchain Medical Vault</h3>
+                    <p>Tamper-proof patient records on Polygon network. Your medical history is secure, encrypted, and only accessible with your consent.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Polygon</span>
+                        <span class="tech-tag">IPFS</span>
+                        <span class="tech-tag">Hyperledger</span>
+                    </div>
+                </div>
+
+                <!-- Real-Time AI Triage -->
+                <div class="feature-card ai-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                        <div class="tech-badge">AI Triage</div>
+                    </div>
+                    <h3>Real-Time Triage</h3>
+                    <p>AI ranks emergency cases for fastest ambulance assignment. Machine learning prioritizes based on symptoms, location, and severity.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">TensorFlow</span>
+                        <span class="tech-tag">ML Models</span>
+                        <span class="tech-tag">Real-time</span>
+                    </div>
+                </div>
+
+                <!-- Smart Contracts for Consent -->
+                <div class="feature-card blockchain-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-contract"></i>
+                        <div class="tech-badge">Smart Contract</div>
+                    </div>
+                    <h3>Smart Contracts for Consent</h3>
+                    <p>Solidity-based consent management. Share medical records with hospitals only when you approve. Automated, secure, transparent.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Solidity</span>
+                        <span class="tech-tag">Web3</span>
+                        <span class="tech-tag">MetaMask</span>
+                    </div>
+                </div>
+
+                <!-- Live Hospital Availability -->
+                <div class="feature-card ai-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hospital-alt"></i>
+                        <div class="tech-badge">Live Data</div>
+                    </div>
+                    <h3>Live Hospital Availability</h3>
+                    <p>AI finds nearest hospitals with available beds, ICU, oxygen. ABDM-compliant API integration with government hospital databases.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">ABDM API</span>
+                        <span class="tech-tag">Real-time DB</span>
+                        <span class="tech-tag">WebSocket</span>
+                    </div>
+                </div>
+
+                <!-- Auto Insurance Verification -->
+                <div class="feature-card fintech-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-credit-card"></i>
+                        <div class="tech-badge">FinTech</div>
+                    </div>
+                    <h3>Auto Insurance Verification & Claims</h3>
+                    <p>Instant insurance verification and automated claims processing. Emergency wallet access for immediate payment authorization.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Insurance APIs</span>
+                        <span class="tech-tag">Wallet Integration</span>
+                        <span class="tech-tag coming-soon">Coming Soon</span>
+                    </div>
+                </div>
+
+                <!-- GPS Live Tracking -->
+                <div class="feature-card mapping-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <div class="tech-badge">GPS AI</div>
+                    </div>
+                    <h3>GPS Live Ambulance Tracking</h3>
+                    <p>Real-time ambulance tracking with Mapbox integration. AI-powered route optimization considering traffic, road conditions, and hospital availability.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Mapbox</span>
+                        <span class="tech-tag">Google Maps</span>
+                        <span class="tech-tag">Socket.io</span>
+                    </div>
+                </div>
+
+                <!-- Verified Network -->
+                <div class="feature-card network-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                        <div class="tech-badge">Verified</div>
+                    </div>
+                    <h3>Verified Hospital & Doctor Network</h3>
+                    <p>Partnership with government hospitals, NGOs, and verified private healthcare providers. Quality assurance and regulatory compliance.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Government APIs</span>
+                        <span class="tech-tag">NGO Partners</span>
+                        <span class="tech-tag">Verified Network</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Stack Overview -->
+            <div class="tech-overview">
+                <h3>Powered by Modern Tech Stack</h3>
+                <div class="tech-categories">
+                    <div class="tech-category">
+                        <h4><i class="fab fa-react"></i> Frontend</h4>
+                        <p>React.js, Next.js, TailwindCSS</p>
+                    </div>
+                    <div class="tech-category">
+                        <h4><i class="fas fa-cube"></i> Blockchain</h4>
+                        <p>Polygon, Solidity, Web3, IPFS</p>
+                    </div>
+                    <div class="tech-category">
+                        <h4><i class="fas fa-brain"></i> AI/ML</h4>
+                        <p>TensorFlow, Google Cloud AI, Dialogflow</p>
+                    </div>
+                    <div class="tech-category">
+                        <h4><i class="fas fa-database"></i> Backend</h4>
+                        <p>Firebase, Supabase, Socket.io, Node.js</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <i class="fas fa-cogs"></i>
+                    <span>AI + Blockchain Workflow</span>
+                </div>
+                <h2 class="section-title">How ZenoCare Works</h2>
+                <p class="section-subtitle">From emergency call to hospital arrival - powered by AI and secured by blockchain</p>
+            </div>
+            
+            <div class="workflow-container">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <h3>Voice/Tap Emergency Booking</h3>
+                        <p>Say "ZenoCare, emergency!" or tap the emergency button. Our AI voice assistant captures your location and emergency details instantly.</p>
+                        <div class="step-tech">
+                            <span class="tech-pill">Google Cloud Speech</span>
+                            <span class="tech-pill">Dialogflow</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-arrow">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>AI Triage & Smart Routing</h3>
+                        <p>AI analyzes symptoms, prioritizes urgency, finds nearest ambulance, and identifies hospitals with available beds/ICU capacity.</p>
+                        <div class="step-tech">
+                            <span class="tech-pill">TensorFlow</span>
+                            <span class="tech-pill">Real-time DB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-arrow">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h3>Blockchain Consent & Records</h3>
+                        <p>Smart contracts automatically share relevant medical records with the destination hospital. Patient consent managed via blockchain.</p>
+                        <div class="step-tech">
+                            <span class="tech-pill">Solidity</span>
+                            <span class="tech-pill">Polygon</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-arrow">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-ambulance"></i>
+                        </div>
+                        <h3>Live Tracking & Hospital Prep</h3>
+                        <p>Real-time GPS tracking, family notifications, insurance verification, and hospital preparation - all automated and transparent.</p>
+                        <div class="step-tech">
+                            <span class="tech-pill">Mapbox</span>
+                            <span class="tech-pill">Socket.io</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blockchain Security Highlight -->
+            <div class="security-highlight">
+                <div class="security-content">
+                    <div class="security-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="security-text">
+                        <h3>Blockchain-Secured Medical Records</h3>
+                        <p>Your medical data is encrypted, tamper-proof, and only accessible with your explicit consent via smart contracts.</p>
+                    </div>
+                    <div class="security-badges">
+                        <span class="security-badge">HIPAA Compliant</span>
+                        <span class="security-badge">Blockchain Secured</span>
+                        <span class="security-badge">Patient Controlled</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hospital Network Section -->
+    <section id="hospitals" class="hospital-network">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <i class="fas fa-hospital"></i>
+                    <span>Verified Healthcare Network</span>
+                </div>
+                <h2 class="section-title">Partnered Hospitals & Healthcare Providers</h2>
+                <p class="section-subtitle">Government hospitals, private healthcare, and NGO partners - all verified and integrated</p>
+            </div>
+
+            <!-- Hospital Stats -->
+            <div class="hospital-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-hospital-alt"></i>
+                    </div>
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">Partner Hospitals</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="stat-number">2,847</div>
+                    <div class="stat-label">Verified Doctors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <div class="stat-number">12,450</div>
+                    <div class="stat-label">Available Beds</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Cities Covered</div>
+                </div>
+            </div>
+
+            <!-- Hospital Categories -->
+            <div class="hospital-categories">
+                <div class="category-card government">
+                    <div class="category-header">
+                        <i class="fas fa-landmark"></i>
+                        <h3>Government Hospitals</h3>
+                    </div>
+                    <div class="category-content">
+                        <p>AIIMS, Government Medical Colleges, District Hospitals</p>
+                        <div class="category-features">
+                            <span class="feature-tag">ABDM Integrated</span>
+                            <span class="feature-tag">Real-time Beds</span>
+                            <span class="feature-tag">Emergency Ready</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card private">
+                    <div class="category-header">
+                        <i class="fas fa-building"></i>
+                        <h3>Private Healthcare</h3>
+                    </div>
+                    <div class="category-content">
+                        <p>Apollo, Max, Fortis, Manipal, and 100+ verified private hospitals</p>
+                        <div class="category-features">
+                            <span class="feature-tag">Premium Care</span>
+                            <span class="feature-tag">Specialist Doctors</span>
+                            <span class="feature-tag">Advanced Equipment</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card ngo">
+                    <div class="category-header">
+                        <i class="fas fa-hands-helping"></i>
+                        <h3>NGO Partners</h3>
+                    </div>
+                    <div class="category-content">
+                        <p>Community health centers, charitable hospitals, rural healthcare</p>
+                        <div class="category-features">
+                            <span class="feature-tag">Community Care</span>
+                            <span class="feature-tag">Rural Access</span>
+                            <span class="feature-tag">Affordable</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnership Form Section -->
+    <section id="partnership" class="partnership-section">
+        <div class="container">
+            <div class="partnership-content">
+                <div class="partnership-info">
+                    <div class="section-badge">
+                        <i class="fas fa-handshake"></i>
+                        <span>Join Our Network</span>
+                    </div>
+                    <h2>Partner with ZenoCare</h2>
+                    <p>Join India's most advanced emergency healthcare network. Integrate your hospital or ambulance service with our AI-powered platform.</p>
+                    
+                    <div class="partnership-benefits">
+                        <div class="benefit-item">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h4>Increase Patient Flow</h4>
+                                <p>Get connected to emergency cases in your area</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-robot"></i>
+                            <div>
+                                <h4>AI-Powered Matching</h4>
+                                <p>Smart patient-hospital matching based on specialization</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <h4>Blockchain Integration</h4>
+                                <p>Secure patient records and automated consent management</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <div>
+                                <h4>Digital Dashboard</h4>
+                                <p>Real-time bed management and patient tracking</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="partnership-form">
+                    <form id="partnership-form" class="form">
+                        <h3>Register Your Interest</h3>
+                        
+                        <div class="form-group">
+                            <label for="organization-type">Organization Type</label>
+                            <select id="organization-type" name="organizationType" required>
+                                <option value="">Select Type</option>
+                                <option value="hospital">Hospital</option>
+                                <option value="ambulance">Ambulance Service</option>
+                                <option value="clinic">Clinic/Nursing Home</option>
+                                <option value="ngo">NGO/Charitable Organization</option>
+                                <option value="government">Government Healthcare</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="org-name">Organization Name</label>
+                                <input type="text" id="org-name" name="orgName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-person">Contact Person</label>
+                                <input type="text" id="contact-person" name="contactPerson" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Location (City, State)</label>
+                            <input type="text" id="location" name="location" placeholder="e.g., Mumbai, Maharashtra" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="services">Services Offered</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="services" value="emergency">
+                                    <span class="checkmark"></span>
+                                    Emergency Care
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="services" value="icu">
+                                    <span class="checkmark"></span>
+                                    ICU/Critical Care
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="services" value="ambulance">
+                                    <span class="checkmark"></span>
+                                    Ambulance Service
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="services" value="specialty">
+                                    <span class="checkmark"></span>
+                                    Specialty Care
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Additional Information</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Tell us about your facility, bed capacity, specializations, etc."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-large">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit Partnership Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Stories Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <i class="fas fa-heart"></i>
+                    <span>Success Stories</span>
+                </div>
+                <h2 class="section-title">Real Stories, Real Lives Saved</h2>
+                <p class="section-subtitle">Hear from patients and healthcare providers who experienced ZenoCare's life-saving technology</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"My father collapsed at home. I used ZenoCare's voice booking - just said 'ZenoCare, emergency!' The AI immediately found the nearest cardiac specialist hospital. Within 6 minutes, he was in the ambulance. The blockchain system had already shared his medical history with the hospital. That coordination saved his life."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <strong>Priya Sharma</strong>
+                            <span>Mumbai • Cardiac Emergency</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"During my wife's labor emergency at 2 AM, ZenoCare's AI found the nearest maternity ward with NICU availability. The smart contract system instantly shared her pregnancy records with the hospital. Both mother and baby are healthy today. The technology is incredible."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <strong>Rajesh Kumar</strong>
+                            <span>Delhi • Maternity Emergency</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"As an ER doctor, I've seen how ZenoCare transforms emergency care. Patients arrive with their medical records already shared via blockchain. The AI triage system helps us prioritize cases perfectly. It's the future of emergency medicine."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="author-info">
+                            <strong>Dr. Anita Patel</strong>
+                            <span>Bangalore • Emergency Physician</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why ZenoCare Section -->
+    <section class="trust-section">
+        <div class="container">
+            <h2 class="section-title">Why ZenoCare?</h2>
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div class="trust-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Built by Experts</h3>
+                    <p>Healthcare and AI professionals with 15+ years experience</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>50+ Indian Cities</h3>
+                    <p>Trusted by millions across major metropolitan areas</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Government Data Backed</h3>
+                    <p>Real-time integration with official hospital databases</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How fast is ZenoCare?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ZenoCare dispatches ambulances within 2-3 minutes of booking. Our AI-powered system ensures the fastest possible response time by pre-positioning ambulances based on demand patterns.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is it free?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ZenoCare booking is free. You only pay standard ambulance charges directly to the service provider. No hidden fees, no surge pricing during emergencies.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I use it for my parents?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! You can book ambulances for family members and add their profiles to your account. Emergency contacts are automatically notified when you book for others.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Do hospitals know I'm coming?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! ZenoCare automatically informs the destination hospital about incoming patients, ensuring beds are reserved and medical teams are prepared for your arrival.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="book-now" class="final-cta">
+        <div class="container">
+            <h2>Emergency? Don't Wait.</h2>
+            <p>Every second matters in medical emergencies. Get help now.</p>
+            <div class="cta-buttons">
+                <button class="btn btn-primary btn-large">Book Emergency Help Now</button>
+                <button class="btn btn-secondary">Learn More About How ZenoCare Works</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ZenoCare</h3>
+                    <p>India's first AI-powered ambulance booking service</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Contact Email</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#partners">Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Emergency Contacts</a></li>
+                        <li><a href="#">Report Issues</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ZenoCare™. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

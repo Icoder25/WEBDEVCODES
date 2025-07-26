@@ -117,7 +117,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="admin-login.html" class="flex items-center px-4 py-3 bg-primary text-white">
+                        <a href="login.html" class="flex items-center px-4 py-3 bg-primary text-white">
                             <i class="fas fa-shopping-cart w-6"></i>
                             <span>Orders</span>
                         </a>
@@ -659,7 +659,7 @@
                 // Fallback to localStorage check
                 const adminUser = localStorage.getItem('adminUser');
                 if (!adminUser) {
-                    window.location.href = 'admin-login.html';
+                    window.location.href = 'login.html';
                     return;
                 }
             }
@@ -758,7 +758,7 @@
                     } else {
                         // Fallback to localStorage removal
                         localStorage.removeItem('adminUser');
-                        window.location.href = 'admin-login.html';
+                        window.location.href = 'login.html';
                     }
                 }
             });
