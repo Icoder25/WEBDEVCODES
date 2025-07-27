@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm Sorry, Sana 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            overflow-x: hidden;
+            background: none;
+        }
+
+        /* Background Slideshow */
+        .slideshow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .slideshow-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2000ms ease-in-out;
+            filter: none;
+        }
+
+        .slideshow-image.active {
+            opacity: 1;
+        }
+
+        .romantic-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: none;
+            z-index: 10;
+        }
+
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 30;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1000ms ease-in-out;
+        }
+
+        .main-content.loaded {
+            opacity: 1;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            animation: romantic-glow 2s ease-in-out infinite alternate;
+        }
+
+        /* Teddy Bear */
+        .teddy-container {
+            position: relative;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .teddy-bear {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+            filter: drop-shadow(0 8px 32px hsla(340, 50%, 70%, 0.15));
+        }
+
+        /* Buttons */
+        .heart-button {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, hsl(350, 90%, 75%), hsl(340, 82%, 68%));
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px hsla(340, 80%, 65%, 0.4);
+            transform: scale(1);
+            transition: all 0.3s ease;
+            animation: heart-pulse 1.5s ease-in-out infinite;
+        }
+
+        .heart-button:hover {
+            transform: scale(1.1);
+            filter: brightness(1.1);
+            box-shadow: 0 0 30px hsla(340, 100%, 85%, 0.6);
+        }
+
+        .heart-button:active {
+            transform: scale(0.95);
+        }
+
+        .no-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            background: #e5e7eb;
+            color: #6b7280;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: scale(1);
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .no-button:hover {
+            transform: scale(1.05);
+        }
+
+        .no-button:active {
+            transform: scale(0.95);
+        }
+
+        .no-button.sad {
+            background: #dbeafe;
+            color: #2563eb;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Sad Message */
+        .sad-message {
+            font-size: 1.125rem;
+            color: white;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            animation: fade-in 0.5s ease-out forwards;
+        }
+
+        /* Modal */
+        .sorry-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sorry-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .letter-container {
+            background: linear-gradient(135deg, hsl(350, 50%, 95%), hsl(310, 60%, 85%));
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 42rem;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px hsla(340, 50%, 70%, 0.15);
+            animation: scale-in 0.3s ease-out forwards;
+        }
+
+        .letter-title {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .letter-emoji {
+            font-size: 3.75rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        .letter-text {
+            font-size: 1.125rem;
+            line-height: 1.75;
+            color: #374151;
+            font-family: Georgia, serif;
+            white-space: pre-line;
+            margin-bottom: 2rem;
+        }
+
+        /* Confetti */
+        .confetti-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 40;
+            font-size: 1rem;
+        }
+
+        .confetti-particle.heart {
+            color: #f472b6;
+            font-size: 1.5rem;
+            animation: heart-float 4s ease-out infinite;
+        }
+
+        .confetti-particle.petal {
+            animation: petal-fall 6s linear infinite;
+        }
+
+        .confetti-particle.sparkle {
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes romantic-glow {
+            0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+            100% { text-shadow: 0 0 20px rgba(255, 182, 193, 0.8); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% { transform: translateY(0); }
+            40%, 43% { transform: translateY(-30px); }
+            70% { transform: translateY(-15px); }
+            90% { transform: translateY(-4px); }
+        }
+
+        @keyframes heart-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scale-in {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes heart-float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+
+        @keyframes petal-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(180deg); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .title { font-size: 2.5rem; }
+            .subtitle { font-size: 1.25rem; }
+            .teddy-bear { font-size: 4rem; }
+            .heart-button { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
+            .letter-container { padding: 1.5rem; margin: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Slideshow -->
+    <div class="slideshow-container">
+        <img src="img1.jpg" alt="Sana 1" class="slideshow-image active">
+        <img src="img2.jpg" alt="Sana 2" class="slideshow-image">
+        <img src="img3.jpg" alt="Sana 3" class="slideshow-image">
+        <div class="romantic-overlay"></div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="backgroundMusic" loop>
+        <source src="placeholder-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div>
+            <h1 class="title">I'm Sorry, Sana 💕</h1>
+            <p class="subtitle">Please forgive your best friend...</p>
+        </div>
+
+        <!-- Teddy Bear Container -->
+        <div class="teddy-container">
+            <div class="teddy-bear">🧸</div>
+            <button class="heart-button" onclick="handleYesClick()">
+                💖 YES, I FORGIVE YOU 💖
+            </button>
+        </div>
+
+        <!-- NO Button -->
+        <div id="noButtonContainer">
+            <button class="no-button" id="noButton" onclick="handleNoClick()">
+                No... 💔
+            </button>
+        </div>
+
+        <!-- Sad Message -->
+        <div id="sadMessageContainer"></div>
+    </div>
+
+    <!-- Sorry Letter Modal -->
+    <div class="sorry-modal" id="sorryModal">
+        <div class="letter-container">
+            <div>
+                <h2 class="letter-title">💌 My Heartfelt Apology</h2>
+                <div class="letter-emoji">💝</div>
+            </div>
+            
+            <div class="letter-text" id="letterText"></div>
+            
+            <div style="text-align: center;">
+                <button class="heart-button" onclick="closeModal()">
+                    💕 Thank You for Forgiving Me 💕
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentImage = 0;
+        let noClickCount = 0;
+        let showNoButton = true;
+        let confettiInterval;
+        
+        const images = document.querySelectorAll('.slideshow-image');
+        const noMessages = [
+            "Please think again... 🥺",
+            "I really need your forgiveness... 💔",
+            "This is my last try... 😢"
+        ];
+
+        const sorryLetter = `My Dearest Sana,
+
+I know words can't undo the hurt I've caused, but I need you to know how deeply sorry I am. I was detached because of someone else, but every single day, I missed you more than words can express.
+
+You are not just my best friend; you are the light that brightens my darkest days, the laughter that fills my silence, and the warmth that makes everything better. I was foolish to let anything come between us.
+
+I miss our late-night conversations, our silly jokes, our shared secrets, and the way you always know exactly what to say. I miss YOU, Sana - your smile, your kindness, your beautiful soul.
+
+I promise to be better, to never let anything or anyone affect our friendship again. You mean the world to me, and I can't imagine my life without you in it.
+
+Please forgive me, my beautiful friend. Let's make new memories and bring back the joy we share.
+
+With all my love and deepest apologies,
+Your sorry best friend 💕`;
+
+        // Initialize page
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('mainContent').classList.add('loaded');
+            }, 500);
+            
+            // Start slideshow
+            setInterval(nextImage, 4000);
+        });
+
+        // Slideshow functionality
+        function nextImage() {
+            images[currentImage].classList.remove('active');
+            currentImage = (currentImage + 1) % images.length;
+            images[currentImage].classList.add('active');
+        }
+
+        // Handle NO button click
+        function handleNoClick() {
+            const noButton = document.getElementById('noButton');
+            const sadMessageContainer = document.getElementById('sadMessageContainer');
+            
+            if (noClickCount < 2) {
+                // Show sad message
+                sadMessageContainer.innerHTML = `<div class="sad-message">${noMessages[noClickCount]}</div>`;
+                noButton.classList.add('sad');
+                noClickCount++;
+                
+                setTimeout(() => {
+                    sadMessageContainer.innerHTML = '';
+                    noButton.classList.remove('sad');
+                }, 2000);
+            } else {
+                // Final message and hide button
+                sadMessageContainer.innerHTML = '<div class="sad-message">I understand... I\'m truly sorry 💔</div>';
+                document.getElementById('noButtonContainer').style.display = 'none';
+                
+                setTimeout(() => {
+                    sadMessageContainer.innerHTML = '';
+                }, 3000);
+            }
+        }
+
+        // Handle YES button click
+        function handleYesClick() {
+            // Show modal
+            document.getElementById('sorryModal').classList.add('show');
+            
+            // Start confetti
+            startConfetti();
+            
+            // Start music
+            const audio = document.getElementById('backgroundMusic');
+            audio.play().catch(console.log);
+            
+            // Start typewriter effect
+            typeWriter();
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('sorryModal').classList.remove('show');
+            stopConfetti();
+        }
+
+        // Typewriter effect
+        function typeWriter() {
+            const letterTextElement = document.getElementById('letterText');
+            let i = 0;
+            letterTextElement.innerHTML = '';
+            
+            function type() {
+                if (i < sorryLetter.length) {
+                    letterTextElement.innerHTML += sorryLetter.charAt(i);
+                    i++;
+                    setTimeout(type, 50);
+                }
+            }
+            
+            type();
+        }
+
+        // Confetti functionality
+        function startConfetti() {
+            confettiInterval = setInterval(createConfetti, 100);
+            
+            // Stop after 10 seconds
+            setTimeout(stopConfetti, 10000);
+        }
+
+        function stopConfetti() {
+            if (confettiInterval) {
+                clearInterval(confettiInterval);
+            }
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 3; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-particle';
+                
+                const type = Math.random();
+                if (type > 0.7) {
+                    confetti.classList.add('heart');
+                    confetti.textContent = '💖';
+                } else if (type > 0.4) {
+                    confetti.classList.add('petal');
+                    confetti.textContent = '🌸';
+                } else {
+                    confetti.classList.add('sparkle');
+                    confetti.textContent = '✨';
+                }
+                
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                
+                document.body.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    if (confetti.parentNode) {
+                        confetti.parentNode.removeChild(confetti);
+                    }
+                }, 6000);
+            }
+        }
+    </script>
+</body>
+</html>
